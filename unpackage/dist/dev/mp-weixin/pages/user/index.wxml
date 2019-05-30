@@ -1,0 +1,1 @@
+<view bind:__l="__l"><navigator url="/pages/user/song/index"><button type="default">跳转到新页面</button></navigator></view>

@@ -1,0 +1,70 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/home/index",
+			"style": {
+				"navigationBarTitleText": "首页"
+			}
+		},
+		{
+			"path": "pages/release/index",
+			"style": {
+				"navigationBarTitleText": "发布"
+			}
+		},
+		{
+			"path": "pages/about/index",
+			"style": {
+				"navigationBarTitleText": "关于我们"
+			}
+		},
+		{
+			"path": "pages/user/index",
+			"style": {
+				"navigationBarTitleText": "我的"
+			}
+		},
+		{
+			"path" : "pages/user/song/index",
+			"style": {
+				"navigationBarTitleText": "送养"
+			}
+		}
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8"
+	},
+	"tabBar": {
+			"color": "#aaaaaa",
+			"selectedColor": "#39b54a",
+			"borderStyle": "white",
+			"backgroundColor": "#ffffff",
+			"list": [{
+					"pagePath": "pages/home/index",
+					"iconPath": "static/tabbar/home.png",
+					"selectedIconPath": "static/tabbar/home_selected.png",
+					"text": "首页"
+				},
+				{
+					"pagePath": "pages/release/index",
+					"iconPath": "static/tabbar/edit.png",
+					"selectedIconPath": "static/tabbar/edit_selected.png",
+					"text": "发布"
+				}, {
+					"pagePath": "pages/about/index",
+					"iconPath": "static/tabbar/group.png",
+					"selectedIconPath": "static/tabbar/group_selected.png",
+					"text": "关于我们"
+				}, {
+					"pagePath": "pages/user/index",
+					"iconPath": "static/tabbar/user.png",
+					"selectedIconPath": "static/tabbar/user_selected.png",
+					"text": "我的"
+				}
+			]
+		}
+	
+}
