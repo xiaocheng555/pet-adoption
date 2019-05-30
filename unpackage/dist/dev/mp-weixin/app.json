@@ -1,0 +1,50 @@
+{
+  "pages": [
+    "pages/home/index",
+    "pages/release/index",
+    "pages/about/index",
+    "pages/user/index",
+    "pages/user/song/index"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "uni-app",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "color": "#aaaaaa",
+    "selectedColor": "#39b54a",
+    "borderStyle": "white",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/home/index",
+        "iconPath": "static/tabbar/home.png",
+        "selectedIconPath": "static/tabbar/home_selected.png",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/release/index",
+        "iconPath": "static/tabbar/edit.png",
+        "selectedIconPath": "static/tabbar/edit_selected.png",
+        "text": "发布"
+      },
+      {
+        "pagePath": "pages/about/index",
+        "iconPath": "static/tabbar/group.png",
+        "selectedIconPath": "static/tabbar/group_selected.png",
+        "text": "关于我们"
+      },
+      {
+        "pagePath": "pages/user/index",
+        "iconPath": "static/tabbar/user.png",
+        "selectedIconPath": "static/tabbar/user_selected.png",
+        "text": "我的"
+      }
+    ]
+  },
+  "permission": {},
+  "usingComponents": {}
+}
