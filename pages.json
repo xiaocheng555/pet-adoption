@@ -7,7 +7,7 @@
 			}
 		},
 		{
-			"path": "pages/release/index",
+			"path": "pages/publish/index",
 			"style": {
 				"navigationBarTitleText": "发布"
 			}
@@ -25,9 +25,27 @@
 			}
 		},
 		{
-			"path" : "pages/user/song/index",
+			"path" : "pages/user/feed/index",
 			"style": {
-				"navigationBarTitleText": "送养"
+				"navigationBarTitleText": "我的送养"
+			}
+		},
+		{
+			"path" : "pages/user/apply/index",
+			"style": {
+				"navigationBarTitleText": "我的申请"
+			}
+		},
+		{
+			"path" : "pages/user/owner-search/index",
+			"style": {
+				"navigationBarTitleText": "我的寻主启示"
+			}
+		},
+		{
+			"path" : "pages/user/pet-search/index",
+			"style": {
+				"navigationBarTitleText": "我的寻宠启示"
 			}
 		}
 	],
@@ -49,7 +67,7 @@
 					"text": "首页"
 				},
 				{
-					"pagePath": "pages/release/index",
+					"pagePath": "pages/publish/index",
 					"iconPath": "static/tabbar/edit.png",
 					"selectedIconPath": "static/tabbar/edit_selected.png",
 					"text": "发布"
