@@ -1,13 +1,13 @@
 import Vue from 'vue'
 import App from './App'
-import httpUse from '@/config/http/use'
+import http from '@/config/http'
 
 Vue.config.productionTip = false
 
 App.mpType = 'app'
 
 // 声明 http 插件
-httpUse()
+http.use()
 
 const app = new Vue({
     ...App
