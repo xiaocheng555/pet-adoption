@@ -1,47 +1,75 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+	  // 首页 
 		{
 			"path": "pages/home/index",
 			"style": {
 				"navigationBarTitleText": "首页"
 			}
 		},
+		// 发布页 
 		{
 			"path": "pages/publish/index",
 			"style": {
 				"navigationBarTitleText": "发布"
 			}
 		},
+		// 发布领养
 		{
-			"path": "pages/about/index",
+			"path": "pages/publish/feed/index",
 			"style": {
-				"navigationBarTitleText": "关于我们"
+				"navigationBarTitleText": "发布领养"
 			}
 		},
+		// 发布寻宠启示
+		{
+			"path": "pages/publish/owner-search/index",
+			"style": {
+				"navigationBarTitleText": "发布寻宠启示"
+			}
+		},
+		// 发布寻主启示
+		{
+			"path": "pages/publish/pet-search/index",
+			"style": {
+				"navigationBarTitleText": "发布寻主启示"
+			}
+		},
+		// {
+		// 	"path": "pages/about/index",
+		// 	"style": {
+		// 		"navigationBarTitleText": "关于我们"
+		// 	}
+		// },
+		// 我的 
 		{
 			"path": "pages/user/index",
 			"style": {
 				"navigationBarTitleText": "我的"
 			}
 		},
+		// 我的送养 
 		{
 			"path" : "pages/user/feed/index",
 			"style": {
 				"navigationBarTitleText": "我的送养"
 			}
 		},
+		// 我的申请
 		{
 			"path" : "pages/user/apply/index",
 			"style": {
 				"navigationBarTitleText": "我的申请"
 			}
 		},
+		// 我的寻主启示
 		{
 			"path" : "pages/user/owner-search/index",
 			"style": {
 				"navigationBarTitleText": "我的寻主启示"
 			}
 		},
+		// 我的寻宠启示
 		{
 			"path" : "pages/user/pet-search/index",
 			"style": {
@@ -71,12 +99,14 @@
 					"iconPath": "static/tabbar/edit.png",
 					"selectedIconPath": "static/tabbar/edit_selected.png",
 					"text": "发布"
-				}, {
-					"pagePath": "pages/about/index",
-					"iconPath": "static/tabbar/group.png",
-					"selectedIconPath": "static/tabbar/group_selected.png",
-					"text": "关于我们"
-				}, {
+				}, 
+				// {
+				// 	"pagePath": "pages/about/index",
+				// 	"iconPath": "static/tabbar/group.png",
+				// 	"selectedIconPath": "static/tabbar/group_selected.png",
+				// 	"text": "关于我们"
+				// }, 
+				{
 					"pagePath": "pages/user/index",
 					"iconPath": "static/tabbar/user.png",
 					"selectedIconPath": "static/tabbar/user_selected.png",
