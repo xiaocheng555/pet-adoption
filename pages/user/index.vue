@@ -1,37 +1,25 @@
 <template>
 	<view>
-		<view class="cu-list menu sm-border margin-top">
-			<view class="cu-item">
-				<navigator class="content" hover-class='none' url="/pages/user/apply/index" navigateTo>
-					<text class="cuIcon-like text-red"></text>
-					<text class="text-grey">我的申请</text>
-				</navigator>
-			</view>
-			<view class="cu-item">
-				<navigator class="content" hover-class='none' url="/pages/user/feed/index" navigateTo>
-					<text class="cuIcon-baby text-mauve"></text>
-					<text class="text-grey">我的送养</text>
-				</navigator>
-			</view>
-			<view class="cu-item">
-				<navigator class="content" hover-class='none' url="/pages/user/owner-search/index" navigateTo>
-					<text class="cuIcon-profile text-orange"></text>
-					<text class="text-grey">我的寻主启示</text>
-				</navigator>
-			</view>
-			<view class="cu-item">
-				<navigator class=" content" hover-class='none' url="/pages/user/pet-search/index" navigateTo>
-					<text class="cuIcon-search text-olive"></text>
-					<text class="text-grey">我的寻宠启示</text>
-				</navigator>
+		<view class="user-info">
+			<image class="user-info-bg" mode="aspectFill" src="/static/images/user-info-bg.jpeg"></image>
+			<view class="user-info-main">
+				<image class="user-info-avatar" :src="userInfo.avatarUrl || '/static/images/default-avatar.png'"></image>
+				<view>
+					<text v-if="userInfo.nickName" class="user-info-name">{{ userInfo.nickName }}</text>
+					<text v-else class="user-info-name user-info-login">登录</text>
+				</view>
 			</view>
 		</view>
-		<view class="cu-list menu sm-border margin-top">
-			<view class="cu-item">
-				<view class="content" @tap="previewImage">
-					<text class="cuIcon-appreciatefill text-red"></text>
-					<text class="text-grey">赞赏支持</text>
-					<image src=""></image>
+		<view class="nav-list">
+			<view 
+				class="nav-list-item" 
+				:class="[ nav.class || '' ]"
+				v-for="(nav, index) in navList" 
+				:key="index">
+				<view class="nav-list-content" @tap="handleNavTap(nav)">
+					<image class="nav-list-icon" :src="nav.icon"></image>
+					<text class="nav-list-text">{{ nav.text }}</text>
+					<image class="nav-list-arrow" src="/static/icons/arrow-right.svg"></image>
 				</view>
 			</view>
 		</view>
@@ -39,17 +27,67 @@
 </template>
 
 <script>
-	import rewardImgUrl from '@/static/reward-qr-code.png'
+	import rewardImgUrl from '@/static/images/reward-qr-code.png'
+	import defaultAvatar from '@/static/images/default-avatar.png'
+	
+	const APPRECIATE = 'appreciate'
+	
 	export default {
 		data() {
 			return {
-				
+				defaultAvatar,
+				userInfo: {
+					nickName: null,
+					avatarUrl: null
+				},
+				navList: [
+					{
+						icon: '/static/icons/user__apply.svg',
+						text: '我的申请',
+						url: '/pages/user/apply/index'
+					},
+					{
+						icon: '/static/icons/user__feed.svg',
+						text: '我的送养',
+						url: '/pages/user/feed/index'
+					},
+					{
+						icon: '/static/icons/user__search-people.svg',
+						text: '我的寻主启示',
+						url: '/pages/user/owner-search/index'
+					},
+					{
+						icon: '/static/icons/user__search-pet.svg',
+						text: '我的寻宠启示',
+						url: '/pages/user/pet-search/index'
+					},
+					{
+						icon: '/static/icons/user__appreciate.svg',
+						text: '赞赏支持',
+						key: APPRECIATE,
+						class: 'margin-top'
+					}
+				]
 			}
 		},
 		onLoad() {
 
 		},
 		methods: {
+			// nav点击事件
+			handleNavTap (nav) {
+				if (nav.key === APPRECIATE) {
+					this.previewImage()
+					return
+				}
+				console.log(nav, 'nav')
+				if (nav.url) {
+					uni.navigateTo({
+						url: nav.url
+					})
+				}
+			},
+			// 预览打赏图片
 			previewImage () {
 				uni.previewImage({
 					current: 0,
@@ -60,6 +98,65 @@
 	}
 </script>
 
-<style lang="less">
-
+<style lang="scss">
+.user-info {
+	position: relative;
+	width: 100%;
+	height: 150px;
+	padding-top: 70px;
+	text-align: center;
+}
+.user-info-bg {
+	display: block;
+	position: absolute;
+	top: 0;
+	width: 100%;
+	height: 100%;
+}
+.user-info-main {
+	position: relative;
+	z-index: 1;
+}
+.user-info-avatar {
+	width: 60px;
+	height: 60px;
+	border-radius: 100px;
+}
+.user-info-name {
+	font-size: 16px;
+	text-align: center;
+	color: $color-main;
+}
+.user-info-login {
+	color: $uni-text-color-grey;
+}
+.nav-list {
+	margin-bottom: 10px;
+}
+.nav-list-item {
+	&.margin-top {
+		margin-top: 12px;
+	}
+}
+.nav-list-content {
+	display: flex;
+	background-color: #ffffff;
+	padding: 0 16px;
+	line-height: 55px;
+	align-items: center;
+}
+.nav-list-icon {
+	width: 20px;
+	height: 20px;
+	margin-right: 16px;
+}
+.nav-list-text {
+	flex: 1;
+	font-size: 16px;
+	color: $uni-text-color;
+}
+.nav-list-arrow {
+	width: 8px;
+	height: 13.5px;
+}
 </style>

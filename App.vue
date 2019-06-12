@@ -1,7 +1,19 @@
 <script>
+	import Vue from 'vue'
 	export default {
 		onLaunch: function() {
-			console.log('App Launch')
+			uni.getSystemInfo({
+				success: function(e) {
+					Vue.prototype.$statusBar = 0
+					Vue.prototype.$customBar = 45
+					
+					// #ifdef MP-WEIXIN
+					Vue.prototype.$statusBar = e.statusBarHeight;
+					let custom = wx.getMenuButtonBoundingClientRect();
+					Vue.prototype.$customBar = custom.bottom + custom.top - e.statusBarHeight;
+					// #endif		
+				}
+			})
 		},
 		onShow: function() {
 			console.log('App Show')
@@ -14,7 +26,5 @@
 
 <style>
 	/*每个页面公共css */
-	/* 引用colorui全局样式 */
-	@import "colorui/main.css";
-	@import "colorui/icon.css";
+	@import url("./styles/global.scss");
 </style>

@@ -1,19 +1,16 @@
 <template>
-	<view class="publish-page">
-		<scroll-view scroll-y>
-			<view class="cu-card">
-				<view 
-					class="cu-item bg-img shadow-blur" 
-					:style="{ 'background-color': item.bgColor }"
-				  v-for="(item,index) in publishList" 
-				  :key="index"
-					@tap="handleTap(item)">
-					<view class="card-title">
-						{{item.title}}
-					</view>
-				</view>
+	<view>
+		<c-header title="发布" :has-back="false"></c-header>
+		<view class="publish-card-list">
+			<view 
+				class="publish-card" 
+				v-for="(item,index) in publishList" 
+				:key="index"
+				@tap="handleTap(item)">
+				<image class="publish-card-icon" :src="item.icon"></image>
+				<text class="publish-card-title">{{ item.title }}</text>
 			</view>
-		</scroll-view>
+		</view>
 	</view>
 </template>
 
@@ -24,19 +21,19 @@
 				publishList: [
 					{
 						title: '发布领养',
-						image: '',
+						icon: '/static/icons/publish__feed.svg',
 						url: '/pages/publish/feed/index',
 						bgColor: '#f37b1d'
 					},
 					{
 						title: '发布寻宠启示',
-						image: '',
+						icon: '/static/icons/publish__pet-search.svg',
 						url: '/pages/publish/pet-search/index',
 						bgColor: '#8dc63f'
 					},
 					{
 						title: '发布寻主启示',
-						image: '',
+						icon: '/static/icons/publish__search-owner.svg',
 						url: '/pages/publish/owner-search/index',
 						bgColor: '#1cbbb4'
 					}
@@ -56,29 +53,28 @@
 	}
 </script>
 
-<style lang="less">
-.publish-page {
-	.card-title {
-		color: #fff;
-		padding: 90upx 60upx;
-		font-size: 40upx;
-		font-weight: 300;
-		transform: skew(-10deg, 0deg);
-		position: relative;
-		text-shadow: 0px 0px 6upx rgba(0, 0, 0, 0.3);
-		
-		&::before {
-			content: "";
-			position: absolute;
-			width: 60upx;
-			height: 6upx;
-			border-radius: 20upx;
-			background-color: #fff;
-			display: block;
-			top: 60upx;
-			left: 50upx;
-			transform: skew(10deg, 0deg);
-		}
-	}
+<style lang="scss">
+.publish-card-list {
+	padding: 0 16px;
+}
+.publish-card {
+	display: flex;
+	margin-top: 20px;
+	padding: 16px;
+	border-radius: 8px;
+	background-color: #ffffff;
+	box-shadow: 3px 3px 4px rgba(26, 26, 26, 0.2);
+}
+.publish-card-icon {
+	width: 70px;
+	height: 70px;
+	margin-left: 10px;
+	margin-right: 40px;
+}
+.publish-card-title {
+	flex: 1;
+	margin-top: 20px;
+	font-size: 20px;
+	color: $uni-text-color; 
 }
 </style>

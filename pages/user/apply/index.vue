@@ -1,5 +1,6 @@
 <template>
 	<view>
+		<c-header title="我的申请"></c-header>
 		<view>content</view>
 	</view>
 </template>
