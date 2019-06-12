@@ -86,23 +86,52 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var _default =
 {
   data: function data() {
-    return {};
-
+    return {
+      title: 'list-triplex-row',
+      lists: [] };
 
   },
   onLoad: function onLoad() {
-
-  },
-  methods: {},
-
-
-  mounted: function mounted() {
-    this.$http('news-list', {
-      loading: true });
-
+    var list = [];
+    for (var i = 0; i < 5; i++) {
+      list.push(i);
+    }
+    this.lists = list;
   } };exports.default = _default;
 
 /***/ }),

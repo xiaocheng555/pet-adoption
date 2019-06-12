@@ -1,1 +1,1 @@
-<view bind:__l="__l"><view>content</view></view>
+<view bind:__l="__l"><c-header title="我的申请"></c-header><view>content</view></view>

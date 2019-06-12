@@ -2,7 +2,9 @@
   "pages": [
     "pages/home/index",
     "pages/publish/index",
-    "pages/about/index",
+    "pages/publish/feed/index",
+    "pages/publish/owner-search/index",
+    "pages/publish/pet-search/index",
     "pages/user/index",
     "pages/user/feed/index",
     "pages/user/apply/index",
@@ -11,14 +13,13 @@
   ],
   "subPackages": [],
   "window": {
+    "backgroundColor": "#EDF0F2",
     "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "uni-app",
-    "navigationBarBackgroundColor": "#F8F8F8",
-    "backgroundColor": "#F8F8F8"
+    "navigationStyle": "custom"
   },
   "tabBar": {
-    "color": "#aaaaaa",
-    "selectedColor": "#39b54a",
+    "color": "#9DA7AD",
+    "selectedColor": "#0893FF",
     "borderStyle": "white",
     "backgroundColor": "#ffffff",
     "list": [
@@ -35,12 +36,6 @@
         "text": "发布"
       },
       {
-        "pagePath": "pages/about/index",
-        "iconPath": "static/tabbar/group.png",
-        "selectedIconPath": "static/tabbar/group_selected.png",
-        "text": "关于我们"
-      },
-      {
         "pagePath": "pages/user/index",
         "iconPath": "static/tabbar/user.png",
         "selectedIconPath": "static/tabbar/user_selected.png",
@@ -49,6 +44,8 @@
     ]
   },
   "permission": {},
-  "usingComponents": {},
+  "usingComponents": {
+    "c-header": "/library/components/c-header/index"
+  },
   "sitemapLocation": "sitemap.json"
 }

@@ -45,7 +45,8 @@
 		{
 			"path": "pages/user/index",
 			"style": {
-				"navigationBarTitleText": "我的"
+				"navigationBarTitleText": "我的",
+				"navigationBarTextStyle": "white"
 			}
 		},
 		// 我的送养 
@@ -78,14 +79,13 @@
 		}
 	],
 	"globalStyle": {
+		"backgroundColor": "#EDF0F2",
 		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "uni-app",
-		"navigationBarBackgroundColor": "#F8F8F8",
-		"backgroundColor": "#F8F8F8"
+		"navigationStyle": "custom"
 	},
 	"tabBar": {
-			"color": "#aaaaaa",
-			"selectedColor": "#39b54a",
+			"color": "#9DA7AD",
+			"selectedColor": "#0893FF",
 			"borderStyle": "white",
 			"backgroundColor": "#ffffff",
 			"list": [{
@@ -99,13 +99,7 @@
 					"iconPath": "static/tabbar/edit.png",
 					"selectedIconPath": "static/tabbar/edit_selected.png",
 					"text": "发布"
-				}, 
-				// {
-				// 	"pagePath": "pages/about/index",
-				// 	"iconPath": "static/tabbar/group.png",
-				// 	"selectedIconPath": "static/tabbar/group_selected.png",
-				// 	"text": "关于我们"
-				// }, 
+				},
 				{
 					"pagePath": "pages/user/index",
 					"iconPath": "static/tabbar/user.png",
@@ -114,5 +108,4 @@
 				}
 			]
 		}
-	
 }
