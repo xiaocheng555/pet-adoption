@@ -9,7 +9,8 @@
     "pages/user/feed/index",
     "pages/user/apply/index",
     "pages/user/owner-search/index",
-    "pages/user/pet-search/index"
+    "pages/user/pet-search/index",
+    "pages/test/index"
   ],
   "subPackages": [],
   "window": {
@@ -45,7 +46,11 @@
   },
   "permission": {},
   "usingComponents": {
-    "c-header": "/library/components/c-header/index"
+    "c-header": "/library/components/c-header/index",
+    "c-form": "/library/components/c-form/index",
+    "c-form-item": "/library/components/c-form/c-form-item",
+    "c-input": "/library/components/c-input/index",
+    "c-inline-loading": "/library/components/c-inline-loading/index"
   },
   "sitemapLocation": "sitemap.json"
 }

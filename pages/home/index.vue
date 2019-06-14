@@ -1,7 +1,7 @@
 <template>
     <view class="page">
 		<c-header title="首页" :has-back="false"></c-header>
-        <!-- <page-head :title="title"></page-head> -->
+		<navigator url="/pages/test/index">========test========</navigator>
         <view class="uni-list">
             <block v-for="(item,index) in lists" :key="index">
                 <view class="uni-list-cell" hover-class="uni-list-cell-hover">

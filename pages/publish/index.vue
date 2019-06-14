@@ -20,7 +20,7 @@
 			return {
 				publishList: [
 					{
-						title: '发布领养',
+						title: '发布送养',
 						icon: '/static/icons/publish__feed.svg',
 						url: '/pages/publish/feed/index',
 						bgColor: '#f37b1d'
@@ -75,6 +75,6 @@
 	flex: 1;
 	margin-top: 20px;
 	font-size: 20px;
-	color: $uni-text-color; 
+	color: $A11; 
 }
 </style>

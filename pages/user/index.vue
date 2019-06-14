@@ -125,10 +125,10 @@
 .user-info-name {
 	font-size: 16px;
 	text-align: center;
-	color: $color-main;
+	color: $A06;
 }
 .user-info-login {
-	color: $uni-text-color-grey;
+	color: $M08;
 }
 .nav-list {
 	margin-bottom: 10px;
@@ -153,7 +153,7 @@
 .nav-list-text {
 	flex: 1;
 	font-size: 16px;
-	color: $uni-text-color;
+	color: $M10;
 }
 .nav-list-arrow {
 	width: 8px;

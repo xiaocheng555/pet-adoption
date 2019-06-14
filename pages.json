@@ -76,6 +76,10 @@
 			"style": {
 				"navigationBarTitleText": "我的寻宠启示"
 			}
+		},
+		// 测试页面
+		{
+			"path" : "pages/test/index"
 		}
 	],
 	"globalStyle": {

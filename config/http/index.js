@@ -4,7 +4,7 @@ import httpConfig from '@/config/http/base'
 import CONFIG from '@/config'
 
 export default {
- use () {
+ install () {
 		Vue.use(Http, {
 			config: httpConfig,
 			baseUrl: CONFIG.host
