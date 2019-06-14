@@ -53,8 +53,9 @@
 
 <style lang="scss">
 .c-form-item {
-	position: relative;
+	box-sizing: border-box;
 	display: flex;
+	min-height: 50px;
 	padding: 5px 16px;
 	font-size: 16px;
 	background-color: #ffffff;

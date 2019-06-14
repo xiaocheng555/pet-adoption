@@ -28,13 +28,9 @@
 	import deleteIcon from './assets/delete.svg'
 	
 	export default {
-		model: {
-			prop: 'imgList',
-			event: 'changeImgList'
-		},
 		props: {
 			// 图片地址列表
-			imgList: {
+			value: {
 				type: Array,
 				default: () => []
 			},
@@ -48,10 +44,10 @@
 				type: Number,
 				default: 9
 			},
-			// 可以指定是原图还是压缩图，默认二者都有
+			// 可以指定是原图还是压缩图，默认compressed；【全部['original', 'compressed']】
 			sizeType: {
 				type: Array,
-				default: () => ['original', 'compressed']
+				default: () => ['compressed']
 			},
 			// 可以指定是相册选图还是拍照，默认二者都有
 			sourceType: {
@@ -121,9 +117,9 @@
 		},
 		watch: {
 			imgDataList (val) {
-				this.$emit('changeImgList', val)
+				this.$emit('input', val)
 			},
-			imgList (val) {
+			value (val) {
 				this.imgDataList = val
 			}
 		}
@@ -162,6 +158,7 @@
 	right: 6px;
 	z-index: 1;
 	padding: 5px 7px;
+	border-radius: 0 3px 0 3px;
 	background-color: rgba(0, 0, 0, 0.5);
 }
 .delete-icon {
