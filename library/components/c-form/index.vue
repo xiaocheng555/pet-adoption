@@ -8,17 +8,13 @@
 	import schema from 'async-validator'
 	
 	export default {
-		model: {
-			prop: 'formData',
-			event: 'changeFormData'
-		},
 		provide () {
 			return {
 				'cForm': this
 			}
 		},
 		props: {
-			formData: {
+			form: {
 				type: Object,
 				default: () => ({})
 			},
@@ -37,7 +33,7 @@
 		},
 		methods: {
 			validate (callback) {
-				this.validator.validate(this.formData, (errors, fields) => {
+				this.validator.validate(this.form, (errors, fields) => {
 					if(errors) {
 						uni.showToast({
 							icon: 'none',

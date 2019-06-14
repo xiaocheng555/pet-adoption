@@ -45,8 +45,8 @@ export default {
 	z-index: 99;
 }
 .loading-icon {
-	width: 25px;
-	height: 25px;
+	width: 23px;
+	height: 23px;
 	animation: 1.3s rotate linear infinite;
 }
 .loading-text {
