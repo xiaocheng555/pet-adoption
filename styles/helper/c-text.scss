@@ -1,0 +1,51 @@
+@mixin ellipsis {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	word-wrap: normal;
+}
+
+@mixin ellipsisLn($line) {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: $line;
+}
+
+@mixin text_wrap() {
+	word-wrap:break-word;
+	word-break:break-all;
+}
+
+.c-ellipsis {
+	@include ellipsis;
+}
+
+.c-ellipsisLn2 {
+	@include ellipsisLn(2);
+}
+
+.c-ellipsisLn3 {
+	@include ellipsisLn(3);
+}
+
+.c-ellipsisLn4 {
+	@include ellipsisLn(4);
+}
+
+.c-ellipsisLn5 {
+	@include ellipsisLn(5);
+}
+
+.c-ellipsisLn6 {
+	@include ellipsisLn(6);
+}
+
+.c-ellipsisLn7 {
+	@include ellipsisLn(7);
+}
+
+.c-text-wrap {
+	@include text_wrap();
+}

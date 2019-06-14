@@ -1,0 +1,23 @@
+{
+  "name": "pet-adoption",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xiaocheng555/pet-adoption.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xiaocheng555/pet-adoption/issues"
+  },
+  "homepage": "https://github.com/xiaocheng555/pet-adoption#readme",
+  "dependencies": {
+    "async-validator": "^1.11.2"
+  }
+}

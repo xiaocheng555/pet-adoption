@@ -55,11 +55,12 @@
 <style lang="scss">
 .c-header {
 	display: flex;
-	position: fixed;
 	box-sizing: border-box;
+	position: fixed;
 	top: 0;
 	left: 0;
 	right: 0;
+	z-index: 100;
 	background-color: #ffffff;
 	box-shadow: 0 0.5px 3px #DFE3E6;
 }
@@ -85,7 +86,7 @@
 	margin-right: 6px;
 }
 .c-header-back-text {
-	color: #011829;
+	color: $A11;
 	font-size: 16px;
 	text-align: center;
 }
@@ -93,6 +94,6 @@
 	padding: 0 80px;
 	text-align: center;
 	font-size: 18px;
-	color: #011829;
+	color: $A11;
 }
 </style>

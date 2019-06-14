@@ -120,7 +120,7 @@ var _default =
     return {
       publishList: [
       {
-        title: '发布领养',
+        title: '发布送养',
         icon: '/static/icons/publish__feed.svg',
         url: '/pages/publish/feed/index',
         bgColor: '#f37b1d' },
