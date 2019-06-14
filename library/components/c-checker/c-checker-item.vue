@@ -79,7 +79,7 @@
 	margin-top: 5px;
 	margin-bottom: 5px;
 	padding: 0 14px;
-	border: 1px solid $M04;
+	border: 1px solid $M05;
 	border-radius: 30px;
 	font-size: 15px;
 	line-height: 28px;

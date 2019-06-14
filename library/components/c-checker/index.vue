@@ -61,6 +61,6 @@
 
 <style lang="scss">
 .c-checker {
-	padding: 0 12px;
+	// padding: 0 12px;
 }
 </style>

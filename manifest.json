@@ -63,6 +63,10 @@
             "minified" : true
         },
         "usingComponents" : true,
-        "permission" : {}
+        "permission" : {
+            "scope.userLocation" : {
+                "desc" : "获取用户地址"
+            }
+        }
     }
 }

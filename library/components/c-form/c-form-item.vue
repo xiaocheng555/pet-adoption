@@ -59,7 +59,6 @@
 	padding: 5px 16px;
 	font-size: 16px;
 	background-color: #ffffff;
-	align-items: center;
 }
 .c-form-item.no-border-top {
 	&:before {
@@ -68,12 +67,14 @@
 }
 .c-form-item-label {
 	color: $uni-color-title;
-	padding-right: 4px;
+	padding-right: 11px;
+	padding-top: 9px;
 }
 .c-form-item-star {
 	color: red;
 }
 .c-form-item-content {
 	flex: 1;
+	align-self: center;
 }
 </style>
