@@ -1,11 +1,11 @@
 <template>
 	<view>
-		<c-form ref="cForm" :form="form" :rules="formRules" label-width="82px">
+		<c-form ref="cForm" :form="formData" :rules="formRules" label-width="82px">
 			<c-form-item label="姓名" required no-border-top>
-				<c-input v-model="form.name" placeholder="年龄" clear />
+				<c-input v-model="formData.name" placeholder="年龄" clear />
 			</c-form-item>
 			<c-form-item label="年龄">
-				<c-input v-model="form.age" placeholder="年龄" clear />
+				<c-input v-model="formData.age" placeholder="年龄" clear />
 			</c-form-item>
 			<upload-image-card></upload-image-card>
 			<c-form-item label="种类(单选)" required no-border-top style="margin-top: 10px;">
@@ -38,7 +38,7 @@
 		},
 		data () {
 			return {
-				form: {
+				formData: {
 					name: ''
 				},
 				formRules: {

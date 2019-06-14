@@ -41,7 +41,6 @@
 
 <style lang="scss" scoped>
 .upload-image-card {
-	margin-top: 12px;
 	background-color: #ffffff;
 }
 .card-header {
@@ -58,6 +57,7 @@
 .card-header-right {
 	width: 100px;
 	text-align: right;
+	color: $M08;
 }
 .card-body {
 	padding: 0 16px 10px;

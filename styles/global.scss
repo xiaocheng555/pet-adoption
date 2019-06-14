@@ -1,3 +1,39 @@
 page {
 	background-color: #EDF0F2;
 }
+
+/* 上边距 */
+.c-gutter-xs {
+	margin-top: 5px;
+}
+
+.c-gutter-sm {
+	margin-top: 10px;
+}
+
+.c-gutter-md {
+	margin-top: 12px;
+}
+
+.c-gutter-lg {
+	margin-top: 16px;
+}
+
+.c-gutter-xl {
+	margin-top: 20px;
+}
+
+/* 按钮 */
+.c-submit-button {
+	width: 70%;
+	height: 40px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 40px;
+	margin-bottom: 40px;
+	border-radius: 100px;
+	font-size: 16px;
+	line-height: 40px;
+	color: #ffffff;
+	background-color: #1897F2;
+}
