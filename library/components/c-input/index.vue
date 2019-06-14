@@ -3,6 +3,7 @@
 		<textarea 
 			v-if="type === 'textarea'"
 			class="c-input-textarea"
+			v-model="inputVal" 
 			:placeholder="placeholder" 
 			:placeholder-style="placeholderStyle" 
 			:focus="focus"

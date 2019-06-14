@@ -75,11 +75,24 @@
 					address: ''
 				},
 				formRules: {
-					name: [  ],
-					age: {
-						required: true,
-						message: '请输入年龄'
-					}
+					name: [
+						{ validator: validateConfig.nonEmpty, message: '请输入联系人名称' },
+					],
+					telephone: [
+						{ validator: validateConfig.nonEmpty, message: '请输入电话号' },
+					],
+					petType: [
+						{ validator: validateConfig.nonEmpty, message: '请选择宠物类型' },
+					],
+					petSex: [
+						{ validator: validateConfig.nonEmpty, message: '请选择宠物性别' },
+					],
+					address: [
+						{ validator: validateConfig.nonEmpty, message: '请选择宠物丢失的地址' },
+					],
+					petDesc: [
+						{ validator: validateConfig.nonEmpty, message: '请输入宠物特征' },
+					]
 				},
 				// 宠物类型选项
 				petTypeOptions: [
