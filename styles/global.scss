@@ -37,3 +37,14 @@ page {
 	color: #ffffff;
 	background-color: #1897F2;
 }
+
+/* 表单label宽度统一设置 */
+.c-form_label-width-sm .c-form-item-label {
+	width: 60px;
+}
+.c-form_label-width-md .c-form-item-label {
+	width: 82px;
+}
+.c-form_label-width-lg .c-form-item-label {
+	width: 100px;
+}

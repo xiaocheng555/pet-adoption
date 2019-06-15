@@ -2,7 +2,7 @@
 	<view>
 		<c-header title="发布寻宠"></c-header>
 		<view class="c-gutter-md"></view>
-		<c-form ref="cForm" :form="formData" :rules="formRules" label-width="82px">
+		<c-form class="c-form_label-width-md" ref="cForm" :form="formData" :rules="formRules">
 			<c-form-item label="联系人" required no-border-top>
 				<c-input v-model="formData.name" :maxlength="20" placeholder="请输入联系人名称" clear />
 			</c-form-item>
@@ -36,10 +36,12 @@
 			</c-form-item>
 			<c-form-item label="丢失位置" required>
 				<view @tap="chooseLocation">
-					<c-input v-model="formData.address" disabled />
+					<c-input v-model="formData.address" placeholder="点击此处选择" disabled />
 				</view>
 			</c-form-item>
-			<c-form-item label="宠物特征" required>
+			<view class="c-gutter-md"></view>
+			
+			<c-form-item label="宠物特征" required block no-border-top>
 				<c-input 
 					v-model="formData.petDesc" 
 					height="140px" 
@@ -49,7 +51,7 @@
 			</c-form-item>
 			<view class="c-gutter-md"></view>
 			
-			<upload-image-card title="宠物图片"></upload-image-card>
+			<upload-image-card ref="uploadImageCard" title="宠物图片"></upload-image-card>
 			<button class="c-submit-button" @tap="sumbitForm">提交</button>
 		</c-form>
 	</view>
@@ -72,7 +74,8 @@
 					petType: [],
 					petSex: [],
 					petDesc: '',
-					address: ''
+					address: '',
+					imgList: []
 				},
 				formRules: {
 					name: [
@@ -80,6 +83,7 @@
 					],
 					telephone: [
 						{ validator: validateConfig.nonEmpty, message: '请输入电话号' },
+						{ validator: validateConfig.telephone, message: '请输入正确的电话' }
 					],
 					petType: [
 						{ validator: validateConfig.nonEmpty, message: '请选择宠物类型' },
@@ -92,6 +96,9 @@
 					],
 					petDesc: [
 						{ validator: validateConfig.nonEmpty, message: '请输入宠物特征' },
+					],
+					imgList: [
+						{ validator: validateConfig.nonEmpty, message: '请选择宠物图片' },
 					]
 				},
 				// 宠物类型选项
@@ -127,14 +134,7 @@
 			}
 		},
 		methods: {
-			// 提交表单
-			sumbitForm () {
-				this.$refs.cForm.validate((valid) => {
-					if (valid) {
-						console.log('提交成功')
-					}
-				})
-			},
+			// 选择地理位置
 			chooseLocation () {
 				uni.chooseLocation({
 					success: (res) => {
@@ -142,11 +142,17 @@
 						this.formData.address = res.address
 					}
 				})
+			},
+			// 提交表单
+			sumbitForm () {
+				this.formData.imgList = this.$refs.uploadImageCard.getImgList()
+				
+				this.$refs.cForm.validate((valid) => {
+					if (valid) {
+						console.log('提交成功')
+					}
+				})
 			}
 		}
 	}
 </script>
-
-<style lang="less">
-
-</style>
