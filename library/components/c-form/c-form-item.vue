@@ -1,6 +1,6 @@
 <template>
-	<view class="c-form-item c-1px-t" :class="[noBorderTop ? 'no-border-top' : '']">
-		<label class="c-form-item-label" :style="{ 'width': labelWidthValue }">
+	<view class="c-form-item c-1px-t" :class="[noBorderTop ? 'no-border-top' : '', block ? 'c-form-item_block' : '' ]">
+		<label class="c-form-item-label" :style="{ 'width': labelWidth }">
 			{{ label }}
 			<text v-if="required" class="c-form-item-star">*</text>
 		</label>
@@ -26,27 +26,12 @@
 			noBorderTop: {
 				type: Boolean,
 				default: false
+			},
+			// block 从上到下布局
+			block: {
+				type: Boolean,
+				default: false
 			}
-		},
-		inject: ['cForm'],
-		data () {
-			return {
-				labelWidthValue: null,
-				bar: this.formData
-			}
-		},
-		methods: {
-			setLabelWidth () {
-				if (this.labelWidth) {
-					this.labelWidthValue = this.labelWidth
-				} else {
-					let formLabelWidth = this.$parent.labelWidth || this.cForm.labelWidth
-					this.labelWidthValue = formLabelWidth
-				}
-			}
-		},
-		mounted () {
-			this.setLabelWidth()
 		}
 	}
 </script>
@@ -60,15 +45,20 @@
 	font-size: 16px;
 	background-color: #ffffff;
 }
+.c-form-item_block {
+	display: block;
+}
 .c-form-item.no-border-top {
 	&:before {
 		border-top: none;
 	}
 }
 .c-form-item-label {
+	display: block;
 	color: $uni-color-title;
 	padding-right: 11px;
-	padding-top: 9px;
+	padding-top: 8px;
+	padding-bottom: 8px;
 }
 .c-form-item-star {
 	color: red;

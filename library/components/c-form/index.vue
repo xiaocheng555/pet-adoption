@@ -8,11 +8,6 @@
 	import schema from 'async-validator'
 	
 	export default {
-		provide () {
-			return {
-				'cForm': this
-			}
-		},
 		props: {
 			form: {
 				type: Object,
@@ -21,9 +16,6 @@
 			rules: {
 				type: Object,
 				default: () => ({})
-			},
-			labelWidth: {
-				type: String
 			}
 		},
 		data () {

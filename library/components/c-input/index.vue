@@ -104,7 +104,7 @@
 	}
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .c-input {
 	display: flex;
 	align-items: center;
@@ -112,7 +112,7 @@
 .c-input-textarea {
 	box-sizing: border-box;
 	width: 100%;
-	margin-top: 11px;
+	margin-top: 10px;
 	margin-bottom: 10px;
 	font-size: 16px;
 }
@@ -129,5 +129,4 @@
 	width: 20px;
 	height: 20px;
 }
-
 </style>

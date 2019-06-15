@@ -32,8 +32,13 @@
 			}
 		},
 		methods: {
+			// 上传图片
 			upload () {
 				return this.$refs.uploadImage.upload()
+			},
+			// 获取图片列表
+			getImgList () {
+				return this.imgList
 			}
 		}
 	}
