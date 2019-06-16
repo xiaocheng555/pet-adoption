@@ -44,7 +44,7 @@
 			<c-form-item label="宠物特征" required block no-border-top>
 				<c-input 
 					v-model="formData.petDesc" 
-					height="140px" 
+					height="110px" 
 					type="textarea" 
 					placeholder="请输入宠物特征" 
 					:maxlength="500" />
