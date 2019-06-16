@@ -10,7 +10,7 @@
 			:disabled="disabled"
 			:auto-height="autoHeight"
 			:maxlength="maxlength"
-			:style="height ? { height: height } : ''"
+			:style="{ height: height }"
 			 @focus="handleFocus"
 			 @blur="handleBlur"/>
 		<input 
