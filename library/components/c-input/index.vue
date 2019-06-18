@@ -98,6 +98,7 @@
 				this.$emit('input', val)
 			},
 			value (val) {
+				console.log(val, 'val')
 				this.inputVal = val
 			}
 		}

@@ -16,7 +16,13 @@
 		},
 		methods: {
 
-		}
+		},
+		onLoad: function() {
+			console.log('App Hide123')
+		},
+		onReady: function() {
+			console.log('App Hide123')
+		},
 	}
 </script>
 

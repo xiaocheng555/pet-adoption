@@ -1,6 +1,5 @@
 <template>
-	<view>
-		<c-header title="发布" :has-back="false"></c-header>
+	<c-page title="发布" :has-back="false">
 		<view class="publish-card-list">
 			<view 
 				class="publish-card" 
@@ -11,7 +10,7 @@
 				<text class="publish-card-title">{{ item.title }}</text>
 			</view>
 		</view>
-	</view>
+	</c-page>
 </template>
 
 <script>
@@ -39,9 +38,6 @@
 					}
 				]
 			}
-		},
-		onLoad() {
-
 		},
 		methods: {
 			handleTap (item) {

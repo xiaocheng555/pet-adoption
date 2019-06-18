@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/xiaocheng555/pet-adoption#readme",
   "dependencies": {
-    "async-validator": "^1.11.2"
+    "async-validator": "^1.11.2",
+    "min-ready": "^2.3.0"
   }
 }

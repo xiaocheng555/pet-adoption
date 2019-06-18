@@ -1,6 +1,5 @@
 <template>
-	<view>
-		<c-header title="发布寻宠"></c-header>
+	<c-page title="发布寻宠">
 		<view class="c-gutter-md"></view>
 		<c-form class="c-form_label-width-md" ref="cForm" :form="formData" :rules="formRules">
 			<c-form-item label="联系人" required no-border-top>
@@ -54,7 +53,7 @@
 			<upload-image-card ref="uploadImageCard" title="宠物图片"></upload-image-card>
 			<button class="c-submit-button" @tap="sumbitForm">提交</button>
 		</c-form>
-	</view>
+	</c-page>
 </template>
 
 <script>

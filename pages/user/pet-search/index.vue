@@ -1,7 +1,7 @@
 <template>
-	<view>
+	<c-page>
 		<view>content</view>
-	</view>
+	</c-page>
 </template>
 
 <script>

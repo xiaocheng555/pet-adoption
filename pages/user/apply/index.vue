@@ -1,8 +1,7 @@
 <template>
-	<view>
-		<c-header title="我的申请"></c-header>
+	<c-page title="我的申请">
 		<view>content</view>
-	</view>
+	</c-page>
 </template>
 
 <script>

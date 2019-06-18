@@ -1,101 +1,94 @@
-// 验证http配置的正确性
-function checkHttpConfig(httpConfig) {
+export default {
+	config: {
+		baseUrl: "",
+		headers: {},
+		dataType: "json",
+		responseType: "text"
+	},
+	interceptor: {
+		request: null,
+		response: null
+	},
+	request(options) {
+		return new Promise((resolve, reject) => {
+			let _config = null
+			options.url = this.config.baseUrl + options.url
+			options.complete = (response) => {
+				let statusCode = response.statusCode
 
-}
+				response.config = _config
 
-// 获取http配置
-function getHttpOptions(httpConfig, name) {
-	let options
-	httpConfig.some(item => {
-		if (item.name === name) {
-			options = item.config
-			return true
-		}
-	})
-	return options || null
-}
-
-// 封装http的Vue插件
-function install(Vue, globalOptions) {
-	const httpConfig = globalOptions.config || []
-	const baseUrl = globalOptions.baseUrl || ''
-	checkHttpConfig(httpConfig)
-	delete globalOptions.config
-	delete globalOptions.baseUrl
-
-	Vue.prototype.$http = function(requestName, requestOptions) {
-		const httpOptions = getHttpOptions(httpConfig, requestName)
-		if (!httpOptions) {
-			console.error(`[http error]: ${requestName} 请求名未配置`)
-			return
-		}
-		// 获取统一的uni请求配置
-		const uniRequestOptions = Object.assign({}, globalOptions, httpOptions, requestOptions)
-
-		// 将相对路径变为绝对路径
-		if (uniRequestOptions.url && uniRequestOptions.url.slice(0, 1) === '/') {
-			uniRequestOptions.url = baseUrl + uniRequestOptions.url
-		}
-
-		// 将methods的值转为大写
-		if (typeof uniRequestOptions.method === 'string') {
-			uniRequestOptions.method = uniRequestOptions.method.toLocaleUpperCase()
-		}
-
-		// 增加loading配置
-		if (uniRequestOptions.loading) {
-			uni.showLoading({
-				title: '加载中'
-			})
-		}
-
-		// 用户定义的请求事件
-		const userCompleteEvent = uniRequestOptions.complete
-		const userSuccessEvent = uniRequestOptions.success
-		const userFailEvent = uniRequestOptions.fail
-
-		// 对uni请求的complete事件做处理
-		uniRequestOptions.complete = (data) => {
-			userCompleteEvent && userCompleteEvent(res.data)
-		}
-		
-		// 对uni请求的success事件做处理
-		uniRequestOptions.success = (res) => {
-			let errorTip
-			let resData = res.data
-			if (res.statusCode === 200) {
-				if (resData.code !== 0) {
-					errorTip = resData && resData.msg || '请求失败了~'
+				if (process.env.NODE_ENV === 'development') {
+					if (statusCode === 200) {
+						console.log("【" + _config.requestId + "】 结果：" + JSON.stringify(response.data))
+					}
 				}
-				userSuccessEvent && userSuccessEvent(resData)
-			} else {
-				errorTip = '请求失败了~'
-			}
-			// 增加是否使用toast显示错误提示
-			if (uniRequestOptions.errorTip !== false && errorTip) {
-				uni.showToast({
-					title: errorTip,
-					icon: 'none'
-				})
-			} else {
-				// 隐藏loading
-				if (uniRequestOptions.loading) {
-					uni.hideLoading()
+
+				if (this.interceptor.response) {
+					let newResponse = this.interceptor.response(response)
+					if (newResponse) {
+						response = newResponse
+					}
+				}
+
+				if (statusCode === 200) { //成功
+					resolve(response);
+				} else {
+					reject(response)
 				}
 			}
-		}
-		
-		// 对uni请求的error事件做处理
-		uniRequestOptions.fail = (error) => {
-			uni.showToast({
-				title: '网络连接失败，请稍后重试',
-				icon: 'none'
-			})
-			userFailEvent && userFailEvent(error)
-		}
 
-		return uni.request(uniRequestOptions)
+			_config = Object.assign({}, this.config, options)
+			_config.requestId = new Date().getTime()
+
+			if (this.interceptor.request) {
+				this.interceptor.request(_config)
+			}
+
+			if (process.env.NODE_ENV === 'development') {
+				console.log("【" + _config.requestId + "】 地址：" + _config.url)
+				if (_config.data) {
+					console.log("【" + _config.requestId + "】 参数：" + JSON.stringify(_config.data))
+				}
+			}
+
+			uni.request(_config);
+		});
+	},
+	get(url, data, options) {
+		if (!options) {
+			options = {}
+		}
+		options.url = url
+		options.data = data
+		options.method = 'GET'
+		return this.request(options)
+	},
+	post(url, data, options) {
+		if (!options) {
+			options = {}
+		}
+		options.url = url
+		options.data = data
+		options.method = 'POST'
+		return this.request(options)
+	},
+	put(url, data, options) {
+		if (!options) {
+			options = {}
+		}
+		options.url = url
+		options.data = data
+		options.method = 'PUT'
+		return this.request(options)
+	},
+	delete(url, data, options) {
+		if (!options) {
+			options = {}
+		}
+		options.url = url
+		options.data = data
+		options.method = 'DELETE'
+		return this.request(options)
 	}
 }
-
-export default install
