@@ -6,8 +6,10 @@
 					<image class="c-header-back-icon" src="/static/icons/header__back.svg"></image>
 					<text class="c-header-back-text">返回</text>
 				</view>
-				<view class="c-header-main">
-					<slot>{{ title }}</slot>
+				<view class="c-header-main c-ellipsis">
+					<slot>
+						{{ title }}
+					</slot>
 				</view>
 			</div>
 		</view>
@@ -24,10 +26,6 @@
 			hasBack: {
 				type: Boolean,
 				default: true
-			},
-			isFixed: {
-				type: Boolean,
-				default: false
 			}
 		},
 		data () {
@@ -68,6 +66,7 @@
 	position: relative;
 	flex: 1;
 	align-self: center;
+	width: 100%;
 	height: 30px;
 	line-height: 30px;
 }

@@ -1,5 +1,6 @@
 const CONFIG = {}
 
-CONFIG.host = 'https://mobiledemo.midea.com'
+// 网站host
+CONFIG.host = 'https://pet.xpressiot.com'
 
 export default CONFIG
