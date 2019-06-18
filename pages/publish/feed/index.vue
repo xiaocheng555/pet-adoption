@@ -1,7 +1,7 @@
 <template>
 	<c-page title="发布送养">
 		<view class="c-gutter-md"></view>
-		<c-form class="c-form_label-width-md" ref="cForm" :form="formData" :rules="formRules">
+		<c-form class="c-form_label-width-md" ref="cForm" :form="formData">
 			<c-form-item label="宠物昵称" required>
 				<c-input v-model="formData.petName" :maxlength="20" placeholder="请输入宠物昵称" clear />
 			</c-form-item>
@@ -76,7 +76,7 @@
 			</c-form-item>
 			<view class="c-gutter-md"></view>
 
-			<c-form-item label="联系人" required>
+			<!-- <c-form-item label="联系人" required>
 				<c-input v-model="formData.name" :maxlength="20" placeholder="请输入联系人名称" clear />
 			</c-form-item>
 			<c-form-item label="手机号" required>
@@ -84,7 +84,7 @@
 			</c-form-item>
 			<c-form-item label="微信号" placeholder="选填">
 				<c-input v-model="formData.weixin" clear :maxlength="30" />
-			</c-form-item>
+			</c-form-item> -->
 			
 			<c-form-item label="宠物详情" required block>
 				<c-input 
@@ -156,13 +156,15 @@
 					imgList: []
 				},
 				formRules: {
-					a: validateConfig.nonEmpty, 
 					petName: [
 						{ validator: validateConfig.nonEmpty, message: '请输入宠物昵称' }
 					],
-					// petClass: [
-					// 	{ validator: validateConfig.nonEmpty, message: '请选择宠物类型' },
-					// ],
+					petAge:  [
+						{ validator: validateConfig.nonEmpty, message: '请选择宠物年龄' }
+					],
+					petClass: [
+						{ validator: validateConfig.nonEmpty, message: '请选择宠物类型' },
+					],
 					petGender: [
 						{ validator: validateConfig.nonEmpty, message: '请选择宠物性别' }
 					],
@@ -175,6 +177,9 @@
 					free: [
 						{ validator: validateConfig.nonEmpty, message: '请选择是否免费' }
 					],
+					address: [
+						{ validator: validateConfig.nonEmpty, message: '请选择地址' }
+					],
 					// name: [
 					// 	{ validator: validateConfig.nonEmpty, message: '请输入联系人名称' }
 					// ],
@@ -183,7 +188,7 @@
 					// 	{ validator: validateConfig.telephone, message: '请输入正确的电话' }
 					// ],
 					petDesc: [
-						{ validator: validateConfig.nonEmpty, message: '请输入宠物特征' }
+						{ validator: validateConfig.nonEmpty, message: '请输入宠物描述' }
 					],
 					adoptionDesc: [
 						{ validator: validateConfig.nonEmpty, message: '请输入领养要求' }
@@ -234,6 +239,8 @@
 			// 年龄选择器确定事件
 			handleAgePickerChange (e) {
 				this.agePickerIndex = e.target.value
+				const ageOption = this.ageOptions[this.agePickerIndex]
+				this.formData.petAge = ageOption.value
 			},
 			// 选择地址
 			chooseAddress () {
@@ -300,7 +307,7 @@
 			}
 		},
 		onLoad () {
-			console.log(this.formRules, 'validateConfig.number')
+			this.$refs.cForm.initRules(this.formRules)
 			this.$app.ready(() => {
 				this.fetchPetClassList()
 				this.fetchChinaAddressData()
