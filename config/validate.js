@@ -37,7 +37,7 @@ function initValidateConfig (pattern) {
 		} else {
 			validateFn = reg
 		}
-		_validateConfig[key] = (validateFn)
+		_validateConfig[key] = validateFn
   })
   return _validateConfig
 }

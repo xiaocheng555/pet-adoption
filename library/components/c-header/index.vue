@@ -2,8 +2,8 @@
 	<view :style="{ height: customBar + 'px' }">
 		<view class="c-header" :style="style">
 			<div class="c-header-inner">
-				<view class="c-header-left" v-if="hasBack" @tap="backPage">
-					<image class="c-header-back-icon" src="/static/icons/header__back.svg"></image>
+				<view class="c-header-left" v-show="hasBack" @tap="backPage">
+					<image class="c-header-back-icon" :src="backIcon"></image>
 					<text class="c-header-back-text">返回</text>
 				</view>
 				<view class="c-header-main c-ellipsis">
@@ -17,6 +17,7 @@
 </template>
 
 <script>
+	import backIcon from './assets/header__back.svg'
 	export default {
 		props: {
 			title: {
@@ -30,6 +31,7 @@
 		},
 		data () {
 			return {
+				backIcon,
 				statusBar: this.$statusBar,
 				customBar: this.$customBar
 			}

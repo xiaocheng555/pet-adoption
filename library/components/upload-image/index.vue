@@ -27,6 +27,13 @@
 	import cameraAddIcon from './assets/camera-add.svg'
 	import deleteIcon from './assets/delete.svg'
 	
+	// 图片上传使用oss
+	const OSS = {
+		host: 'oss-cn-shenzhen.aliyuncs.com',
+		secret: 'LTAIp3WBQZiLomr7',
+		id: 'tXDSYgaMZ9SKv7lUflumDjjD5U9NOO'
+	}
+	
 	export default {
 		props: {
 			// 图片地址列表
@@ -57,7 +64,10 @@
 			preview: {
 				type: Boolean,
 				default: true
-			}
+			},
+			onBefore: Function,
+			onSuccess: Function,
+			onFail: Function
 		},
 		data () {
 			return {
@@ -92,9 +102,38 @@
 					sizeType: this.sizeType, 
 					sourceType: this.sourceType,
 					success: (res) => {
-						this.imgDataList = [].concat(this.imgDataList, res.tempFilePaths)
-						this.$emit('after-choose', this.imgDataList)
+						const chooseImgs = res.tempFilePaths
+						this.uploadImages(chooseImgs)
 					}
+				})
+			},
+			// 上传图片
+			uploadImages (images) {
+				images.forEach(img => {
+					this.onSuccess && this.onBefore(img)
+					uni.uploadFile({
+						url: 'http://yourbucketname.oss-cn-shanghai.aliyuncs.com',
+						filePath: img,
+						fileType: 'image',
+						name: 'file',
+						formData:{
+							name: img,
+							'key' : "${filename}",
+							//让服务端返回200,不然，默认会返回204
+							'success_action_status' : '200', 
+							'policy': 'yourpolicycaculated',
+							'OSSAccessKeyId': 'yourosskeyid', 
+							'signature': 'yoursignaturecaculated'
+						},
+						success: (res) => {
+							console.log(res, 'res')
+							this.onSuccess && this.onSuccess(res)
+							// this.imgDataList.push(res.path)
+						},
+						fail: (err) => {
+							this.onSuccess && this.onFail(err)
+						}
+					})
 				})
 			},
 			// 预览图片
@@ -109,10 +148,6 @@
 			// 删除图片
 			deleteImage (index) {
 				this.imgDataList.splice(index, 1)
-			},
-			// 上传图片
-			upload () {
-				
 			}
 		},
 		watch: {

@@ -1,5 +1,9 @@
 <template>
-	<c-page title="发布" :has-back="false">
+	<c-page 
+		title="发布" 
+		:has-back="false" 
+		:login-modal="loginModalShow" 
+		@login-close="loginModalShow = false">
 		<view class="publish-card-list">
 			<view 
 				class="publish-card" 
@@ -14,9 +18,12 @@
 </template>
 
 <script>
+	import { mapGetters } from 'vuex'
+	
 	export default {
 		data() {
 			return {
+				loginModalShow: false,
 				publishList: [
 					{
 						title: '发布送养',
@@ -39,11 +46,25 @@
 				]
 			}
 		},
+		computed:{
+			...mapGetters([
+				'hasLogin'
+			])
+		},
 		methods: {
 			handleTap (item) {
+				// if (!this.hasLogin) {
+				// 	this.loginModalShow = true
+				// 	return
+				// }
 				uni.navigateTo({
 					url: item.url
 				})
+			}
+		},
+		onShow () {
+			if (!this.hasLogin) {
+				this.loginModalShow = true
 			}
 		}
 	}

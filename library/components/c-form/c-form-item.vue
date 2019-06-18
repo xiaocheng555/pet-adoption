@@ -2,7 +2,7 @@
 	<view class="c-form-item" :class="[noBorderTop ? 'no-border-top' : '', block ? 'c-form-item_block' : '' ]">
 		<label class="c-form-item-label" :style="{ 'width': labelWidth }">
 			{{ label }}
-			<text v-if="required" class="c-form-item-star">*</text>
+			<!-- <text v-if="required" class="c-form-item-star">*</text> -->
 		</label>
 		<view class="c-form-item-content">
 			<slot></slot>

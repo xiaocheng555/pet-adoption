@@ -99,7 +99,6 @@
           this.previewImage()
           return
         }
-				console.log(this.hasLogin, '==')
 				if (!this.hasLogin) {
 					return uni.showToast({
 						icon: 'none',

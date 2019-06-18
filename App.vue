@@ -40,7 +40,7 @@
 			// 登录
 			handleLogin () {
 				this.$promisify(uni.login)().then(result => {
-					// console.log(this.$http, 'this.$http')
+					console.log(result.code, result, 'result')
 					this.getToken(result.code)
 				})
 			},
@@ -57,6 +57,12 @@
 					} else {
 						console.error('token获取失败')
 					}
+				}).catch(error => {
+					uni.showToast({
+						title: 'token获取失败，请退出重试',
+						icon: 'none'
+					})
+					console.error('token 获取失败:', error)
 				})
 			},
 			// 获取用户信息
