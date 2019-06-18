@@ -110,7 +110,8 @@
 			// 上传图片
 			uploadImages (images) {
 				images.forEach(img => {
-					this.onSuccess && this.onBefore(img)
+					console.log(this.onBefore, 'this.onBefore ')
+					this.onBefore && this.onBefore(img)
 					uni.uploadFile({
 						url: 'http://yourbucketname.oss-cn-shanghai.aliyuncs.com',
 						filePath: img,
@@ -131,7 +132,7 @@
 							// this.imgDataList.push(res.path)
 						},
 						fail: (err) => {
-							this.onSuccess && this.onFail(err)
+							this.onFail && this.onFail(err)
 						}
 					})
 				})
