@@ -20,10 +20,11 @@ http.interceptor.response = (response) => {
 	if (response.statusCode === 200) {
 		return response.data
 	} else {
-		uni.showToast({
-			title: '请求失败了'
-		})
-		return response.data
+		// uni.showToast({
+		// 	icon: 'none',
+		// 	title: '请求失败了'
+		// })
+		return response
 	}
 }
 

@@ -5,7 +5,7 @@
 		</c-header>
 	  <slot></slot>
 		<!-- 登录提示框 -->
-		<uni-popup :show="loginPopupShow" position="middle" mode="fixed">
+		<uni-popup :show="loginModal" position="middle" mode="fixed">
 			<view class="login-box">
 				<view class="login-title">您未登录，请先登录</view>
 				<view class="login-footer">
@@ -44,64 +44,38 @@
 			hasHeader: {
 				type: Boolean,
 				default: true
-			}
-		},
-		data () {
-			return {
-				// loginPopupShow: false
+			},
+			loginModal: {
+				type: Boolean,
+				default: false
 			}
 		},
 		computed: {
 			...mapState([
-				'userInfo',
-				'loginPopupShow'
+				'userInfo'
 			])
 		},
 		methods: {
 			...mapMutations([
-				'setUserInfo',
-				'changeLoginPopupShow'
+				'setUserInfo'
 			]),
-			// 登录取消按钮
-			handleLoginCancel () {
-				// this.loginPopupShow = false
-				this.changeLoginPopupShow(false)
-			},
 			// 登录
 			toLogin (result) {
+				uni.showToast({
+					title: '登录成功',
+					icon: 'none'
+				})
 				let userInfo = result.detail.userInfo
 				this.setUserInfo({
 					nickName: userInfo.nickName,
-					avatarUrl: userInfo.avatarUrl,
-					signature: userInfo.signature
+					avatarUrl: userInfo.avatarUrl
 				})
-				this.changeLoginPopupShow(false)
-				// this.loginPopupShow = false
+				this.$emit('login-close')
 			},
-			// 获取用户数据
-			getUserInfo () {
-				uni.getUserInfo({
-					provider: 'weixin',
-					success: (result) => {
-						let userInfo = result.userInfo
-						this.setUserInfo({
-							nickName: userInfo.nickName,
-							avatarUrl: userInfo.avatarUrl,
-							signature: result.signature
-						})
-					},
-					fail: (error) => {
-						// this.loginPopupShow = true
-						this.changeLoginPopupShow(true)
-						console.log(error)
-					}
-				})
+			// 登录取消按钮
+			handleLoginCancel () {
+				this.$emit('login-close')
 			}
-		},
-		created () {
-			// if (this.userInfo) {
-			// 	this.getUserInfo()
-			// }
 		}
 	}
 </script>
@@ -113,7 +87,7 @@
 .login-title {
 	margin-top: 30px;
 	margin-bottom: 30px;
-	font-size: 18px;
+	font-size: 16px;
 	text-align: center;
 	color: #000000;
 }
@@ -125,12 +99,11 @@
 	padding: 10px 10px;
 }
 .login-button {
-	line-height: 40px;
+	line-height: 35px;
 	border-radius: 5px;
-	font-size: 15px;
+	font-size: 14px;
 }
 .login-button_cancel {
-	border: 1px solid $M04;
 	color: $M10;
 }
 .login-button_confirm {

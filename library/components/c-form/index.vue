@@ -14,8 +14,7 @@
 				default: () => ({})
 			},
 			rules: {
-				type: Object,
-				default: () => ({})
+				
 			}
 		},
 		data () {
@@ -25,21 +24,26 @@
 		},
 		methods: {
 			validate (callback) {
+				console.log('validate --')
 				this.validator.validate(this.form, (errors, fields) => {
 					if(errors) {
+						console.log(errors, 'error')
 						uni.showToast({
 							icon: 'none',
 							title: errors[0].message
 						})
 						callback(false, errors)
 					} else {
+						console.log('true')
 						callback(true)
 					}
 				})
 			}
 		},
 		created () {
+			console.log(this.rules, 'this.rules')
 			this.validator = new schema(this.rules)
+			console.log(JSON.stringify(this.rules), 'json')
 		},
 		beforeDestroy () {
 			this.validator = null

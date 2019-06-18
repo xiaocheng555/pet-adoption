@@ -17,9 +17,10 @@ Vue.config.productionTip = false
 App.mpType = 'app'
 
 // 声明全局变量
+Vue.prototype.$http = http
+console.log(http.get, 'http')
 Vue.prototype.$store = store
 Vue.prototype.$promisify = promisify
-Vue.prototype.$http = http
 
 // 声明全局组件
 Vue.component('c-header', CHeader)
