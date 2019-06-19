@@ -11,6 +11,7 @@ import CInput from '@/library/components/c-input'
 import CChecker from '@/library/components/c-checker'
 import CCheckerItem from '@/library/components/c-checker/c-checker-item'
 import CInlineLoading from '@/library/components/c-inline-loading'
+import CTag from '@/library/components/c-tag'
 
 Vue.config.productionTip = false
 
@@ -31,6 +32,7 @@ Vue.component('c-input', CInput)
 Vue.component('c-checker', CChecker)
 Vue.component('c-checker-item', CCheckerItem)
 Vue.component('c-inline-loading', CInlineLoading)
+Vue.component('c-tag', CTag)
 
 const app = new Vue({
     ...App,
