@@ -17,7 +17,7 @@
 			</view>
 			<view class="feed-list-footer">
 				<view class="feed-list-action"></view>
-				<view class="feed-list-delete">删除</view>
+				<view class="feed-list-delete" @tap="handleDelete(item, index)">删除</view>
 			</view>
 		</view>
 	</view>
@@ -44,6 +44,9 @@
 		methods: {
 			handleItemClick (item, index) {
 				this.$emit('item-click', item, index)
+			},
+			handleDelete (item, index) {
+				this.$emit('item-delete', item, index)
 			}
 		}
 	}

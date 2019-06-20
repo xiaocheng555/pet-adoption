@@ -12,13 +12,7 @@
 			form: {
 				type: Object,
 				default: () => ({})
-			},
-			// rules: {
-			// 	type: Object,
-			// 	default: () => {
-			// 		return {}
-			// 	}
-			// }
+			}
 		},
 		data () {
 			return {

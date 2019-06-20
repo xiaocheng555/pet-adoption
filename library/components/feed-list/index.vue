@@ -8,6 +8,7 @@
 		<feed-list-user 
 			v-if="type === 'user'" 
 			:list="list"
+			@item-delete="handleItemDelete"
 			@item-click="handleItemClick">
 		</feed-list-user>
 	</view>
@@ -35,6 +36,9 @@
 		methods: {
 			handleItemClick (...arg) {
 				this.$emit('item-click', ...arg)
+			},
+			handleItemDelete (...arg) {
+				this.$emit('item-delete', ...arg)
 			}
 		}
 	}
