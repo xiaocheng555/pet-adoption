@@ -1,6 +1,6 @@
 <template>
   <c-page title="我的送养">
-		<feed-list :list="feedList" type="user"></feed-list>
+		<feed-list :list="feedList" type="user" @item-delete="handleFeedDelete"></feed-list>
 	</c-page>
 </template>
 
@@ -71,6 +71,17 @@
 				]
       }
     },
+		methods: {
+			handleFeedDelete (item, index) {
+				this.$promisify(uni.showModal)({ 
+					title: '确定删除'
+				}).then(res => {
+					if (res.confirm) {
+						console.log(item, index, '确定')
+					}
+				})
+			}
+		},
     onLoad() {
       this.$app.ready(() => {
 				

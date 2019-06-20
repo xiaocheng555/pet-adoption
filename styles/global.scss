@@ -2,29 +2,26 @@ page {
 	background-color: #EDF0F2;
 }
 
-form {
-	display: block;
-}
-
 /* 上边距 */
 .c-gutter-xs {
 	margin-top: 5px;
 }
-
 .c-gutter-sm {
 	margin-top: 10px;
 }
-
 .c-gutter-md {
 	margin-top: 12px;
 }
-
 .c-gutter-lg {
 	margin-top: 16px;
 }
-
 .c-gutter-xl {
 	margin-top: 20px;
+}
+
+/* 上边留白 */
+.c-padding-bottem-md {
+	padding-bottom: 10px !important;
 }
 
 /* 按钮 */
