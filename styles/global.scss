@@ -2,6 +2,10 @@ page {
 	background-color: #EDF0F2;
 }
 
+form {
+	display: block;
+}
+
 /* 上边距 */
 .c-gutter-xs {
 	margin-top: 5px;
@@ -33,6 +37,18 @@ page {
 	color: #ffffff;
 	background-color: #1897F2;
 }
+.c-submit-button-fixed {
+	border-top: 1px solid #DFE3E6;
+	position: fixed;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #ffffff;
+}
+.c-submit-button-fixed .c-submit-button {
+		margin-top: 10px;
+		margin-bottom: 10px;
+	}
 
 /* 表单label宽度统一设置 */
 .c-form_label-width-sm .c-form-item-label {
@@ -43,4 +59,26 @@ page {
 }
 .c-form_label-width-lg .c-form-item-label {
 	width: 100px;
+}
+.c-form_label-row .c-form-item-label {
+	width: 100%;
+	padding-right: 0;
+}
+
+// 通用卡片样式
+.c-card {
+	// margin-top: 12px;
+	padding: 0 16px 16px;
+	background-color: #ffffff;
+}
+.c-card-header {
+	padding: 16px 0;
+	font-size: 17px;
+	font-weight: 800;
+	color: #21272B;
+}
+.c-card-body {
+	font-size: 16px;
+	line-height: 26px;
+	color: #6C7880;
 }

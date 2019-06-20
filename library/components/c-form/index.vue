@@ -22,16 +22,16 @@
 		},
 		data () {
 			return {
-				validator: null,
 				rules: {}
 			}
 		},
 		methods: {
 			initRules (rules) {
-				this.validator = new schema(rules)
+				this.rules = rules
 			},
 			validate (callback) {
-				this.validator.validate(this.form, (errors, fields) => {
+				const validator = new schema(this.rules)
+				validator.validate(this.form, (errors, fields) => {
 					if(errors) {
 						uni.showToast({
 							icon: 'none',

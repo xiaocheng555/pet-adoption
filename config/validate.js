@@ -28,6 +28,7 @@ function initValidateConfig (pattern) {
 		if (isRegExp(reg)) {
 			// 将正则表达式转化为c-form组件（同el-element）可使用的验证函数
 			validateFn = function (rule, value, callback) {
+				console.log(rule, value, callback, 'rule, value, callback')
 			  if (reg.test(value.toString())) {
 			    callback()
 			  } else {

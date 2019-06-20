@@ -1,11 +1,14 @@
 <template>
 	<view>
-		<c-form ref="cForm" :form="formData" :rules="formRules" label-width="82px">
+		<c-form ref="cForm" :form="formData">
 			<c-form-item label="姓名" required no-border-top>
 				<c-input v-model="formData.name" placeholder="年龄" clear />
 			</c-form-item>
 			<c-form-item label="年龄">
 				<c-input v-model="formData.age" placeholder="年龄" clear />
+			</c-form-item>
+			<c-form-item label="对象">
+				<c-input v-model="formData.obj.value" clear />
 			</c-form-item>
 			<upload-image-card></upload-image-card>
 			<c-form-item label="种类(单选)" required no-border-top style="margin-top: 10px;">
@@ -32,6 +35,8 @@
 
 <script>
 	import uploadImageCard from '@/library/components/upload-image-card'
+	import validateConfig from '@/config/validate'
+
 	export default {
 		components: {
 			uploadImageCard
@@ -39,7 +44,10 @@
 		data () {
 			return {
 				formData: {
-					name: ''
+					name: '',
+					obj: {
+						value: ''
+					}
 				},
 				formRules: {
 					name: [
@@ -56,6 +64,16 @@
 					age: {
 						required: true,
 						message: '请输入年龄'
+					},
+					obj: {
+						type: "object",
+						fields: {
+							value: [
+								{
+									validator: validateConfig.nonEmpty, message: `obj不能为空`
+								}
+							]
+						}
 					}
 				},
 				checkedList: [],
@@ -70,7 +88,11 @@
 						console.log('提交成功')
 					}
 				})
-			}
+			},
+		},
+		mounted () {
+			console.log(this.formRules, 'formRules')
+			this.$refs.cForm.initRules(this.formRules)
 		}
 	}
 </script>
