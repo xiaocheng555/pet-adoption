@@ -307,11 +307,13 @@
 			}
 		},
 		onLoad () {
-			this.$refs.cForm.initRules(this.formRules)
 			this.$app.ready(() => {
 				this.fetchPetClassList()
 				this.fetchChinaAddressData()
 			})
+		},
+		mounted () {
+			this.$refs.cForm.initRules(this.formRules)
 		}
 	}
 </script>

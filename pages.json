@@ -2,14 +2,18 @@
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 	  // 首页 
 		{
-			"path": "pages/home/index",
-			"style": {
-				"navigationBarTitleText": "首页"
-			}
+			"path": "pages/home/index"
 		},
 		// 送养详情页
 		{
-			"path": "pages/feed/detail/index"
+			"path": "pages/feed/detail/index",
+			"style": {
+				"navigationBarTextStyle": "white"
+			}
+		},
+		// 申请领养页
+		{
+			"path": "pages/feed/apply/index"
 		},
 		// 发布页 
 		{

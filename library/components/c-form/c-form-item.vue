@@ -56,9 +56,10 @@
 .c-form-item-label {
 	display: block;
 	color: $uni-color-title;
+	line-height: 1.6;
 	padding-right: 11px;
-	padding-top: 8px;
-	padding-bottom: 8px;
+	padding-top: 7px;
+	padding-bottom: 7px;
 }
 .c-form-item-star {
 	color: red;
