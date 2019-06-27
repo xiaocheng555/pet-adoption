@@ -17,14 +17,23 @@ http.interceptor.request = (config) => {
 
 // 设置请求结束后拦截器
 http.interceptor.response = (response) => {
-	if (response.statusCode === 200) {
+	if (response.statusCode >= 200 && response.statusCode <= 299) {
 		return response.data
-	} else {
-		// uni.showToast({
-		// 	icon: 'none',
-		// 	title: '请求失败了'
-		// })
-		return response
+	} 
+	else {
+		let errorTip
+		if (response.statusCode >= 400 && response.statusCode <= 499) {
+			errorTip = '请求错误'
+		} else if (response.statusCode >= 500 && response.statusCode <= 599) {
+			errorTip = '服务器错误'
+		} else {
+			errorTip = '未知异常'
+		}
+		uni.showToast({
+			icon: 'none',
+			title: errorTip
+		})
+		return (errorTip, response)
 	}
 }
 

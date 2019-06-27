@@ -31,7 +31,7 @@ export default {
 					}
 				}
 
-				if (statusCode === 200) { //成功
+				if (statusCode >= 200 && statusCode <= 299) { //成功
 					resolve(response);
 				} else {
 					reject(response)

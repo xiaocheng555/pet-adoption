@@ -2,6 +2,7 @@
 	import Vue from 'vue'
 	import { mapState, mapMutations } from 'vuex'
 	import Ready from 'min-ready'
+	import CONFIG from '@/config'
 	const ready = Ready()
 	
 	export default {
@@ -39,23 +40,31 @@
 			},
 			// 登录
 			handleLogin () {
+				// #ifdef H5
+				// 加入测试数据
+				this.setUserInfo(CONFIG.tesUserInfo)
+				ready.open()
+				// #endif
+				
+				// #ifdef MP-WEIXIN
 				this.$promisify(uni.login)().then(result => {
 					console.log(result.code, result, 'result')
-					this.getToken(result.code)
+					this.getToken(result.code).then(() => {
+						this.getUserInfo()
+					})
 				})
+				// #endif
 			},
 			// 获取token
 			getToken (code) {
-				this.$http.get('/pet/auth/wx', {
+				return this.$http.get('/pet/auth/wx', {
 					js_code: code
 				}).then(res => {
 					if (res && res.token) {
 						this.setUserInfo({
 							token: res.token
 						})
-						this.getUserInfo()
-					} else {
-						console.error('token获取失败')
+						ready.open()
 					}
 				}).catch(error => {
 					uni.showToast({
@@ -73,9 +82,6 @@
 						nickName: userInfo.nickName,
 						avatarUrl: userInfo.avatarUrl
 					})
-					ready.open()
-				}).catch(() => {
-					ready.open()
 				})
 			}
 		},
