@@ -1,7 +1,7 @@
 <template>
 	<view class="feed-list-home">
 		<view 
-			class="feed-list-item" 
+			class="feed-list-item c-1px-b" 
 			v-for="(item, index) in list" 
 			:key="index"
 			@tap="handleItemClick(item, index)">
@@ -54,10 +54,10 @@
 
 <style lang="scss">
 .feed-list-home {
-	
+	// margin-top: -12px;
 }
 .feed-list-item {
-	margin-top: 12px;
+	// margin-top: 12px;
 	padding: 16px;
 	background-color: #ffffff;
 }
