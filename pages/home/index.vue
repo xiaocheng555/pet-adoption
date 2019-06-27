@@ -75,11 +75,9 @@
 				})
 			} 
 		},
-    onLoad() {
+    onLoad () {
       this.$app.ready(() => {
-				this.$http.get('/pet/api/v1/pet/class').then(res => {
-					console.log(res, 'res')
-				})
+				console.log('=============ready================')
 			})
     }
   }

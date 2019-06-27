@@ -11,24 +11,62 @@ const store = new Vuex.Store({
 			code: null,
 			token: null
 		},
-		loginPopupShow: false
+		petClass: null
 	},
 	getters: {
 		hasLogin (state) {
-			console.log(!!state.userInfo.nickName, '========')
 			return !!state.userInfo.nickName
 		}
 	},
 	mutations: {
 		setUserInfo (state, data) {
 			Object.assign(state.userInfo, data)
-		},
-		changeLoginPopupShow (state, data) {
-			state.loginPopupShow = data
 		}
 	},
 	actions: {
-		
+		// 获取宠物类型
+		fetchPetClass () {
+			return Vue.prototype.$http.get('/pet/api/v1/pet/class').then(res => {
+				return res.map(item => {
+					return {
+						label: item.name,
+						value: item.uuid
+					}
+				})
+			})
+		},
+		// 获取中国地址数据
+		fetchChinaAddressData () {
+			return Vue.prototype.$http.get('/pet/api/v1/locality').then(res => {
+				let provinces = res || []
+				// 遍历省
+				provinces = provinces.map(province => {
+					let citys = province.citys || []
+					// 遍历市
+					citys = citys.map(city => {
+						let localities = city.localities || []
+						// 遍历区
+						localities = localities.map(locality => {
+							return {
+								label: locality.locality_name,
+								value: locality.locality_uuid
+							}
+						})
+						return {
+							label: city.city_name,
+							value: city.city_uuid,
+							children: localities
+						} 
+					})
+					return {
+						label: province.province_name,
+						value: province.province_uuid,
+						children: citys
+					}
+				})
+				return provinces
+			})
+		}
 	}
 })
 
