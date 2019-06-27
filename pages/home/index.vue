@@ -1,18 +1,48 @@
 <template>
   <c-page title="首页" :has-back="false">
-		<feed-list :list="feedList" @item-click="handleFeedItemClick"></feed-list>
+		<image class="home-banner" src="/static/images/banner.jpg" lazy-load></image>
+		<!-- <view class="c-gutter-md"></view> -->
+		<view class="home-container">
+			<c-tab :data="tabList"></c-tab>
+			<home-filter 
+				@address-change="handleAddressChange" 
+				@pet-class-change="handlePetClassChange">
+			</home-filter>
+			<feed-list :list="feedList" @item-click="handleFeedItemClick"></feed-list>
+		</view>
 	</c-page>
 </template>
 
 <script>
 	import FeedList from '@/library/components/feed-list'
+	import HomeFilter from '@/library/components/home-filter'
 	
   export default {
 		components: {
-			FeedList
+			FeedList,
+			HomeFilter
 		},
-    data() {
+    data () {
       return {
+				tabList: [
+					{
+						label: '宠物领养',
+						value: '0'
+					},
+					{
+						label: '寻主启示',
+						value: '1'
+					},
+					{
+						label: '寻宠启示',
+						value: '2'
+					}
+				],
+				// 筛选项
+				filterOptions: {
+					address: null,
+					petClass: null
+				},
 				feedList: [
 					{
 						avatar: 'https://mmbiz.qpic.cn/mmbiz_gif/1qRdrtrbict1lYcqGYFpzS7Y4zYiar4nXeKYNNb34j4SYfhAzoEs1yp1VcDLYKiaYJicNgHs4wyEGX8632Ms2Z7Jxg/640?wx_fmt=gif&tp=webp&wxfrom=5&wx_lazy=1',
@@ -68,8 +98,15 @@
       }
     },
 		methods: {
+			// 省市区地址改变事件
+			handleAddressChange () {
+				
+			},
+			// 宠物类型改变事件
+			handlePetClassChange () {
+				
+			},
 			handleFeedItemClick (item) {
-				console.log(item, 'item')
 				uni.navigateTo({
 					url: '/pages/feed/detail/index'
 				})
@@ -83,5 +120,11 @@
   }
 </script>
 
-<style>
+<style lang="scss">
+.home-banner {
+	display: block;
+	width: 100%;
+	height: 200px;
+}
 </style>
+

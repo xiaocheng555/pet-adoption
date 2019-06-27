@@ -4,7 +4,7 @@
 			mode="multiSelector" 
 			:value="multiIndex" 
 			:range="multiArray"
-			range-key="label"
+			:range-key="'label'"
 			@columnchange="handleMultiPickerColumnChange"
 			@change="handleConfirm">
 			<slot></slot>
@@ -65,12 +65,13 @@
 					case 1:
 						this.multiIndex[1] = value
 						this.multiIndex[2] = 0
+						citys = provinces[this.multiIndex[0]].children
 						localities = citys[value].children
 						this.multiArray[2] = localities
 						break
 					// 第三列的值改变，区的值改变
 					case 2:
-						this.multiIndex[0] = value
+						this.multiIndex[2] = value
 						break
 				}
 			},

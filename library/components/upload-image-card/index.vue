@@ -3,9 +3,9 @@
 		<view class="card-header">
 			<view class="card-header-title">
 				{{ title }}
-					<view class="card-header-tip" v-if="uploadingCount === 0">
-						[ 上传中<image class="card-header-loading" :src="loadingIcon"></image> ]
-					</view>
+				<view class="card-header-tip" v-if="uploadingCount !== 0">
+					[ 上传中<image class="card-header-loading" :src="loadingIcon"></image> ]
+				</view>
 			</view>
 			<view class="card-header-right">
 				{{ imgList.length }}/{{ count }}

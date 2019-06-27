@@ -8,7 +8,7 @@
 				<view class="image-delete-box" @tap="deleteImage(index)">
 					<image class="delete-icon" :src="deleteIcon"></image>
 				</view>
-				<image class="image" :src="img" mode="aspectFill" @tap="viewImage(index)"></image>
+				<image class="image" :src="img" mode="aspectFill" lazy-load @tap="viewImage(index)"></image>
 			</view>
 		</view>
 		<view v-if="addIconShow" class="image-item" @tap="chooseImage">
@@ -30,8 +30,9 @@
 	// 图片上传使用oss
 	const OSS = {
 		host: 'oss-cn-shenzhen.aliyuncs.com',
-		secret: 'LTAIp3WBQZiLomr7',
-		id: 'tXDSYgaMZ9SKv7lUflumDjjD5U9NOO'
+		policy: null,
+		signature: null,
+		accessid: null
 	}
 	
 	export default {
@@ -73,7 +74,12 @@
 			return {
 				cameraAddIcon,
 				deleteIcon,
-				imgDataList: []
+				imgDataList: [],
+				oosData: {
+					policy: null,
+					signature: null,
+					accessid: null
+				}
 			}
 		},
 		computed: {
@@ -90,6 +96,14 @@
 			}
 		},
 		methods: {
+			// 获取图片上传oos参数
+			fetchOosData () {
+			  this.$http.get('/pet/api/v1/oss').then(res => {
+					OSS.policy = res.policy
+					OSS.signature = res.signature
+					OSS.accessid = res.accessid
+				})
+			},
 			// 选择图片
 			chooseImage () {
 				const imglen = this.imgDataList.length
@@ -110,8 +124,12 @@
 			// 上传图片
 			uploadImages (images) {
 				images.forEach(img => {
-					console.log(this.onBefore, 'this.onBefore ')
 					this.onBefore && this.onBefore(img)
+					const {
+						policy,
+						signature,
+						accessid
+					} = OSS
 					uni.uploadFile({
 						url: 'http://yourbucketname.oss-cn-shanghai.aliyuncs.com',
 						filePath: img,
@@ -119,12 +137,12 @@
 						name: 'file',
 						formData:{
 							name: img,
-							'key' : "${filename}",
+							key: '${filename}',
 							//让服务端返回200,不然，默认会返回204
-							'success_action_status' : '200', 
-							'policy': 'yourpolicycaculated',
-							'OSSAccessKeyId': 'yourosskeyid', 
-							'signature': 'yoursignaturecaculated'
+							success_action_status : '200', 
+							policy: policy,
+							OSSAccessKeyId: accessid, 
+							signature: signature
 						},
 						success: (res) => {
 							console.log(res, 'res')
@@ -158,6 +176,9 @@
 			value (val) {
 				this.imgDataList = val
 			}
+		},
+		created () {
+			this.fetchOosData()
 		}
 	}
 </script>
