@@ -29,7 +29,8 @@
 	
 	// 图片上传使用oss
 	const OSS = {
-		host: 'oss-cn-shenzhen.aliyuncs.com',
+		host: '',
+		dir: '',
 		policy: null,
 		signature: null,
 		accessid: null
@@ -99,9 +100,7 @@
 			// 获取图片上传oos参数
 			fetchOosData () {
 			  this.$http.get('/pet/api/v1/oss').then(res => {
-					OSS.policy = res.policy
-					OSS.signature = res.signature
-					OSS.accessid = res.accessid
+					Object.assign(OSS, res)
 				})
 			},
 			// 选择图片
@@ -117,6 +116,7 @@
 					sourceType: this.sourceType,
 					success: (res) => {
 						const chooseImgs = res.tempFilePaths
+						console.log(res, 'res image')
 						this.uploadImages(chooseImgs)
 					}
 				})
@@ -126,23 +126,39 @@
 				images.forEach(img => {
 					this.onBefore && this.onBefore(img)
 					const {
+						host,
+						dir,
 						policy,
 						signature,
 						accessid
 					} = OSS
+					// 文件扩展名
+					let extIndex = img.lastIndexOf('.');
+					let ext = img.substring(extIndex)
+					// 文件名
+					let filekey = `${dir}/${new Date().getTime()}${ext}`
+					console.log('formdata', {
+						name: img,
+						key: filekey,
+						//让服务端返回200,不然，默认会返回204
+						success_action_status : '200', 
+						policy: policy,
+						OSSAccessKeyId: accessid, 
+						signature: signature
+					})
 					uni.uploadFile({
-						url: 'http://yourbucketname.oss-cn-shanghai.aliyuncs.com',
+						url: `http://${dir}.${host}`,
 						filePath: img,
 						fileType: 'image',
 						name: 'file',
 						formData:{
 							name: img,
-							key: '${filename}',
+							'key': filekey,
 							//让服务端返回200,不然，默认会返回204
-							success_action_status : '200', 
-							policy: policy,
-							OSSAccessKeyId: accessid, 
-							signature: signature
+							'success_action_status' : '200', 
+							'policy': policy,
+							'OSSAccessKeyId': accessid, 
+							'signature': signature
 						},
 						success: (res) => {
 							console.log(res, 'res')
