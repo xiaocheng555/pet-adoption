@@ -4,7 +4,7 @@
 			mode="multiSelector" 
 			:value="multiIndex" 
 			:range="multiArray"
-			:range-key="'label'"
+			range-key="label"
 			@columnchange="handleMultiPickerColumnChange"
 			@change="handleConfirm">
 			<slot></slot>
@@ -38,9 +38,7 @@
 					let provinces = this.cityData
 					let citys = provinces[this.multiIndex[0]].children
 					let localities = citys[this.multiIndex[1]].children
-					this.multiArray[0] = provinces
-					this.multiArray[1] = citys
-					this.multiArray[2] = localities
+					this.multiArray = [provinces, citys, localities]
 				}
 			},
 			// picker的change事件
@@ -53,25 +51,21 @@
 			  switch (e.detail.column) {
 					// 第一列的值改变，省的值改变
       		case 0:
-						this.multiIndex[0] = value
-						this.multiIndex[1] = 0
-						this.multiIndex[2] = 0
+						this.multiIndex = [value, 0, 0]
 						citys = provinces[value].children
 						localities = citys[0].children
-						this.multiArray[1] = citys
-						this.multiArray[2] = localities
+						this.multiArray = [provinces, citys, localities]
 						break
 					// 第二列的值改变，市的值改变
 					case 1:
-						this.multiIndex[1] = value
-						this.multiIndex[2] = 0
+						this.multiIndex = [this.multiIndex[0], value, 0]
 						citys = provinces[this.multiIndex[0]].children
 						localities = citys[value].children
-						this.multiArray[2] = localities
+						this.multiArray = [provinces, citys, localities]
 						break
 					// 第三列的值改变，区的值改变
 					case 2:
-						this.multiIndex[2] = value
+						this.multiIndex = [this.multiIndex[0], this.multiIndex[1], 0]
 						break
 				}
 			},
