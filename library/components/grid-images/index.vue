@@ -88,9 +88,9 @@
 	position: absolute;
 	bottom: 0;
 	right: 0;
-	padding: 5px 10px;
+	padding: 4px 8px;
 	border-radius: 6px 0 6px 0;
-	font-size: 14px;
+	font-size: 12px;
 	line-height: 14px;
 	font-weight: 500;
 	color: #ffffff;

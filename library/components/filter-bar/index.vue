@@ -1,0 +1,134 @@
+<template>
+  <view class="home-section-header c-1px-b" :style="{ top: customBar + 'px' }">
+		<view class="section-header-title">
+			宠物领养
+		</view>
+		<view class="section-header-right">
+			<view class="action-item section-header-filter c-1px-r">
+        <image class="action-item-icon" src="/static/icons/filter-blue.svg"></image>
+				<picker 
+					class="c-ellipsis action-item-text"
+					:value="petClassIndex" 
+					:range="petClassOptions" 
+					range-key="label" 
+					@change="handlePetClassChange">
+					{{ petClassLabel || '宠物类型' }}
+				</picker>
+			</view>
+			<view class="action-item">
+        <image class="action-item-icon" src="/static/icons/location-blue.svg"></image>
+				<!-- 省市区选择器 -->
+				<citypicker 
+					class="c-ellipsis action-item-text"
+	        v-if="cityData"
+					:city-data="cityData" 
+					@confirm="handleCitypickerConfirm">
+          {{ addressLabel || '地址' }}
+				</citypicker>
+			</view>
+		</view>
+	</view>
+</template>
+
+<script>
+import Citypicker from '@/library/components/citypicker'
+import { mapActions } from 'vuex'
+
+export default {
+  components: {
+    Citypicker
+  },
+  data () {
+    return {
+      customBar: this.$customBar,
+      petClassLabel: '',
+      petClassOptions: [],
+      petClassIndex: -1,
+      cityData: null,
+      addressLabel: ''
+    }
+  },
+  methods: {
+    ...mapActions([
+			'fetchPetClass',
+			'fetchChinaAddressData'
+    ]),
+    // 初始化数据
+		initData () {
+			this.fetchPetClass().then(data => {
+				this.petClassOptions = data
+			})
+			this.fetchChinaAddressData().then((data) => {
+				this.cityData = data
+			})
+    },
+    // 地址选择器的确认事件
+		handleCitypickerConfirm ({labels, values}) {
+      this.addressLabel = labels[1]
+      this.$emit('address-change', {
+        labels, 
+        values
+      })
+    },
+    // 宠物类型改变事件
+    handlePetClassChange (e) {
+      this.petClassIndex = e.target.value
+			const petClassOption = this.petClassOptions[this.petClassIndex]
+      this.petClassLabel = petClassOption.label
+      this.$emit('pet-class-change', petClassOption.value)
+    }
+  },
+  created () {
+    this.$app.ready(() => {
+			this.initData()
+		})
+  }
+}
+</script>
+
+<style lang='scss'>
+.home-section-header {
+	position: sticky !important;
+	z-index: 1;
+	display: flex;
+	margin-top: 12px;
+	padding: 0 16px;
+	align-items: center;
+	background-color: #ffffff;
+}
+.section-header-title {
+	flex: 1;
+	font-size: 16px;
+	color: #000000;
+	line-height: 50px;
+}
+.section-header-right {
+	display: flex;
+}
+.section-header-filter {
+	margin-right: 16px;
+	padding-right: 16px;
+	
+	&:after {
+		border-color: $M10;
+	}
+}
+.action-item {
+	display: flex;
+	font-size: 14px;
+	line-height: 20px;
+	color: $M10;
+}
+.action-item-icon {
+	position: relative;
+	top: 1px;
+	display: inline-block;
+	margin-right: 5px;
+	width: 18px;
+	height: 18px;
+}
+.action-item-text {
+	display: inline-block;
+	max-width: 60px;
+}
+</style>

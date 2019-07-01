@@ -36,6 +36,9 @@
 		accessid: null
 	}
 	
+	// 图片查看地址，key后面接上传时的图片名称
+	const IMAGE_VIEW_URL = 'https://pet.xpressiot.com/pet/static/img?key='
+	
 	export default {
 		props: {
 			// 图片地址列表
@@ -66,10 +69,7 @@
 			preview: {
 				type: Boolean,
 				default: true
-			},
-			onBefore: Function,
-			onSuccess: Function,
-			onFail: Function
+			}
 		},
 		data () {
 			return {
@@ -100,7 +100,11 @@
 			// 获取图片上传oos参数
 			fetchOosData () {
 			  this.$http.get('/pet/api/v1/oss').then(res => {
-					Object.assign(OSS, res)
+					OSS.host = `http://${res.dir}.${res.host}`
+					OSS.dir = res.dir
+					OSS.policy = res.policy
+					OSS.signature = res.signature
+					OSS.accessid = res.accessid
 				})
 			},
 			// 选择图片
@@ -124,7 +128,7 @@
 			// 上传图片
 			uploadImages (images) {
 				images.forEach(img => {
-					this.onBefore && this.onBefore(img)
+					this.$emit('onBefore', img)
 					const {
 						host,
 						dir,
@@ -136,18 +140,10 @@
 					let extIndex = img.lastIndexOf('.');
 					let ext = img.substring(extIndex)
 					// 文件名
-					let filekey = `${dir}/${new Date().getTime()}${ext}`
-					console.log('formdata', {
-						name: img,
-						key: filekey,
-						//让服务端返回200,不然，默认会返回204
-						success_action_status : '200', 
-						policy: policy,
-						OSSAccessKeyId: accessid, 
-						signature: signature
-					})
+					let fileName = new Date().getTime() + ext
+					let filekey = `${dir}/${fileName}`
 					uni.uploadFile({
-						url: `http://${dir}.${host}`,
+						url: host,
 						filePath: img,
 						fileType: 'image',
 						name: 'file',
@@ -161,12 +157,16 @@
 							'signature': signature
 						},
 						success: (res) => {
-							console.log(res, 'res')
-							this.onSuccess && this.onSuccess(res)
-							// this.imgDataList.push(res.path)
+							if (res.statusCode === 200) {
+								const imgPath = IMAGE_VIEW_URL + fileName
+								this.imgDataList.push(imgPath)
+								this.$emit('onSuccess', res)
+							} else {
+								this.$emit('onFail', err)
+							}
 						},
 						fail: (err) => {
-							this.onFail && this.onFail(err)
+							this.$emit('onFail', err)
 						}
 					})
 				})

@@ -2,10 +2,14 @@
 	<view :style="{ height: customBar + 'px' }">
 		<view class="c-header" :style="style">
 			<div class="c-header-inner">
-				<view class="c-header-left" v-show="hasBack" @tap="backPage">
-					<image class="c-header-back-icon" :src="backIcon"></image>
-					<text class="c-header-back-text">返回</text>
-				</view>
+				<div class="c-header-left">
+					<slot name="left">
+						<view v-show="hasBack" @tap="backPage">
+							<image class="c-header-back-icon" :src="backIcon"></image>
+							<text class="c-header-back-text">返回</text>
+						</view>
+					</slot>
+				</div>
 				<view class="c-header-main c-ellipsis">
 					<slot>
 						{{ title }}
@@ -77,6 +81,8 @@
 	top: 50%;
 	left: 0;
 	padding: 0 16px;
+	color: $A11;
+	font-size: 16px;
 	transform: translateY(-50%);
 }
 .c-header-back-icon {
@@ -87,8 +93,6 @@
 	margin-right: 6px;
 }
 .c-header-back-text {
-	color: $A11;
-	font-size: 16px;
 	text-align: center;
 }
 .c-header-main {

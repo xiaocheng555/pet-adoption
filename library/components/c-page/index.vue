@@ -1,8 +1,6 @@
 <template>
 	<view class="c-page">
-		<c-header v-if="hasHeader" :title="title" :has-back="hasBack">
-			<slot slot="header"></slot>
-		</c-header>
+		<c-header v-if="hasHeader" :title="title" :has-back="hasBack"></c-header>
 	  <slot></slot>
 		<!-- 登录提示框 -->
 		<uni-popup :show="loginModal" position="middle" mode="fixed">
@@ -76,6 +74,9 @@
 			handleLoginCancel () {
 				this.$emit('login-close')
 			}
+		},
+		created () {
+			console.log(this.$slot, 'slot')
 		}
 	}
 </script>

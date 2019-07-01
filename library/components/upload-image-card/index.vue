@@ -4,7 +4,7 @@
 			<view class="card-header-title">
 				{{ title }}
 				<view class="card-header-tip" v-if="uploadingCount !== 0">
-					[ 上传中<image class="card-header-loading" :src="loadingIcon"></image> ]
+					[ 上传中<image class="card-header-loading" src="/static/icons/loading.svg"></image> ]
 				</view>
 			</view>
 			<view class="card-header-right">
@@ -16,9 +16,9 @@
 				v-model="imgList" 
 				ref="uploadImage" 
 				:count="count"
-				:onBefore="uploadBefore"
-				:onSuccess="uploadSuccess"
-				:onFail="uploadFail">
+				@onBefore="uploadBefore"
+				@onSuccess="uploadSuccess"
+				@onFail="uploadFail">
 			</upload-image>
 		</view>
 	</view>
@@ -26,7 +26,6 @@
 
 <script>
 	import uploadImage from '@/library/components/upload-image'
-	import loadingIcon from '@/static/images/loading.gif'
 	
 	export default {
 		components: {
@@ -40,7 +39,6 @@
 		},
 		data () {
 			return {
-				loadingIcon,
 				imgList: [],
 				count: 9,
 				// 正在上传的图片个数
@@ -48,10 +46,6 @@
 			}
 		},
 		methods: {
-			// 上传图片
-			// upload () {
-			// 	return this.$refs.uploadImage.upload()
-			// },
 			// 图片上传前的事件
 			uploadBefore (src) {
 				this.uploadingCount++

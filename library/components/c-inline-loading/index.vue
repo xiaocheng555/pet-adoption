@@ -1,13 +1,11 @@
 <template>
 	<view class="c-inline-loading" :class="[align === 'center' ? 'c-inline-loading_middle' : '']">
-		<image class="loading-icon" :src="loadingIcon"></image>
+		<image class="loading-icon" src="/static/icons/loading.svg"></image>
 		<text class="loading-text" v-if="text">{{ text }}</text>
 	</view>
 </template>
 
 <script>
-import loadingIcon from './assets/loading.svg'
-
 export default {
 	props: {
 		text: {
@@ -17,11 +15,6 @@ export default {
 		align: {
 			type: String,
 			default: 'top'
-		}
-	},
-	data () {
-		return {
-			loadingIcon
 		}
 	}
 }
@@ -47,20 +40,10 @@ export default {
 .loading-icon {
 	width: 23px;
 	height: 23px;
-	animation: 1.3s rotate linear infinite;
 }
 .loading-text {
 	margin-left: 5px;
 	font-size: 15px;
 	color: $M08;
-}
-
-@keyframes rotate {
-	from {
-		transform: rotate(0deg);
-	}
-	to {
-		transform: rotate(360deg);
-	}
 }
 </style>

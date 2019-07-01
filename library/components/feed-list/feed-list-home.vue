@@ -54,10 +54,10 @@
 
 <style lang="scss">
 .feed-list-home {
-	// margin-top: -12px;
+	margin-top: -12px;
 }
 .feed-list-item {
-	// margin-top: 12px;
+	margin-top: 12px;
 	padding: 16px;
 	background-color: #ffffff;
 }
