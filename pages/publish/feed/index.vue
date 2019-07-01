@@ -1,9 +1,6 @@
 <template>
 	<c-page title="发布送养">
-		<template v-if="pageLoading">
-			<c-inline-loading align="center"></c-inline-loading>
-		</template>
-		<template v-else-if="!showSuccessTip">
+		<template v-if="!showSuccessTip">
 			<view class="c-gutter-md"></view>
 			<c-form class="c-form_label-width-md" ref="cForm" :form="formData">
 				<c-form-item label="宠物昵称" required>
@@ -129,7 +126,7 @@
 	import SubmitTipBar from '@/library/components/submit-tip-bar'
 	import Citypicker from '@/library/components/citypicker'
 	import validateConfig from '@/config/validate'
-	import { mapActions } from 'vuex'
+	import { mapState } from 'vuex'
 	import { 
 		ageOptions,
 		petGenderOptions,
@@ -146,7 +143,6 @@
 		},
 		data () {
 			return {
-				pageLoading: true,
 				formData: {
 					petName: '',
 					petAge: '',
@@ -211,15 +207,17 @@
 				petSterilizationOptions,
 				petVaccinationOptions,
 				petFreeOptions,
-				petClassOptions: [],
 				agePickerIndex: null,
-				cityData: null,
 				localityId: null,
 				// 是否显示提交成功的提示
 				showSuccessTip: false
 			}
 		},
 		computed: {
+			...mapState([
+	      'cityData',
+	      'petClassOptions'
+	    ]),
 			// 显示选中的年龄
 			petAgeLabel () {
 				const ageOption = this.ageOptions[this.agePickerIndex]
@@ -227,25 +225,6 @@
 			}
 		},
 		methods: {
-			...mapActions([
-				'fetchPetClass',
-				'fetchChinaAddressData'
-			]),
-			// 初始化数据
-			initData () {
-				let p1 = this.fetchPetClass().then(data => {
-					this.petClassOptions = data
-				})
-				let p2 = this.fetchChinaAddressData().then((data) => {
-					this.cityData = data
-				})
-				Promise.all([p1, p2]).then(() => {
-					this.pageLoading = false
-					this.$nextTick(() => {
-						this.$refs.cForm.initRules(this.formRules)
-					})
-				})
-			},
 			// 年龄选择器确定事件
 			handleAgePickerChange (e) {
 				this.agePickerIndex = e.target.value
@@ -264,7 +243,9 @@
 				this.$refs.cForm.validate((valid) => {
 					if (valid) {
 						const postData = this.adapterPostData()
-						uni.showLoading()
+						uni.showLoading({
+							title: '正在提交'
+						})
 						this.$http.post('/pet/api/v1/adoption/pet', postData).then(() => {
 							uni.hideLoading()
 							this.showSuccessTip = true
@@ -314,7 +295,7 @@
 		},
 		onLoad () {
 			this.$app.ready(() => {
-				this.initData()
+				this.$refs.cForm.initRules(this.formRules)
 			})
 		}
 	}
