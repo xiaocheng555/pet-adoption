@@ -1,21 +1,15 @@
 <script>
 	import Vue from 'vue'
-	import { mapState, mapMutations } from 'vuex'
+	import { mapActions } from 'vuex'
 	import Ready from 'min-ready'
 	import CONFIG from '@/config'
 	const ready = Ready()
 	
 	export default {
-		computed: {
-			...mapState([
-				'userInfo',
-				'loginPopupShow'
-			])
-		},
 		methods: {
-			...mapMutations([
-				'setUserInfo',
-				'changeLoginPopupShow'
+			...mapActions([
+				'handleAuth',
+				'getUserInfo',
 			]),
 			// 初始化app的ready函数
 			// $app.ready(fn): fn函数会在token获取成功后执行
@@ -37,58 +31,16 @@
 					Vue.prototype.$customBar = custom.bottom + custom.top - e.statusBarHeight;
 					// #endif		
 				})
-			},
-			// 登录
-			handleLogin () {
-				// #ifdef H5
-				// 加入测试数据
-				this.setUserInfo(CONFIG.tesUserInfo)
-				ready.open()
-				// #endif
-				
-				// #ifdef MP-WEIXIN
-				this.$promisify(uni.login)().then(result => {
-					console.log(result.code, result, 'result')
-					this.getToken(result.code).then(() => {
-						this.getUserInfo()
-					})
-				})
-				// #endif
-			},
-			// 获取token
-			getToken (code) {
-				return this.$http.get('/pet/auth/wx', {
-					js_code: code
-				}).then(res => {
-					if (res && res.token) {
-						this.setUserInfo({
-							token: res.token
-						})
-						ready.open()
-					}
-				}).catch(error => {
-					uni.showToast({
-						title: 'token获取失败，请退出重试',
-						icon: 'none'
-					})
-					console.error('token 获取失败:', error)
-				})
-			},
-			// 获取用户信息
-			getUserInfo () {
-				this.$promisify(uni.getUserInfo)({ provider: 'weixin' }).then(result => {
-					let userInfo = result.userInfo
-					this.setUserInfo({
-						nickName: userInfo.nickName,
-						avatarUrl: userInfo.avatarUrl
-					})
-				})
 			}
 		},
 		onLaunch: function() {
 			this.initAppReady()
 			this.getSystemInfo()
-			this.handleLogin()
+			this.getUserInfo()
+			this.handleAuth().then(() => {
+				// 执行app.ready内的函数
+				ready.open()
+			})
 		}
 	}
 </script>

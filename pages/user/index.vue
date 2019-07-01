@@ -31,7 +31,7 @@
 </template>
 
 <script>
-  import { mapState, mapGetters, mapMutations } from 'vuex'
+  import { mapState, mapActions } from 'vuex'
   import rewardImgUrl from '@/static/images/reward-qr-code.png'
   import defaultAvatar from '@/static/images/default-avatar.png'
   
@@ -74,24 +74,15 @@
     computed: {
       ...mapState([
         'userInfo',
-      ]),
-			...mapGetters([
-				'hasLogin'
-			])
+      ])
     },
     methods: {
-			...mapMutations([
-				'setUserInfo'
+			...mapActions([
+				'getUserInfo'
 			]),
       // 登录
       toLogin () {
-        this.$promisify(uni.getUserInfo)({ provider: 'weixin' }).then(result => {
-        	let userInfo = result.userInfo
-        	this.setUserInfo({
-        		nickName: userInfo.nickName,
-        		avatarUrl: userInfo.avatarUrl
-        	})
-        })
+        this.getUserInfo()
       },
       // nav点击事件
       handleNavTap (nav) {

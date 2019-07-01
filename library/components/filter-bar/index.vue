@@ -32,7 +32,7 @@
 
 <script>
 import Citypicker from '@/library/components/citypicker'
-import { mapActions } from 'vuex'
+import { mapState } from 'vuex'
 
 export default {
   components: {
@@ -42,26 +42,17 @@ export default {
     return {
       customBar: this.$customBar,
       petClassLabel: '',
-      petClassOptions: [],
       petClassIndex: -1,
-      cityData: null,
       addressLabel: ''
     }
+	},
+	computed: {
+    ...mapState([
+      'cityData',
+      'petClassOptions'
+    ])
   },
   methods: {
-    ...mapActions([
-			'fetchPetClass',
-			'fetchChinaAddressData'
-    ]),
-    // 初始化数据
-		initData () {
-			this.fetchPetClass().then(data => {
-				this.petClassOptions = data
-			})
-			this.fetchChinaAddressData().then((data) => {
-				this.cityData = data
-			})
-    },
     // 地址选择器的确认事件
 		handleCitypickerConfirm ({labels, values}) {
       this.addressLabel = labels[1]
@@ -77,11 +68,6 @@ export default {
       this.petClassLabel = petClassOption.label
       this.$emit('pet-class-change', petClassOption.value)
     }
-  },
-  created () {
-    this.$app.ready(() => {
-			this.initData()
-		})
   }
 }
 </script>
