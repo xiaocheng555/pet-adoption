@@ -9,7 +9,10 @@ http.config.baseUrl = CONFIG.host
 http.interceptor.request = (config) => {
 	// 添加token
 	const token = Vue.prototype.$store.state.userInfo.token
-	config.header = {}
+	console.log(config, '设置请求前拦截器')
+	if (!config.header) {
+		config.header = {}
+	}
 	if (token) {
 		config.header.Authorization = `Bearer ${token}`
 	}

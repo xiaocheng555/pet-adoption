@@ -1,7 +1,7 @@
 export default {
 	config: {
 		baseUrl: "",
-		headers: {},
+		header: {},
 		dataType: "json",
 		responseType: "text"
 	},
@@ -96,6 +96,7 @@ export default {
 		options.url = url
 		options.data = data
 		options.method = 'DELETE'
+		console.log(options.header, 'options.header', options)
 		return this.request(options)
 	}
 }

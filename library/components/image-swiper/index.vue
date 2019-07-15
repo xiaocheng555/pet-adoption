@@ -46,7 +46,7 @@
 	justify-content: center;
 	align-items: center;
 	height: 100%;
-	background: #eee;
+	background-color: $M03;;
 	color: #fff;
 }
 .swiper-item image {

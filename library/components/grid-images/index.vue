@@ -83,6 +83,7 @@
 	width: 100%;
 	height: 100%;
 	border-radius: 6px;
+	background-color: $M03;
 }
 .grid-images-flag {
 	position: absolute;

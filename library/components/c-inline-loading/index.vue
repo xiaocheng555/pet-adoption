@@ -1,6 +1,6 @@
 <template>
 	<view class="c-inline-loading" :class="[align === 'center' ? 'c-inline-loading_middle' : '']">
-		<image class="loading-icon" src="/static/icons/loading.svg"></image>
+		<view class="loading-icon"></view>
 		<text class="loading-text" v-if="text">{{ text }}</text>
 	</view>
 </template>
@@ -38,12 +38,27 @@ export default {
 	z-index: 99;
 }
 .loading-icon {
-	width: 23px;
-	height: 23px;
+	display: inline-block;
+  width: 18px;
+	height: 18px;
+	margin-right: 5px;
+  animation: circle infinite .75s linear;
+  border: 2px solid #1897F2;
+  border-top-color: transparent;
+  border-radius: 100%;
 }
 .loading-text {
 	margin-left: 5px;
 	font-size: 15px;
 	color: $M08;
+}
+
+@keyframes circle {
+  0% {
+    transform:rotate(0)
+  }
+  100% {
+    transform:rotate(360deg)
+  }
 }
 </style>

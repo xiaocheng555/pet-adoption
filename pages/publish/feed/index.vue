@@ -199,7 +199,7 @@
 						{ validator: validateConfig.nonEmpty, message: '请输入领养要求' }
 					],
 					imgList: [
-						// { validator: validateConfig.nonEmpty, message: '请选择宠物图片' }
+						{ validator: validateConfig.nonEmpty, message: '请选择宠物图片' }
 					]
 				},
 				ageOptions,
@@ -233,7 +233,7 @@
 			},
 			// 地址选择器的确认事件
 			handleCitypickerConfirm ({labels, values}) {
-				this.formData.address = labels.join('-')
+				this.formData.address = labels.join('·')
 				this.localityId = values[2]
 			},
 			// 提交表单
@@ -280,7 +280,7 @@
 					pet_name: petName,
 					pet_age: petAge,
 					pet_classid: petClass[0],
-					pet_variety: petVariety[0],
+					pet_variety: petVariety,
 					// 地址id
 					locality_name: address,
 					locality_id: this.localityId,

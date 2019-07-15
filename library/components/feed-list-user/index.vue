@@ -2,22 +2,18 @@
 	<view class="feed-list-user">
 		<view 
 			class="feed-list-item" 
+			:class="index === 0 ? 'feed-list-item_first' : ''"
 			v-for="(item, index) in list" 
 			:key="index"
 			@tap="handleItemClick(item, index)">
 			<view class="feed-list-body">
-				<view class="feed-list-content c-ellipsisLn-6">{{ item.content }}</view>
+				<view class="feed-list-content c-ellipsisLn-6">{{ item.petDesc }}</view>
 				<view class="feed-list-date">{{ item.date }}</view>
 				<grid-images :list="item.petImages"></grid-images>
-				<view class="feed-list-tags">
-					<c-tag>未绝育</c-tag>
-					<c-tag>未绝育</c-tag>
-					<c-tag>未绝育</c-tag>
-				</view>
 			</view>
 			<view class="feed-list-footer">
 				<view class="feed-list-action"></view>
-				<view class="feed-list-delete" @tap="handleDelete(item, index)">删除</view>
+				<view class="feed-list-delete" @tap.stop="handleDelete(item, index)">删除</view>
 			</view>
 		</view>
 	</view>
@@ -42,19 +38,21 @@
 			}
 		},
 		methods: {
-			handleItemClick (item, index) {
-				this.$emit('item-click', item, index)
+			handleItemClick (item) {
+				this.$emit('item-click', item)
 			},
 			handleDelete (item, index) {
-				this.$emit('item-delete', item, index)
+				this.$emit('item-delete', {
+					item, index
+				})
 			}
 		}
 	}
 </script>
 
 <style lang="scss">
-.feed-list-user {
-	
+.feed-list-item_first {
+	margin-top: 0;
 }
 .feed-list-item {
 	margin-top: 12px;

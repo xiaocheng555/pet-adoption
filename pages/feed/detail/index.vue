@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<c-page :has-header="false">
 		<image-swiper :list="currFeedData.petImages || []"></image-swiper>
 		<view class="feed-detail-main">
 			<!-- 宠物信息 -->
@@ -64,7 +64,7 @@
 				<button class="footer-menu-button" @tap="gotoApplyPage">申请领养</button>
 			</view>
 		</view>
-	</view>
+	</c-page>
 </template>
 
 <script>
