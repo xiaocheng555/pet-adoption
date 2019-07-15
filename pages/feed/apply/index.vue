@@ -39,18 +39,29 @@
 	import validateConfig from '@/config/validate'
 	import dogFormData from './form-data/dog.js'
 	import catFormData from './form-data/cat.js'
-
+	import { PET_CLASS_ID } from '@/library/constant'
+	
 	export default {
 		data () {
 			return {
 				formData: {},
-				formRules: {}
+				formRules: {},
+				petClassId: null,
+				petId: null
 			}
 		},
 		methods: {
 			// 初始化formData数据
-			initFormData (form) {
-				console.log(form, 'dog')
+			initFormData () {
+				let form
+				if (this.petClassId === PET_CLASS_ID.dog) {
+					form = dogFormData
+				} else if (this.petClassId === PET_CLASS_ID.cat) {
+					form = catFormData
+				} else {
+					form = dogFormData
+				}
+				
 				const _formData = {}
 				form.forEach((item, index) => {
 					let key = 'question' + index
@@ -78,6 +89,7 @@
 				})
 				this.formData = _formData
 			},
+			// 初始化表单验证规则
 			initFormRules () {
 				for (const [key, item] of Object.entries(this.formData)) {
 					if (item.required) {
@@ -95,6 +107,7 @@
 				}
 				this.$refs.cForm.initRules(this.formRules)
 			},
+			// 提交表单
 			sumbitForm () {
 				this.$refs.cForm.validate((valid) => {
 					if (valid) {
@@ -105,10 +118,13 @@
 				})
 			}
 		},
+		onLoad (params) {
+			this.petClassId = params.petClassId
+			this.petId = params.id
+		},
 		created () {
-			this.$nextTick(() =>{
-				// this.initFormData(dogFormData)
-				this.initFormData(catFormData)
+			this.$nextTick(() => {
+				this.initFormData()
 				this.initFormRules()
 			})
 		}

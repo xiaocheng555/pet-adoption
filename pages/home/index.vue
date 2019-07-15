@@ -1,113 +1,140 @@
 <template>
   <c-page title="首页" :has-back="false">
-		<image class="home-banner" src="/static/images/banner.jpg" lazy-load></image>
-		<view class="home-container">
+		<div class="home-section">
+			<image class="home-banner" src="/static/images/banner.jpg" lazy-load></image>
 			<view class="home-nav">
 				<view class="home-nav-item c-1px-r">
 					<image class="home-nav-icon" src="/static/icons/publish__pet-search.svg"></image>
-          <text class="home-nav-text">寻宠启示</text>
+	        <text class="home-nav-text">寻宠启示</text>
 				</view>
 				<view class="home-nav-item">
 					<image class="home-nav-icon" src="/static/icons/publish__search-owner.svg"></image>
-          <text class="home-nav-text">寻主启示</text>
+	        <text class="home-nav-text">寻主启示</text>
 				</view>
 			</view>
-			<filter-bar></filter-bar>
-			<feed-list :list="feedList" @item-click="handleFeedItemClick"></feed-list>
-		</view>
+		</div>
+		<filter-bar 
+			@address-change="filterAddress" 
+			@pet-class-change="filterPetClass">
+		</filter-bar>
+		<feed-list :list="feedList" @item-click="handleFeedItemClick">
+		</feed-list>
+		<uni-load-more 
+			slot="suffix"
+			:status="loadmoreStatus" 
+			:content-text="loadmoreContent" 
+			color="#6C7880" />
 	</c-page>
 </template>
 
 <script>
 import FilterBar from '@/library/components/filter-bar'
 import FeedList from '@/library/components/feed-list'
+import uniLoadMore from '@/library/components/uni-ui/uni-load-more/uni-load-more.vue'
+import { adapterFeedList } from '@/library/utils/adapter-data'
+import {  LOADMORE_STATUS, LOADMORE_CONTENT_TEXT } from '@/library/constant'
+import { mapMutations } from 'vuex'
 
 export default {
 	components: {
 		FeedList,
-		FilterBar
+		FilterBar,
+		uniLoadMore
 	},
   data () {
     return {
-			feedList: [
-				{
-					avatar: 'https://mmbiz.qpic.cn/mmbiz_gif/1qRdrtrbict1lYcqGYFpzS7Y4zYiar4nXeKYNNb34j4SYfhAzoEs1yp1VcDLYKiaYJicNgHs4wyEGX8632Ms2Z7Jxg/640?wx_fmt=gif&tp=webp&wxfrom=5&wx_lazy=1',
-					name: 'zhang先生',
-					address: '广东省佛山市顺德区',
-					content: '肯德基疯狂星期四”活动时间为6月20日、6月27日。活动日的9:30-23:00（北京市、天津市、南京市、无锡市、湖北省、江西省、广东省、福建省、广西壮族自治区和海南省等部分地区仅限10:30－23:00供应），具体以餐厅实际营业时间为准，到店可享以9.9元优惠价购买薯条（小）2份，以19.9元优惠价购买老北京香辣鸭肉卷2个，以及以19.9元优惠价购买桃之恋乌龙茶2杯。',
-					petImages: [
-						'https://mmbiz.qpic.cn/mmbiz_gif/1qRdrtrbict1lYcqGYFpzS7Y4zYiar4nXeKYNNb34j4SYfhAzoEs1yp1VcDLYKiaYJicNgHs4wyEGX8632Ms2Z7Jxg/640?wx_fmt=gif&tp=webp&wxfrom=5&wx_lazy=1',
-						'https://mmbiz.qpic.cn/mmbiz_gif/1qRdrtrbict1lYcqGYFpzS7Y4zYiar4nXeKYNNb34j4SYfhAzoEs1yp1VcDLYKiaYJicNgHs4wyEGX8632Ms2Z7Jxg/640?wx_fmt=gif&tp=webp&wxfrom=5&wx_lazy=1',
-						'https://mmbiz.qpic.cn/mmbiz_gif/1qRdrtrbict1lYcqGYFpzS7Y4zYiar4nXeKYNNb34j4SYfhAzoEs1yp1VcDLYKiaYJicNgHs4wyEGX8632Ms2Z7Jxg/640?wx_fmt=gif&tp=webp&wxfrom=5&wx_lazy=1',
-						'https://mmbiz.qpic.cn/mmbiz_gif/1qRdrtrbict1lYcqGYFpzS7Y4zYiar4nXeKYNNb34j4SYfhAzoEs1yp1VcDLYKiaYJicNgHs4wyEGX8632Ms2Z7Jxg/640?wx_fmt=gif&tp=webp&wxfrom=5&wx_lazy=1',
-						'https://mmbiz.qpic.cn/mmbiz_gif/1qRdrtrbict1lYcqGYFpzS7Y4zYiar4nXeKYNNb34j4SYfhAzoEs1yp1VcDLYKiaYJicNgHs4wyEGX8632Ms2Z7Jxg/640?wx_fmt=gif&tp=webp&wxfrom=5&wx_lazy=1',
-					]
-				},
-				{
-					avatar: 'https://mmbiz.qpic.cn/mmbiz_jpg/1qRdrtrbict1R7pMvLMDI1mLRmsWNh5MKiaibCboHLHQ6AD0gUNcsX9dy9M4YuMnY46b5ibL1SkPuiaHmterWI06q5A/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1',
-					name: 'zhang先生',
-					address: '广东省佛山市顺德区',
-					content: '肯德基疯狂星期四”活动时间为6月20日、6月27日。活动日的9:30-23:00（北京市、天津市、南京市、无锡市、湖北省、江西省、广东省、福建省、广西壮族自治区和海南省等部分地区仅限10:30－23:00供应），具体以餐厅实际营业时间为准，到店可享以9.9元优惠价购买薯条（小）2份，以19.9元优惠价购买老北京香辣鸭肉卷2个，以及以19.9元优惠价购买桃之恋乌龙茶2杯。',
-					petImages: [
-						'https://mmbiz.qpic.cn/mmbiz_jpg/1qRdrtrbict1R7pMvLMDI1mLRmsWNh5MKW1K3gselO4ohdf0GBMFEsLPbqXy9Cqe6ZkWl5AJctHHibtQLo7I4ibrw/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1',
-						'https://mmbiz.qpic.cn/mmbiz_gif/1qRdrtrbict1lYcqGYFpzS7Y4zYiar4nXeKYNNb34j4SYfhAzoEs1yp1VcDLYKiaYJicNgHs4wyEGX8632Ms2Z7Jxg/640?wx_fmt=gif&tp=webp&wxfrom=5&wx_lazy=1',
-						'https://mmbiz.qpic.cn/mmbiz_jpg/1qRdrtrbict1R7pMvLMDI1mLRmsWNh5MKiaibCboHLHQ6AD0gUNcsX9dy9M4YuMnY46b5ibL1SkPuiaHmterWI06q5A/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1'
-					]
-				},
-				{
-					avatar: 'https://mmbiz.qpic.cn/mmbiz_jpg/1qRdrtrbict1R7pMvLMDI1mLRmsWNh5MKiaibCboHLHQ6AD0gUNcsX9dy9M4YuMnY46b5ibL1SkPuiaHmterWI06q5A/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1',
-					name: 'zhang先生',
-					address: '广东省佛山市顺德区',
-					content: '肯德基疯狂星期四”活动时间为6月20日、6月27日。活动日的9:30-23:00（北京市、天津市、南京市、无锡市、湖北省、江西省、广东省、福建省、广西壮族自治区和海南省等部分地区仅限10:30－23:00供应），具体以餐厅实际营业时间为准，到店可享以9.9元优惠价购买薯条（小）2份，以19.9元优惠价购买老北京香辣鸭肉卷2个，以及以19.9元优惠价购买桃之恋乌龙茶2杯。',
-					petImages: [
-						'https://mmbiz.qpic.cn/mmbiz_jpg/1qRdrtrbict1R7pMvLMDI1mLRmsWNh5MKW1K3gselO4ohdf0GBMFEsLPbqXy9Cqe6ZkWl5AJctHHibtQLo7I4ibrw/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1',
-						'https://mmbiz.qpic.cn/mmbiz_gif/1qRdrtrbict1lYcqGYFpzS7Y4zYiar4nXeKYNNb34j4SYfhAzoEs1yp1VcDLYKiaYJicNgHs4wyEGX8632Ms2Z7Jxg/640?wx_fmt=gif&tp=webp&wxfrom=5&wx_lazy=1',
-						'https://mmbiz.qpic.cn/mmbiz_jpg/1qRdrtrbict1R7pMvLMDI1mLRmsWNh5MKiaibCboHLHQ6AD0gUNcsX9dy9M4YuMnY46b5ibL1SkPuiaHmterWI06q5A/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1'
-					]
-				},
-				{
-					avatar: 'https://mmbiz.qpic.cn/mmbiz_jpg/1qRdrtrbict1R7pMvLMDI1mLRmsWNh5MKiaibCboHLHQ6AD0gUNcsX9dy9M4YuMnY46b5ibL1SkPuiaHmterWI06q5A/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1',
-					name: 'zhang先生',
-					address: '广东省佛山市顺德区',
-					content: '肯德基疯狂星期四”活动时间为6月20日、6月27日。活动日的9:30-23:00（北京市、天津市、南京市、无锡市、湖北省、江西省、广东省、福建省、广西壮族自治区和海南省等部分地区仅限10:30－23:00供应），具体以餐厅实际营业时间为准，到店可享以9.9元优惠价购买薯条（小）2份，以19.9元优惠价购买老北京香辣鸭肉卷2个，以及以19.9元优惠价购买桃之恋乌龙茶2杯。',
-					petImages: [
-						'https://mmbiz.qpic.cn/mmbiz_jpg/1qRdrtrbict1R7pMvLMDI1mLRmsWNh5MKW1K3gselO4ohdf0GBMFEsLPbqXy9Cqe6ZkWl5AJctHHibtQLo7I4ibrw/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1',
-						'https://mmbiz.qpic.cn/mmbiz_gif/1qRdrtrbict1lYcqGYFpzS7Y4zYiar4nXeKYNNb34j4SYfhAzoEs1yp1VcDLYKiaYJicNgHs4wyEGX8632Ms2Z7Jxg/640?wx_fmt=gif&tp=webp&wxfrom=5&wx_lazy=1',
-						'https://mmbiz.qpic.cn/mmbiz_gif/1qRdrtrbict1lYcqGYFpzS7Y4zYiar4nXeKYNNb34j4SYfhAzoEs1yp1VcDLYKiaYJicNgHs4wyEGX8632Ms2Z7Jxg/640?wx_fmt=gif&tp=webp&wxfrom=5&wx_lazy=1',
-						'https://mmbiz.qpic.cn/mmbiz_gif/1qRdrtrbict1lYcqGYFpzS7Y4zYiar4nXeKYNNb34j4SYfhAzoEs1yp1VcDLYKiaYJicNgHs4wyEGX8632Ms2Z7Jxg/640?wx_fmt=gif&tp=webp&wxfrom=5&wx_lazy=1',
-						'https://mmbiz.qpic.cn/mmbiz_gif/1qRdrtrbict1lYcqGYFpzS7Y4zYiar4nXeKYNNb34j4SYfhAzoEs1yp1VcDLYKiaYJicNgHs4wyEGX8632Ms2Z7Jxg/640?wx_fmt=gif&tp=webp&wxfrom=5&wx_lazy=1',
-						'https://mmbiz.qpic.cn/mmbiz_gif/1qRdrtrbict1lYcqGYFpzS7Y4zYiar4nXeKYNNb34j4SYfhAzoEs1yp1VcDLYKiaYJicNgHs4wyEGX8632Ms2Z7Jxg/640?wx_fmt=gif&tp=webp&wxfrom=5&wx_lazy=1',
-						'https://mmbiz.qpic.cn/mmbiz_jpg/1qRdrtrbict1R7pMvLMDI1mLRmsWNh5MKiaibCboHLHQ6AD0gUNcsX9dy9M4YuMnY46b5ibL1SkPuiaHmterWI06q5A/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1'
-					]
-				}
-			]
+			// 领养列表
+			feedList: [],
+			// 领养列表请求参数
+			feedListParams: {
+				// '676334de-4a94-45f7-a308-5d70b93a45db'
+				city_id: undefined,
+				// c451e95f-be2b-4f1a-8817-71e72e0704b2
+				locality_id: undefined,
+				petClass_id: undefined,
+				page: 1,
+				page_size: 10
+			},
+			// 值：more、loading、noMore
+			loadmoreStatus: LOADMORE_STATUS.loading,
+			loadmoreContent: LOADMORE_CONTENT_TEXT
     }
-  },
+	},
 	methods: {
+		...mapMutations('feed', [
+			'updateFeedData'
+		]),
+		// 获取领养列表
+		fetchFeedList () {
+			this.$http.get('/pet/api/v1/adoption', {
+				...this.feedListParams
+			}).then(res => {
+				if (res !== null) {
+					const newFeedList = adapterFeedList(res)
+					this.feedList = this.feedList.concat(newFeedList)
+				} else {
+					this.loadmoreStatus = LOADMORE_STATUS.noMore
+				}
+			})
+		},
+		// 地址筛选
+		filterAddress (data) {
+			const values = data.values
+			this.feedListParams.city_id = values[1]
+			this.feedListParams.locality_id = values[2]
+			this.refreshFeedList()
+		},
+		// 宠物种类筛选
+		filterPetClass (data) {
+			this.feedListParams.petClass_id = data
+			this.refreshFeedList()
+		},
+		// 刷新列表数据
+		refreshFeedList () {
+			this.loadmoreStatus = LOADMORE_STATUS.loading
+			this.feedListParams.page = 1
+			this.feedList = []
+			this.fetchFeedList()
+		},
 		// 列表点击事件
 		handleFeedItemClick (item) {
+			this.updateFeedData(item)
 			uni.navigateTo({
-				url: '/pages/feed/detail/index'
+				url: `/pages/feed/detail/index?id=${item.id}&useStore=true`
 			})
-		} 
+		}
+	},
+	onReachBottom () {
+		if (this.loadmoreStatus !== LOADMORE_STATUS.noMore) {
+			this.feedListParams.page++
+			this.fetchFeedList()
+		}
 	},
   onLoad () {
     this.$app.ready(() => {
-			this.initData()
+			this.fetchFeedList()
 		})
   }
 }
 </script>
 
 <style lang="scss">
+.home-section {
+	padding: 14px 16px 0;
+	background-color: #ffffff;
+}
 .home-banner {
+	overflow: hidden;
+	box-sizing: border-box;
 	display: block;
+	border-radius: 8px;
 	width: 100%;
-	height: 200px;
+	height: 150px;
 }
 .home-nav {
 	display: flex;
-	padding: 14px 0;
+	border-radius: 8px;
+	padding: 16px 0;
 	background-color: #ffffff;
 }
 .home-nav-item {
@@ -121,10 +148,10 @@ export default {
 }
 .home-nav-text {
 	display: block;
-	margin-top: 5px;
-	font-size: 14px;
+	margin-top: 8px;
+	font-size: 12px;
 	text-align: center;
-	color: $M10;
+	color: $M08;
 }
 </style>
 

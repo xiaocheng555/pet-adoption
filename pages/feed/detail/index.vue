@@ -1,39 +1,35 @@
 <template>
 	<view>
-		<image-swiper :list="petImages"></image-swiper>
+		<image-swiper :list="currFeedData.petImages || []"></image-swiper>
 		<view class="feed-detail-main">
 			<!-- 宠物信息 -->
 			<view class="pet-info">
 				<view class="pet-info-title">
-					朵朵
+					{{ currFeedData.petName }}
 					<view class="pet-info-desc">
-						<text class="pet-info-desc-item">女孩</text>
-						<text class="pet-info-desc-item">3岁</text>
+						<text class="pet-info-desc-item">{{ currFeedData.petSex }}</text>
+						<text class="pet-info-desc-item">{{ currFeedData.petAge }}</text>
 					</view>
 				</view>
 				<view class="pet-info-body">
 					<view class="pet-info-item">
 						<image class="pet-info-item-icon" src="/static/icons/pet__variety.svg"></image>
-						中华田园猫
+						{{ currFeedData.petVariety }}
 					</view>
-					<!-- <view class="pet-info-item">
-						<image class="pet-info-item-icon" src="/static/icons/pet__classify.svg"></image>
-						中华田园猫
-					</view> -->
 					<view class="pet-info-item">
 						<image class="pet-info-item-icon" src="/static/icons/pet__sterilization.svg"></image>
-						未绝育
+						{{ currFeedData.petSterilization }}
 					</view>
 					<view class="pet-info-item">
 						<image class="pet-info-item-icon" src="/static/icons/pet__needle.svg"></image>
-						未疫苗
+						{{ currFeedData.petVaccine }}
 					</view>
 					<view class="pet-info-item">
 						<image class="pet-info-item-icon" src="/static/icons/pet__pay.svg"></image>
-						免费
+						{{ currFeedData.petFree }}
 					</view>
 					<view class="pet-info-item pet-info-item_row">
-						<image class="pet-info-item-icon" src="/static/icons/location-grey.svg"></image> 广东省佛山市顺德区
+						<image class="pet-info-item-icon" src="/static/icons/location-grey.svg"></image> {{ currFeedData.address }}
 					</view>
 				</view>
 			</view>
@@ -43,7 +39,7 @@
 					宠物详情
 				</view>
 				<view class="c-card-body">
-					猫，属于猫科动物，分家猫、野猫，是全世界家庭中较为广泛的宠物。家猫的祖先据推测是起源于古埃及的沙漠猫，波斯的波斯猫，已经被人类驯化了3500年
+					{{ currFeedData.petDesc }}
 				</view>
 			</view>
 			<!-- 领养要求 -->
@@ -52,7 +48,7 @@
 					领养要求
 				</view>
 				<view class="c-card-body">
-					猫，属于猫科动物，分家猫、野猫，是全世界家庭中较为广泛的宠物。家猫的祖先据推测是起源于古埃及的沙漠猫，波斯的波斯猫，已经被人类驯化了3500年
+					{{ currFeedData.adoptionRequest }}
 				</view>
 			</view>
 		</view>
@@ -72,35 +68,53 @@
 </template>
 
 <script>
-	import uniSwiperDot from '@/library/components/uni-ui/uni-swiper-dot/uni-swiper-dot.vue'
-	import ImageSwiper from '@/library/components/image-swiper'
-	
-	export default {
-		components: {
-			ImageSwiper
+import { mapState } from 'vuex'
+import uniSwiperDot from '@/library/components/uni-ui/uni-swiper-dot/uni-swiper-dot.vue'
+import ImageSwiper from '@/library/components/image-swiper'
+
+export default {
+	components: {
+		ImageSwiper
+	},
+	data () {
+		return {
+			currFeedData: {}
+		}
+	},
+	computed: {
+		...mapState('feed', [
+			'feedData'
+		])
+	},
+	methods: {
+		// 获取领养详情的数据
+		fetchFeedData () {
+			
 		},
-		data () {
-			return {
-				petImages: [
-					'https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=2247692397,1189743173&fm=5',
-					'https://ss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=3115831678,1524951908&fm=5',
-					'https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=517735934,3607000238&fm=5'
-				]
-			}
+		// 返回首页
+		backHomePage () {
+			uni.switchTab({
+				url: '/pages/home/index'
+			})
 		},
-		methods: {
-			backHomePage () {
-				uni.switchTab({
-					url: '/pages/home/index'
-				})
-			},
-			gotoApplyPage () {
-				uni.navigateTo({
-					url: '/pages/feed/apply/index'
-				})
-			}
+		// 跳转到宠物申请页面
+		gotoApplyPage () {
+			let { id, petClassId } = this.currFeedData
+			uni.navigateTo({
+				url: `/pages/feed/apply/index?petId=${id}&petClassId=${petClassId}`
+			})
+		}
+	},
+	onLoad (params) {
+		// 是否使用store缓存的数据
+		if (params.useStore.toString() === 'true' && this.feedData) {
+			this.currFeedData = this.feedData
+		} else {
+			// 获取领养详情的数据
+			this.fetchFeedData(params.id)
 		}
 	}
+}
 </script>
 
 <style lang="scss">
@@ -121,9 +135,9 @@
 }
 
 .pet-info-title {
-	font-size: 22px;
+	font-size: 18px;
 	line-height: 30px;
-	font-weight: 600;
+	font-weight: bold;
 }
 .pet-info-desc {
 	display: inline-block;
@@ -165,7 +179,7 @@
 	bottom: 0;
 	left: 0;
 	right: 0;
-	height: 52px;
+	height: 60px;
 	align-items: center;
 	padding: 0 16px;
 	background-color: #ffffff;
@@ -191,10 +205,10 @@
 	height: 22px;
 }
 .footer-menu-button {
-	height: 32px;
+	height: 38px;
 	border-radius: 6px;
 	font-size: 14px;
-	line-height: 32px;
+	line-height: 38px;
 	color: #ffffff;
 	background-color: #1897F2;
 }

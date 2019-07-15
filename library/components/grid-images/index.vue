@@ -9,7 +9,7 @@
 							:src="item" 
 							:mode="mode"
 							:lazy-load="lazy"
-							@tap.stop="previewImage"></image>
+							@tap.stop="previewImage(index)"></image>
 							<view 
 								class="grid-images-flag" 
 								v-if="list.length > limit && index === limit - 1">
@@ -56,14 +56,14 @@
 
 <style lang="scss">
 .grid-images {
-	margin: -5px;
+	margin: -3px;
 	margin-bottom: 9px;
 }
 .grid-images-item {
 	display: inline-block;
 	box-sizing: border-box;
 	width: 33.33%;
-	padding: 5px;
+	padding: 3px;
 	vertical-align: top;
 }
 .grid-images-inner {

@@ -282,6 +282,7 @@
 					pet_classid: petClass[0],
 					pet_variety: petVariety[0],
 					// 地址id
+					locality_name: address,
 					locality_id: this.localityId,
 					pet_gender: petGender[0],
 					free: free[0],

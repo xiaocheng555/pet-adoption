@@ -2,6 +2,7 @@
 	<view class="feed-list-home">
 		<view 
 			class="feed-list-item c-1px-b" 
+			:class="index === 0 ? 'feed-list-item_first' : ''"
 			v-for="(item, index) in list" 
 			:key="index"
 			@tap="handleItemClick(item, index)">
@@ -10,12 +11,12 @@
 				<text class="feed-list-name">{{ item.name }}</text>
 			</view>
 			<view class="feed-list-body">
-				<view class="feed-list-content c-ellipsisLn-6">{{ item.content }}</view>
+				<view class="feed-list-content c-ellipsisLn-6">{{ item.petDesc }}</view>
 				<grid-images :list="item.petImages" :limit="3"></grid-images>
 				<view class="feed-list-tags">
-					<c-tag>未绝育</c-tag>
-					<c-tag>未绝育</c-tag>
-					<c-tag>未绝育</c-tag>
+					<c-tag>{{ item.petFree }}</c-tag>
+					<c-tag>{{ item.petSterilization }}</c-tag>
+					<c-tag>{{ item.petVaccine }}</c-tag>
 				</view>
 				<view class="feed-list-address">
 					<image class="feed-list-location-icon" :src="locationIcon"></image>
@@ -23,6 +24,7 @@
 				</view>
 			</view>
 		</view>
+		<slot></slot>
 	</view>
 </template>
 
@@ -54,12 +56,13 @@
 
 <style lang="scss">
 .feed-list-home {
-	margin-top: -12px;
-}
+	}
 .feed-list-item {
-	margin-top: 12px;
-	padding: 16px;
 	background-color: #ffffff;
+	padding: 16px;
+}
+.feed-list-item_first {
+	margin-top: 0;
 }
 .feed-list-header {
 	display: flex;
