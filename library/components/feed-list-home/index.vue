@@ -29,34 +29,32 @@
 </template>
 
 <script>
-	import GridImages from '@/library/components/grid-images'
-	import locationIcon from '@/static/icons/location-grey.svg'
-	export default {
-		components: {
-			GridImages
-		},
-		props: {
-			list: {
-				type: Array,
-				default: () => []
-			}
-		},
-		data () {
-			return {
-				locationIcon
-			}
-		},
-		methods: {
-			handleItemClick (item, index) {
-				this.$emit('item-click', item, index)
-			}
+import GridImages from '@/library/components/grid-images'
+import locationIcon from '@/static/icons/location-grey.svg'
+export default {
+	components: {
+		GridImages
+	},
+	props: {
+		list: {
+			type: Array,
+			default: () => []
+		}
+	},
+	data () {
+		return {
+			locationIcon
+		}
+	},
+	methods: {
+		handleItemClick (item) {
+			this.$emit('item-click', item)
 		}
 	}
+}
 </script>
 
 <style lang="scss">
-.feed-list-home {
-	}
 .feed-list-item {
 	background-color: #ffffff;
 	padding: 16px;

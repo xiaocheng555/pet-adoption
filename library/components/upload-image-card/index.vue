@@ -4,7 +4,7 @@
 			<view class="card-header-title">
 				{{ title }}
 				<view class="card-header-tip" v-if="uploadingCount !== 0">
-					[ 上传中<image class="card-header-loading" src="/static/icons/loading.svg"></image> ]
+					[ 上传中<view class="card-header-loading"></view> ]
 				</view>
 			</view>
 			<view class="card-header-right">
@@ -87,10 +87,15 @@
 	margin-left: 12px;
 }
 .card-header-loading {
-	margin-left: 5px;
+	display: inline-block;
+  width: 10px;
+	height: 10px;
+	margin-left: 8px;
 	margin-right: 3px;
-	width: 15px;
-	height: 15px;
+  animation: circle infinite .75s linear;
+  border: 1.5px solid #1897F2;
+  border-top-color: transparent;
+  border-radius: 100%;
 }
 .card-header-right {
 	width: 100px;
@@ -99,6 +104,15 @@
 }
 .card-body {
 	padding: 0 16px 10px;
+}
+
+@keyframes circle {
+  0% {
+    transform:rotate(0)
+  }
+  100% {
+    transform:rotate(360deg)
+  }
 }
 
 </style>

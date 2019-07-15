@@ -20,7 +20,6 @@
 		<feed-list :list="feedList" @item-click="handleFeedItemClick">
 		</feed-list>
 		<uni-load-more 
-			slot="suffix"
 			:status="loadmoreStatus" 
 			:content-text="loadmoreContent" 
 			color="#6C7880" />
@@ -29,7 +28,7 @@
 
 <script>
 import FilterBar from '@/library/components/filter-bar'
-import FeedList from '@/library/components/feed-list'
+import FeedList from '@/library/components/feed-list-home'
 import uniLoadMore from '@/library/components/uni-ui/uni-load-more/uni-load-more.vue'
 import { adapterFeedList } from '@/library/utils/adapter-data'
 import {  LOADMORE_STATUS, LOADMORE_CONTENT_TEXT } from '@/library/constant'
