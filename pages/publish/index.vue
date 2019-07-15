@@ -76,22 +76,23 @@
 }
 .publish-card {
 	display: flex;
-	margin-top: 20px;
-	padding: 16px;
+	margin-top: 16px;
+	padding: 20px;
 	border-radius: 8px;
 	background-color: #ffffff;
 	box-shadow: 3px 3px 4px rgba(26, 26, 26, 0.2);
 }
 .publish-card-icon {
-	width: 70px;
-	height: 70px;
+	width: 65px;
+	height: 65px;
 	margin-left: 10px;
-	margin-right: 40px;
+	margin-right: 25px;
 }
 .publish-card-title {
 	flex: 1;
 	margin-top: 20px;
-	font-size: 20px;
+	font-size: 16px;
 	color: $A11; 
+	font-weight: bold;
 }
 </style>

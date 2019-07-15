@@ -14,5 +14,5 @@ function promisify (original) {
 }
 
 export {
-	promisify
+  promisify
 }

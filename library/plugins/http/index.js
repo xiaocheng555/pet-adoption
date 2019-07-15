@@ -26,9 +26,7 @@ export default {
 
 				if (this.interceptor.response) {
 					let newResponse = this.interceptor.response(response)
-					if (newResponse) {
-						response = newResponse
-					}
+					response = newResponse
 				}
 
 				if (statusCode >= 200 && statusCode <= 299) { //成功
@@ -59,6 +57,15 @@ export default {
 		if (!options) {
 			options = {}
 		}
+		// 去除undefined的值【新增by张焕城】
+		if (typeof data === 'object') {
+			for (let item in data) {
+				if (typeof data[item] === 'undefined') {
+					delete data[item]
+				}
+			}
+		}
+		
 		options.url = url
 		options.data = data
 		options.method = 'GET'

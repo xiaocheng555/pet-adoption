@@ -31,7 +31,7 @@
 </template>
 
 <script>
-  import { mapState, mapActions } from 'vuex'
+  import { mapState, mapGetters, mapActions } from 'vuex'
   import rewardImgUrl from '@/static/images/reward-qr-code.png'
   import defaultAvatar from '@/static/images/default-avatar.png'
   
@@ -74,6 +74,9 @@
     computed: {
       ...mapState([
         'userInfo',
+      ]),
+      ...mapGetters([
+        'hasLogin'
       ])
     },
     methods: {

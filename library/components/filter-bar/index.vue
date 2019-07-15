@@ -5,24 +5,22 @@
 		</view>
 		<view class="section-header-right">
 			<view class="action-item section-header-filter c-1px-r">
-        <image class="action-item-icon" src="/static/icons/filter-blue.svg"></image>
 				<picker 
-					class="c-ellipsis action-item-text"
 					:value="petClassIndex" 
 					:range="petClassOptions" 
 					range-key="label" 
 					@change="handlePetClassChange">
+        	<image class="action-item-icon" src="/static/icons/filter-blue.svg"></image>
 					{{ petClassLabel || '宠物类型' }}
 				</picker>
 			</view>
 			<view class="action-item">
-        <image class="action-item-icon" src="/static/icons/location-blue.svg"></image>
 				<!-- 省市区选择器 -->
 				<citypicker 
-					class="c-ellipsis action-item-text"
 	        v-if="cityData"
 					:city-data="cityData" 
 					@confirm="handleCitypickerConfirm">
+        	<image class="action-item-icon" src="/static/icons/location-blue.svg"></image>
           {{ addressLabel || '地址' }}
 				</citypicker>
 			</view>
@@ -84,7 +82,7 @@ export default {
 }
 .section-header-title {
 	flex: 1;
-	font-size: 16px;
+	font-size: 15px;
 	color: #000000;
 	line-height: 50px;
 }
@@ -96,18 +94,18 @@ export default {
 	padding-right: 16px;
 	
 	&:after {
-		border-color: $M10;
+		border-color: $M04;
 	}
 }
 .action-item {
 	display: flex;
 	font-size: 14px;
 	line-height: 20px;
-	color: $M10;
+	color: $M08;
 }
 .action-item-icon {
 	position: relative;
-	top: 1px;
+	top: 2px;
 	display: inline-block;
 	margin-right: 5px;
 	width: 18px;

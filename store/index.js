@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import CONFIG from '@/config'
+import feedModule from './feed'
 
 Vue.use(Vuex)
 
@@ -61,6 +62,10 @@ function fetchChinaAddressData() {
 }
 
 const store = new Vuex.Store({
+	// 模块
+	modules: {
+		feed: feedModule
+	},
 	state: {
 		userInfo: {
 			nickName: null,
@@ -69,7 +74,7 @@ const store = new Vuex.Store({
 			token: null
 		},
 		petClassOptions: [],
-		cityData: []
+		cityData: null
 	},
 	getters: {
 		hasLogin (state) {

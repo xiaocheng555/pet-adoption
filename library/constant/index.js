@@ -118,10 +118,12 @@ const petGenderOptions = [
 const petSterilizationOptions = [
 	{
 		label: '是',
+		text: '已绝育',
 		value: 0
 	},
 	{
 		label: '否',
+		text: '未绝育',
 		value: 1
 	},
 	{
@@ -134,10 +136,12 @@ const petSterilizationOptions = [
 const petVaccinationOptions = [
 	{
 		label: '是',
+		text: '已注射疫苗',
 		value: 0
 	},
 	{
 		label: '否',
+		text: '未注射疫苗',
 		value: 1
 	},
 	{
@@ -150,18 +154,43 @@ const petVaccinationOptions = [
 const petFreeOptions = [
 	{
 		label: '是',
+		text: '免费',
 		value: true
 	},
 	{
 		label: '否',
+		text: '不免费',
 		value: false
 	}
 ]
+
+// uni-load-more 组件的loading状态
+const LOADMORE_STATUS = {
+	more: 'more',
+	loading: 'loading',
+	noMore: 'noMore'
+}
+
+// uni-load-more 组件的显示内容
+const LOADMORE_CONTENT_TEXT = {
+	contentdown: '查看更多',
+	contentrefresh: '努力加载中...',
+	contentnomore: '没有更多数据了~'
+}
+
+// 宠物类型id
+const PET_CLASS_ID = {
+	cat: 'ba20f11b-8602-44c0-bfb9-98a7f21478ce',
+	dog: 'cdd4e5ae-45ec-4e18-bce1-73fd726a0783'
+}
 
 export {
 	ageOptions,
 	petGenderOptions,
 	petSterilizationOptions,
 	petVaccinationOptions,
-	petFreeOptions
+	petFreeOptions,
+	LOADMORE_STATUS,
+	LOADMORE_CONTENT_TEXT,
+	PET_CLASS_ID
 }
