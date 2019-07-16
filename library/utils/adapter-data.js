@@ -7,6 +7,7 @@ import {
   petFreeOptions
 } from '@/library/constant'
 import { dateFormat } from './date'
+import { getImgUrlByKey } from '@/library/utils'
 
 /*
  * 适配领养列表
@@ -45,7 +46,9 @@ function adapterFeedList(list) {
       petSex: getOptionsLabel(petGenderOptions, pet_sex),
       // 是否注射疫苗
       petVaccine: getOptionText(petVaccinationOptions, pet_vaccine),
-      petImages: pet_images,
+      petImages: pet_images.map(key => {
+        return getImgUrlByKey(key)
+      }),
       address: locality_name,
       // 宠物种类
       petVariety: pet_variety,

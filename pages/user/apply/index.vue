@@ -31,7 +31,7 @@ export default {
 			this.$http.get('/pet/api/v1/adoption/application').then(res => {
 				this.listLoading = false
 				if (res !== null) {
-					this.applyList = adapterApplyList(res)
+					this.applyList = res // adapterApplyList(res)
 				} else {
 					this.isEmptyData = true
 				}
@@ -39,9 +39,8 @@ export default {
 		},
 		// 某条申请领养点击事件
     handleApplyItemClick (item) {
-      this.updateApplyData(item)
       uni.navigateTo({
-        url: `/pages/apply/detail/index?id=${item.id}&useStore=true`
+        url: `/pages/apply/detail/index`
       })
     },
     // 某条申请领养删除事件

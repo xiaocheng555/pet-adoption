@@ -122,9 +122,9 @@
 			sumbitForm () {
 				this.$refs.cForm.validate((valid) => {
 					if (valid) {
-						this.$http.put(`/pet/api/v1/adoption/pet/${this.petId}/application`, {
+						this.$http.post(`/pet/api/v1/adoption/pet/${this.petId}/application`, {
 							state: PET_APPLY_STATE.wait,
-							infos: this.formData,
+							infos: JSON.stringify(this.formData),
 						}).then(() => {
 							this.showSuccessTip = true
 						}).catch(() => {
