@@ -28,6 +28,10 @@
 					<c-checker-item value="other">其他</c-checker-item>
 				</c-checker>
 			</c-form-item>
+			<c-form-item class="c-padding-bottem-sm" label="多选框测试" :required="true" block>
+				<c-checkbox :options="checkbox1" v-model="checkboxVal1"></c-checkbox>
+			</c-form-item>
+			{{checkboxVal1}}
 			<button @tap="sumbit">submit</button>
 		</c-form>
 	</view>
@@ -77,7 +81,12 @@
 					}
 				},
 				checkedList: [],
-				checkedList2: []
+				checkedList2: [],
+				checkbox1: [
+					{ value: '寒暑假、毕业不能带回家，另想办法处理' },
+					{ value: '不抛弃不放弃，一直带在身边' }
+				],
+				checkboxVal1: ['不抛弃不放弃，一直带在身边']
 			}
 		},
 		methods: {

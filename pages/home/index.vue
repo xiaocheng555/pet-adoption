@@ -21,7 +21,7 @@
 		</feed-list>
 		<uni-load-more 
 			:status="loadmoreStatus" 
-			:content-text="loadmoreContent" 
+ 			:content-text="loadmoreContent" 
 			color="#6C7880" />
 	</c-page>
 </template>
@@ -32,7 +32,7 @@ import FeedList from '@/library/components/feed-list-home'
 import uniLoadMore from '@/library/components/uni-ui/uni-load-more/uni-load-more.vue'
 import { adapterFeedList } from '@/library/utils/adapter-data'
 import {  LOADMORE_STATUS, LOADMORE_CONTENT_TEXT } from '@/library/constant'
-import { mapMutations } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 
 export default {
 	components: {
@@ -59,9 +59,15 @@ export default {
 			loadmoreContent: LOADMORE_CONTENT_TEXT
     }
 	},
+	computed: {
+		...mapState('feed', [
+			'refreshHome'
+		])
+	},
 	methods: {
 		...mapMutations('feed', [
-			'updateFeedData'
+			'updateFeedData',
+			'updateRefreshHome'
 		]),
 		// 获取领养列表
 		fetchFeedList () {
@@ -113,7 +119,20 @@ export default {
     this.$app.ready(() => {
 			this.fetchFeedList()
 		})
-  }
+	},
+	onShow () {
+		console.log(this.refreshHome, 'this.refreshHome')
+		if (this.refreshHome) {
+			// 刷新首页数据
+			this.feedListParams.city_id = undefined
+			this.feedListParams.city_id = undefined
+			this.feedListParams.petClass_id = undefined
+			this.refreshFeedList()
+			
+			// refreshHome 重置为false
+			this.updateRefreshHome(false)
+		}
+	}
 }
 </script>
 

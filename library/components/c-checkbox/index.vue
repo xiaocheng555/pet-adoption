@@ -24,44 +24,23 @@
 		methods: {
 			checkboxChange (e) {
 				let values = e.detail.value
-				this.handleCheckboxChange(values)
+				this.$emit('input', values)
+				this.updateOptions(values)
 			},
-			handleCheckboxChange (values) {
-				let options = this.options
-				for (var i = 0, lenI = options.length; i < lenI; ++i) {
-					const item = options[i]
-					if(values.includes(item.value)) {
-						this.$set(item, 'checked', true)
-						this.addItemValue(item.value)
-					} else{
-						this.$set(item, 'checked', false)
-						this.deleteItemValue(item.value)
+			updateOptions (values) {
+				this.options.forEach((option, index) => {
+					if (values.includes(option.value)) {
+						console.log('ok')
+						this.$set(this.options[index], 'checked', true)
+					} else {
+						this.$set(this.options[index], 'checked', false)
 					}
-				}
-			},
-			addItemValue (val) {
-				let _value = [].concat(this.value)
-				_value.push(val)
-				this.$emit('inupt', _value)
-			},
-			deleteItemValue (val) {
-				let _value = [].concat(this.value)
-				let index = this.value.indexOf(val)
-				if (index > -1) {
-					_value.splice(index, 1)
-					this.$emit('inupt', _value)
-				}
-			}
-		},
-		watch: {
-			value (val) {
-				this.handleCheckboxChange(val)
+				})
 			}
 		},
 		created () {
 			if (this.value.length > 0) {
-				console.log(this.value, 'this.va')
-				this.handleCheckboxChange(this.value)
+				this.updateOptions(this.value)
 			}
 		}
 	}

@@ -184,6 +184,14 @@ const PET_CLASS_ID = {
 	dog: 'cdd4e5ae-45ec-4e18-bce1-73fd726a0783'
 }
 
+// 宠物申请的状态（1等待审核，2通过，3申请失败，4宠物移除）
+const PET_APPLY_STATE = {
+	wait: 1,
+	success: 2,
+	fail: 3,
+	remove: 4
+}
+
 export {
 	ageOptions,
 	petGenderOptions,
@@ -192,5 +200,6 @@ export {
 	petFreeOptions,
 	LOADMORE_STATUS,
 	LOADMORE_CONTENT_TEXT,
-	PET_CLASS_ID
+	PET_CLASS_ID,
+	PET_APPLY_STATE
 }

@@ -1,13 +1,3 @@
-/*
- * File: validate.js
- * File Created: 2019-05-17 4:18:23 pm
- * Author: zhanghc11 (huancheng.zhang@meicloud.com)
- * Copyright: 2017 - 2019 Copyright (c), 深圳美云智数科技有限公司
- * -----
- * Last Modified: 2019-05-22 2:35:04 pm
- * Modified By: zhanghc11 (huancheng.zhang@meicloud.com>)
- */
-
 //  全局的正则表达式或者验证函数
 const pattern = {
   // 邮箱

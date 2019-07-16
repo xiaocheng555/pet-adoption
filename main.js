@@ -15,6 +15,7 @@ import CCheckbox from '@/library/components/c-checkbox'
 import CInlineLoading from '@/library/components/c-inline-loading'
 import CTag from '@/library/components/c-tag'
 import CTab from '@/library/components/c-tab'
+import CNoData from '@/library/components/c-no-data'
 
 Vue.config.productionTip = false
 
@@ -39,6 +40,7 @@ Vue.component('c-checker-item', CCheckerItem)
 Vue.component('c-inline-loading', CInlineLoading)
 Vue.component('c-tag', CTag)
 Vue.component('c-tab', CTab)
+Vue.component('c-no-data', CNoData)
 
 const app = new Vue({
     ...App,
