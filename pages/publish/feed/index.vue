@@ -126,7 +126,7 @@
 	import SubmitTipBar from '@/library/components/submit-tip-bar'
 	import Citypicker from '@/library/components/citypicker'
 	import validateConfig from '@/config/validate'
-	import { mapState } from 'vuex'
+	import { mapState, mapMutations } from 'vuex'
 	import { 
 		ageOptions,
 		petGenderOptions,
@@ -216,8 +216,8 @@
 		computed: {
 			...mapState([
 	      'cityData',
-	      'petClassOptions'
-	    ]),
+				'petClassOptions'
+			]),
 			// 显示选中的年龄
 			petAgeLabel () {
 				const ageOption = this.ageOptions[this.agePickerIndex]
@@ -225,6 +225,9 @@
 			}
 		},
 		methods: {
+			...mapMutations('feed', [
+				'updateRefreshHome'
+			]),
 			// 年龄选择器确定事件
 			handleAgePickerChange (e) {
 				this.agePickerIndex = e.target.value
@@ -249,6 +252,7 @@
 						this.$http.post('/pet/api/v1/adoption/pet', postData).then(() => {
 							uni.hideLoading()
 							this.showSuccessTip = true
+							this.updateRefreshHome(true)
 						}).catch(error => {
 							uni.showToast({
 								icon: 'none',
@@ -296,7 +300,9 @@
 		},
 		onLoad () {
 			this.$app.ready(() => {
-				this.$refs.cForm.initRules(this.formRules)
+				this.$nextTick(() => {
+					this.$refs.cForm.initRules(this.formRules)
+				})
 			})
 		}
 	}

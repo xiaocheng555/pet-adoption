@@ -3,6 +3,10 @@ function dateFormat (date, fmt = 'YYYY-MM-DD HH:mm:ss') {
     return ''
   }
   if (typeof date === 'string') {
+    // 格式：2019-06-27T13:53:32+08:00
+    if (/T(.+)\+/.test(date)) {
+      date = date.replace('T', ' ')
+    } 
     date = new Date(date.replace(/-/g, '/'))
   }
   if (typeof date === 'number') {

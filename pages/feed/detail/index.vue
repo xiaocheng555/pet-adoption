@@ -101,7 +101,7 @@ export default {
 		gotoApplyPage () {
 			let { id, petClassId } = this.currFeedData
 			uni.navigateTo({
-				url: `/pages/feed/apply/index?petId=${id}&petClassId=${petClassId}`
+				url: `/pages/apply/create/index?petId=${id}&petClassId=${petClassId}`
 			})
 		}
 	},
@@ -150,6 +150,7 @@ export default {
 .pet-info-desc-item {
 	display: inline-block;
 	margin-left: 10px;
+	font-weight: 100;
 }
 .pet-info-item {
 	box-sizing: border-box;

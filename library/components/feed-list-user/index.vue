@@ -15,16 +15,23 @@
 				<view class="feed-list-action"></view>
 				<view class="feed-list-delete" @tap.stop="handleDelete(item, index)">删除</view>
 			</view>
+			<view @tap.stop="handleAvatarBarClick(item)">
+				<avatar-bar :list="applyList">
+					已有{{applyList.length}}人申请
+				</avatar-bar>
+			</view>
 		</view>
 	</view>
 </template>
 
 <script>
 	import GridImages from '@/library/components/grid-images'
+	import AvatarBar from '@/library/components/avatar-bar'
 	import locationIcon from '@/static/icons/location-grey.svg'
 	export default {
 		components: {
-			GridImages
+			GridImages,
+			AvatarBar
 		},
 		props: {
 			list: {
@@ -34,12 +41,29 @@
 		},
 		data () {
 			return {
-				locationIcon
+				locationIcon,
+				applyList: [
+					{
+						id: 1,
+						src: 'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIBNWMbATA1z48yPkpaf9W8qOfCf3FicZaVHU0xGaulOQfnDOBRJCwLazo5Ue5GPPicnQgcSmQgKfsQ/132'
+					},
+					{
+						id: 2,
+						src: 'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIBNWMbATA1z48yPkpaf9W8qOfCf3FicZaVHU0xGaulOQfnDOBRJCwLazo5Ue5GPPicnQgcSmQgKfsQ/132'
+					},
+					{
+						id: 2,
+						src: 'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIBNWMbATA1z48yPkpaf9W8qOfCf3FicZaVHU0xGaulOQfnDOBRJCwLazo5Ue5GPPicnQgcSmQgKfsQ/132'
+					}
+				]
 			}
 		},
 		methods: {
 			handleItemClick (item) {
 				this.$emit('item-click', item)
+			},
+			handleAvatarBarClick (item) {
+				this.$emit('avatar-bar-click', item)
 			},
 			handleDelete (item, index) {
 				this.$emit('item-delete', {
@@ -71,7 +95,7 @@
 }
 .feed-list-date {
 	margin-bottom: 12px;
-	font-size: 14px;
+	font-size: 12px;
 	color: $M06;
 }
 .feed-list-tags {

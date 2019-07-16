@@ -25,7 +25,7 @@
 			:focus="focus"
 			@focus="handleFocus"
 			@blur="handleBlur"/>
-			<image :src="clearIcon" class="c-input-clear" v-if="clear && inputVal.length > 0" @click="handleClear"></image>
+			<image :src="clearIcon" class="c-input-clear" v-show="clear && inputVal.length > 0" @click="handleClear"></image>
 	</view>
 </template>
 

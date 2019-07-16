@@ -1,53 +1,64 @@
 <template>
 	<c-page title="申请领养">
-		<c-form class="c-form_label-row" ref="cForm" :form="formData">
-			<view v-for="(item, key) in formData" :key="key">
-				<view class="c-gutter-md"></view>
-				<!-- 单选框 radio -->
-				<template v-if="item.type === 'radio'">
-					<c-form-item class="c-padding-bottem-sm" :label="item.label" :required="item.required" block>
-						<c-radio :options="item.options" v-model="item.value"></c-radio>
-					</c-form-item>
-				</template>
-				<!-- 多选框 -->
-				<template v-else-if="item.type === 'checkbox'">
-					<c-form-item class="c-padding-bottem-sm" :label="item.label" :required="item.required" block>
-						<c-checkbox :options="item.options" v-model="item.value"></c-checkbox>
-					</c-form-item>
-				</template>
-				<!-- 富文本框 textarea -->
-				<template v-else>
-					<c-form-item :label="item.label" :required="item.required" block>
-						<c-input 
-							v-model="item.value" 
-							:height="item.height || '110px'" 
-							type="textarea" 
-							:placeholder="item.placeholder" 
-							:maxlength="500" />
-					</c-form-item>
-				</template>
+		<template v-if="!showSuccessTip">
+			<c-form class="c-form_label-row" ref="cForm" :form="formData">
+				<view v-for="(item, key) in formData" :key="key">
+					<view class="c-gutter-md"></view>
+					<!-- 单选框 radio -->
+					<template v-if="item.type === 'radio'">
+						<c-form-item class="c-padding-bottem-sm" :label="item.label" :required="item.required" block>
+							<c-radio :options="item.options" v-model="item.value"></c-radio>
+						</c-form-item>
+					</template>
+					<!-- 多选框 -->
+					<template v-else-if="item.type === 'checkbox'">
+						<c-form-item class="c-padding-bottem-sm" :label="item.label" :required="item.required" block>
+							<c-checkbox :options="item.options" v-model="item.value"></c-checkbox>
+						</c-form-item>
+					</template>
+					<!-- 富文本框 textarea -->
+					<template v-else>
+						<c-form-item :label="item.label" :required="item.required" block>
+							<c-input 
+								v-model="item.value" 
+								:height="item.height || '110px'" 
+								type="textarea" 
+								:placeholder="item.placeholder" 
+								:maxlength="500" />
+						</c-form-item>
+					</template>
+				</view>
+			</c-form>
+			<view class="footer"></view>
+			<view class="c-submit-button-fixed">
+				<button class="c-submit-button" @tap="sumbitForm">提交</button>
 			</view>
-		</c-form>
-		<view class="footer"></view>
-		<view class="c-submit-button-fixed">
-			<button class="c-submit-button" @tap="sumbitForm">提交</button>
-		</view>
+		</template>
+		<template v-else>
+			<submit-tip-bar />
+		</template>
 	</c-page>
 </template>
 
 <script>
+	import SubmitTipBar from '@/library/components/submit-tip-bar'
 	import validateConfig from '@/config/validate'
 	import dogFormData from './form-data/dog.js'
 	import catFormData from './form-data/cat.js'
-	import { PET_CLASS_ID } from '@/library/constant'
+	import otherFormData from './form-data/other.js'
+	import { PET_CLASS_ID, PET_APPLY_STATE } from '@/library/constant'
 	
 	export default {
+		components: {
+			SubmitTipBar
+		},
 		data () {
 			return {
 				formData: {},
 				formRules: {},
 				petClassId: null,
-				petId: null
+				petId: null,
+				showSuccessTip: false
 			}
 		},
 		methods: {
@@ -59,12 +70,12 @@
 				} else if (this.petClassId === PET_CLASS_ID.cat) {
 					form = catFormData
 				} else {
-					form = dogFormData
+					form = otherFormData
 				}
 				
 				const _formData = {}
 				form.forEach((item, index) => {
-					let key = 'question' + index
+					let key = 'question' + index + 1
 					_formData[key] = {}
 					// 题号
 					_formData[key].no = index + 1
@@ -111,16 +122,24 @@
 			sumbitForm () {
 				this.$refs.cForm.validate((valid) => {
 					if (valid) {
-						console.log('submit succwss')
-					} else {
-						console.log('error')
+						this.$http.put(`/pet/api/v1/adoption/pet/${this.petId}/application`, {
+							state: PET_APPLY_STATE.wait,
+							infos: this.formData,
+						}).then(() => {
+							this.showSuccessTip = true
+						}).catch(() => {
+							uni.showToast({
+								icon: 'none',
+								title: '提交失败'
+							})
+						})
 					}
 				})
 			}
 		},
 		onLoad (params) {
 			this.petClassId = params.petClassId
-			this.petId = params.id
+			this.petId = params.petId
 		},
 		created () {
 			this.$nextTick(() => {

@@ -6,6 +6,7 @@ import {
   petVaccinationOptions,
   petFreeOptions
 } from '@/library/constant'
+import { dateFormat } from './date'
 
 /*
  * 适配领养列表
@@ -30,7 +31,7 @@ function adapterFeedList(list) {
     } = item
     return {
       id: uuid,
-      date: created,
+      date: dateFormat(created, 'YYYY-MM-DD hh:mm'),
       name: 'Zhang°先森',
       avatar: 'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIBNWMbATA1z48yPkpaf9W8qOfCf3FicZaVHU0xGaulOQfnDOBRJCwLazo5Ue5GPPicnQgcSmQgKfsQ/132',
       petName: pet_name,
