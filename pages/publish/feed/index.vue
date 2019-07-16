@@ -127,6 +127,7 @@
 	import Citypicker from '@/library/components/citypicker'
 	import validateConfig from '@/config/validate'
 	import { mapState, mapMutations } from 'vuex'
+	import { getKeyFromImgUrl } from '@/library/utils'
 	import { 
 		ageOptions,
 		petGenderOptions,
@@ -247,7 +248,7 @@
 					if (valid) {
 						const postData = this.adapterPostData()
 						uni.showLoading({
-							title: '正在提交'
+							title: '正在提交...'
 						})
 						this.$http.post('/pet/api/v1/adoption/pet', postData).then(() => {
 							uni.hideLoading()
@@ -278,7 +279,7 @@
 					petDesc,
 					adoptionDesc,
 					imgList
-			  } = this.formData
+				} = this.formData
 				
 				return {
 					pet_name: petName,
@@ -294,12 +295,15 @@
 					pet_sterilization: petSterilization[0],
 					pet_disposition: petDesc,
 					adoption_request: adoptionDesc,
-					pet_images: imgList
+					pet_images: imgList.map(img => {
+						return getKeyFromImgUrl(img)
+					})
 				}
 			}
 		},
 		onLoad () {
 			this.$app.ready(() => {
+				// 在c-page组件的loading结束后，才initRules
 				this.$nextTick(() => {
 					this.$refs.cForm.initRules(this.formRules)
 				})

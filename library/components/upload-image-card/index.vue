@@ -93,7 +93,7 @@
 	margin-left: 8px;
 	margin-right: 3px;
   animation: circle infinite .75s linear;
-  border: 1.5px solid #1897F2;
+  border: 1px solid #1897F2;
   border-top-color: transparent;
   border-radius: 100%;
 }

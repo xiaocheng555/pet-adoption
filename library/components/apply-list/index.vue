@@ -5,7 +5,6 @@
 			:key="index"
 			@tap="handleItemClick(item, index)">
 			{{index}}
-			</view>
 		</view>
 	</view>
 </template>

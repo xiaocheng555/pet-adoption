@@ -26,6 +26,7 @@
 <script>
 	import cameraAddIcon from './assets/camera-add.svg'
 	import deleteIcon from './assets/delete.svg'
+	import { getImgUrlByKey } from '@/library/utils'
 	
 	// 图片上传使用oss
 	const OSS = {
@@ -35,9 +36,6 @@
 		signature: null,
 		accessid: null
 	}
-	
-	// 图片查看地址，key后面接上传时的图片名称
-	const IMAGE_VIEW_URL = 'https://pet.xpressiot.com/pet/static/img?key='
 	
 	export default {
 		props: {
@@ -136,9 +134,8 @@
 						signature,
 						accessid
 					} = OSS
-					// 文件扩展名
-					let extIndex = img.lastIndexOf('.');
-					let ext = img.substring(extIndex)
+					
+					let ext = this.getFileExt(img)
 					// 文件名
 					let fileName = new Date().getTime() + ext
 					let filekey = `${dir}/${fileName}`
@@ -158,7 +155,7 @@
 						},
 						success: (res) => {
 							if (res.statusCode === 200) {
-								const imgPath = IMAGE_VIEW_URL + fileName
+								const imgPath = getImgUrlByKey(fileName)
 								this.imgDataList.push(imgPath)
 								this.$emit('onSuccess', res)
 							} else {
@@ -170,6 +167,17 @@
 						}
 					})
 				})
+			},
+			// 获取文件扩展名
+			getFileExt (file) {
+				// 文件扩展名
+				let ext = ''
+				// 如果不是pc端上传图片
+				if (file.indexOf('blob:http') === -1) {
+					let extIndex = file.lastIndexOf('.');
+					ext = file.substring(extIndex)
+				}
+				return ext
 			},
 			// 预览图片
 			viewImage (index) {
