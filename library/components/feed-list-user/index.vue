@@ -17,7 +17,7 @@
 			</view>
 			<view @tap.stop="handleAvatarBarClick(item)">
 				<avatar-bar :list="applyList">
-					已有{{applyList.length}}人申请
+					已有{{applyList.length}}条申请记录
 				</avatar-bar>
 			</view>
 		</view>

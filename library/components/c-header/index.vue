@@ -5,7 +5,7 @@
 				<div class="c-header-left">
 					<slot name="left">
 						<view v-show="hasBack" @tap="backPage">
-							<image class="c-header-back-icon" :src="backIcon"></image>
+							<image class="c-header-back-icon" src="/static/icons/header__back.svg"></image>
 							<text class="c-header-back-text">返回</text>
 						</view>
 					</slot>
@@ -21,7 +21,6 @@
 </template>
 
 <script>
-	import backIcon from './assets/header__back.svg'
 	export default {
 		props: {
 			title: {
@@ -35,14 +34,12 @@
 		},
 		data () {
 			return {
-				backIcon,
 				statusBar: this.$statusBar,
 				customBar: this.$customBar
 			}
 		},
 		computed: {
 			style () {
-				console.log(this.statusBar, 'this.statusBar', this.$customBar)
 				return `height: ${this.customBar}px; padding-top: ${this.statusBar}px;`
 			}
 		},

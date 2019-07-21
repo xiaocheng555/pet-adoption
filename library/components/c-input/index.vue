@@ -100,6 +100,11 @@
 			value (val) {
 				this.inputVal = val
 			}
+		},
+		created () {
+			if (this.value) {
+				this.inputVal = this.value
+			}
 		}
 	}
 </script>

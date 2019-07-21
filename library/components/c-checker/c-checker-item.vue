@@ -50,18 +50,11 @@
 				}
 			}
 		},
-		watch: {
-			'checker.value' (val) {
-				console.log('======')
-				val.forEach(item => {
-					this.isChecked = item.value === this.value
-				})
-			}
-		},
-		mounted () {
+		created () {
 			const checker = this.cChecker || this.$parent
 			const _this = this
 			if (checker) {
+				// 对外暴露getCheckerItem方法
 				checker.checkerItems.push({
 					getCheckerItem () {
 						return _this

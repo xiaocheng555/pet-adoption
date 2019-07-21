@@ -151,7 +151,7 @@
 </script>
 
 <style>
-	.footer {
-		padding-bottom: 80px;
-	}
+.footer {
+	padding-bottom: 80px;
+}
 </style>
