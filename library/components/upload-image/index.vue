@@ -26,7 +26,7 @@
 <script>
 	import cameraAddIcon from './assets/camera-add.svg'
 	import deleteIcon from './assets/delete.svg'
-	import { getImgUrlByKey } from '@/library/utils'
+	import { getImgUrlByKey, getKeyFromImgUrl } from '@/library/utils'
 	
 	// 图片上传使用oss
 	const OSS = {
@@ -190,6 +190,10 @@
 			},
 			// 删除图片
 			deleteImage (index) {
+				let currImage = this.imgDataList[index]
+				let imgKey = getKeyFromImgUrl(currImage)
+				// 调用删除接口
+				this.$http.delete(`/pet/static/img/${imgKey}`)
 				this.imgDataList.splice(index, 1)
 			}
 		},
@@ -202,6 +206,9 @@
 			}
 		},
 		created () {
+			if (this.value) {
+				this.imgDataList = this.value
+			}
 			this.fetchOosData()
 		}
 	}

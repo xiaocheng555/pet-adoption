@@ -4,7 +4,7 @@
 			v-for="(item, index) in list" 
 			:key="index"
 			@tap="handleItemClick(item, index)">
-			{{index}}
+			申请{{index}}
 		</view>
 	</view>
 </template>

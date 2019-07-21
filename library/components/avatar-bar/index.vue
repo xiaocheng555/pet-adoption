@@ -1,12 +1,12 @@
 <template>
   <view class="avatar-bar c-1px-t">
     <view class="avatar-bar-images">
-  		<image 
+  		<!-- <image 
   			class="avatar-bar-image" 
   			v-for="(item, index) in list"
   			:key="index"
   			:src="item.src">
-  		</image>
+  		</image> -->
     </view>
 		<view class="avatar-bar-right">
 			<slot></slot>

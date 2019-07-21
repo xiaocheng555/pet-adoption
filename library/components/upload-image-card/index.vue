@@ -35,6 +35,10 @@
 			title: {
 				type: String,
 				default: '图片上传'
+			},
+			defaultImgList: {
+				type: Array,
+				default: () => []
 			}
 		},
 		data () {
@@ -60,7 +64,15 @@
 			// 获取图片列表
 			getImgList () {
 				return this.imgList
+			},
+			setImgList (value) {
+				if (Array.isArray(value)) {
+					this.imgList = value
+				}
 			}
+		},
+		created () {
+			this.imgList = this.defaultImgList
 		}
 	}
 </script>

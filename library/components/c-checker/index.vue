@@ -46,6 +46,17 @@
 					checkerItem.isChecked = false
 				})
 				this.checkedListVal = []
+			},
+			// 更新CheckerItem的选中值
+			updateCheckerItem () {
+				this.checkerItems.forEach(item => {
+					const checkerItem = item.getCheckerItem()
+					if (this.checkedListVal.includes(checkerItem.value)) {
+						checkerItem.isChecked = true
+					} else {
+						checkerItem.isChecked = false
+					}
+				})
 			}
 		},
 		watch: {
@@ -54,6 +65,15 @@
 			},
 			value (val) {
 				this.checkedListVal = val
+				this.updateCheckerItem()
+			}
+		},
+		created () {
+			if (this.value && this.value.length > 0) {
+				this.checkedListVal = this.value
+				this.$nextTick(() => {
+					this.updateCheckerItem()
+				})
 			}
 		}
 	}

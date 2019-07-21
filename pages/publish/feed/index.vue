@@ -2,13 +2,13 @@
 	<c-page title="发布送养">
 		<template v-if="!showSuccessTip">
 			<view class="c-gutter-md"></view>
-			<c-form class="c-form_label-width-md" ref="cForm" :form="formData">
+			<c-form class="c-form_label-width-md" ref="cForm" :form="feedFormData">
 				<c-form-item label="宠物昵称" required>
-					<c-input v-model="formData.petName" :maxlength="20" placeholder="请输入宠物昵称" clear />
+					<c-input v-model="feedFormData.petName" :maxlength="20" placeholder="请输入宠物昵称" clear />
 				</c-form-item>
 				<c-form-item label="宠物年龄" required>
 					<picker 
-						:value="agePickerIndex" 
+						:value="feedFormData.agePickerIndex" 
 						:range="ageOptions" 
 						range-key="label" 
 						@change="handleAgePickerChange">
@@ -16,7 +16,7 @@
 					</picker>
 				</c-form-item>
 				<c-form-item label="宠物种类" required>
-					<c-checker v-model="formData.petClass">
+					<c-checker v-model="feedFormData.petClass">
 						<c-checker-item 
 							v-for="option in petClassOptions" 
 							:value="option.value"
@@ -26,12 +26,12 @@
 					</c-checker>
 				</c-form-item>
 				<c-form-item label="宠物品种">
-					<c-input v-model="formData.petVariety" :maxlength="20" placeholder="选填" clear />
+					<c-input v-model="feedFormData.petVariety" :maxlength="20" placeholder="选填" clear />
 				</c-form-item>
 				<view class="c-gutter-md"></view>
 				
 				<c-form-item label="宠物性别" required>
-					<c-checker v-model="formData.petGender">
+					<c-checker v-model="feedFormData.petGender">
 						<c-checker-item 
 							v-for="option in petGenderOptions" 
 							:value="option.value"
@@ -41,7 +41,7 @@
 					</c-checker>
 				</c-form-item>
 				<c-form-item label="是否绝育" required>
-					<c-checker v-model="formData.petSterilization">
+					<c-checker v-model="feedFormData.petSterilization">
 						<c-checker-item 
 							v-for="option in petSterilizationOptions" 
 							:value="option.value"
@@ -51,7 +51,7 @@
 					</c-checker>
 				</c-form-item>
 				<c-form-item label="是否育苗" required>
-					<c-checker v-model="formData.petVaccination">
+					<c-checker v-model="feedFormData.petVaccination">
 						<c-checker-item 
 							v-for="option in petVaccinationOptions" 
 							:value="option.value"
@@ -61,7 +61,7 @@
 					</c-checker>
 				</c-form-item>
 				<c-form-item label="是否免费" required>
-					<c-checker v-model="formData.free">
+					<c-checker v-model="feedFormData.free">
 						<c-checker-item 
 							v-for="option in petFreeOptions" 
 							:value="option.value"
@@ -76,24 +76,24 @@
 						v-if="cityData" 
 						:city-data="cityData" 
 						@confirm="handleCitypickerConfirm">
-						<c-input v-model="formData.address" placeholder="请选择地址" disabled />
+						<c-input v-model="feedFormData.address" placeholder="请选择地址" disabled />
 					</citypicker>
 				</c-form-item>
 				<view class="c-gutter-md"></view>
 
 				<!-- <c-form-item label="联系人" required>
-					<c-input v-model="formData.name" :maxlength="20" placeholder="请输入联系人名称" clear />
+					<c-input v-model="feedFormData.name" :maxlength="20" placeholder="请输入联系人名称" clear />
 				</c-form-item>
 				<c-form-item label="手机号" required>
-					<c-input v-model="formData.telephone" :maxlength="11" type="number" clear />
+					<c-input v-model="feedFormData.telephone" :maxlength="11" type="number" clear />
 				</c-form-item>
 				<c-form-item label="微信号" placeholder="选填">
-					<c-input v-model="formData.weixin" clear :maxlength="30" />
+					<c-input v-model="feedFormData.weixin" clear :maxlength="30" />
 				</c-form-item> -->
 				
 				<c-form-item label="宠物详情" required block>
 					<c-input 
-						v-model="formData.petDesc" 
+						v-model="feedFormData.petDesc" 
 						height="110px" 
 						type="textarea" 
 						placeholder="请输入宠物详情" 
@@ -103,7 +103,7 @@
 				
 				<c-form-item label="领养要求" required block>
 					<c-input 
-						v-model="formData.adoptionDesc" 
+						v-model="feedFormData.adoptionDesc" 
 						height="110px" 
 						type="textarea" 
 						placeholder="请输入领养要求" 
@@ -111,8 +111,15 @@
 				</c-form-item>
 				<view class="c-gutter-md"></view>
 				
-				<upload-image-card ref="uploadImageCard" title="宠物图片"></upload-image-card>
-				<button class="c-submit-button" @tap="sumbitForm">提交</button>
+				<upload-image-card 
+					:default-img-list="feedFormData.imgList"
+					ref="uploadImageCard" 
+					title="宠物图片">
+				</upload-image-card>
+				<view class="footer"></view>
+				<view class="c-submit-button-fixed">
+					<button class="c-submit-button" @tap="sumbitForm">提交</button>
+				</view>
 			</c-form>
 		</template>
 		<template v-else>
@@ -144,23 +151,23 @@
 		},
 		data () {
 			return {
-				formData: {
-					petName: '',
-					petAge: '',
-					petClass: [],
-					petVariety: '',
-					address: '',
-					petGender: [],
-					petSterilization: [],
-					petVaccination: [],
-					free: [],
-					// name: '',
-					// telephone: '',
-					// weixin: '',
-					petDesc: '',
-					adoptionDesc: '',
-					imgList: []
-				},
+				// feedFormData: {
+				// 	petName: '',
+				// 	petAge: '',
+				// 	petClass: [],
+				// 	petVariety: '',
+				// 	address: '',
+				// 	petGender: [],
+				// 	petSterilization: [],
+				// 	petVaccination: [],
+				// 	free: [],
+				// 	// name: '',
+				// 	// telephone: '',
+				// 	// weixin: '',
+				// 	petDesc: '',
+				// 	adoptionDesc: '',
+				// 	imgList: []
+				// },
 				formRules: {
 					petName: [
 						{ validator: validateConfig.nonEmpty, message: '请输入宠物昵称' }
@@ -208,7 +215,7 @@
 				petSterilizationOptions,
 				petVaccinationOptions,
 				petFreeOptions,
-				agePickerIndex: null,
+				// feedFormData.agePickerIndex: null,
 				localityId: null,
 				// 是否显示提交成功的提示
 				showSuccessTip: false
@@ -219,30 +226,70 @@
 	      'cityData',
 				'petClassOptions'
 			]),
+			...mapState('feed', [
+	      'feedFormData'
+			]),
 			// 显示选中的年龄
 			petAgeLabel () {
-				const ageOption = this.ageOptions[this.agePickerIndex]
+				const ageOption = this.ageOptions[this.feedFormData.agePickerIndex]
 				return ageOption ? ageOption.label : ''
 			}
 		},
 		methods: {
 			...mapMutations('feed', [
-				'updateRefreshHome'
+				'updateRefreshHome',
+				'clearFeedFormData'
 			]),
+			// 处理表单缓存
+			handleFormCache () {
+				let hasCacheData = false 
+				console.log(this.feedFormData)
+				Object.entries(this.feedFormData).some(([key, value]) => {
+					if (typeof value === 'string' && value) {
+						hasCacheData = true
+						return true
+					} 
+				  if (Array.isArray(value) && value.length > 0) {
+						hasCacheData = true
+						return true
+					}
+				})
+				if (hasCacheData) {
+					this.$promisify(uni.showModal)({
+						title: '提示',
+						confirmText: '使用',
+						cancelText: '舍弃',
+						content: '发现有未使用的草稿，是否使用'
+					}).then(res => {
+						if (res.cancel) {
+							this.clearImgList()
+							this.clearFeedFormData()
+							this.$refs.uploadImageCard.setImgList([])
+						}
+					})
+				}
+			},
+			// 删除服务端的图片
+			clearImgList (url) {
+				this.feedFormData.imgList.forEach(img => {
+					const imgKey = getKeyFromImgUrl(img)
+					this.$http.delete(`/pet/static/img/${imgKey}`)
+				})
+			},
 			// 年龄选择器确定事件
 			handleAgePickerChange (e) {
-				this.agePickerIndex = e.target.value
-				const ageOption = this.ageOptions[this.agePickerIndex]
-				this.formData.petAge = ageOption.value
+				this.feedFormData.agePickerIndex = e.target.value
+				const ageOption = this.ageOptions[this.feedFormData.agePickerIndex]
+				this.feedFormData.petAge = ageOption.value
 			},
 			// 地址选择器的确认事件
 			handleCitypickerConfirm ({labels, values}) {
-				this.formData.address = labels.join('·')
+				this.feedFormData.address = labels.join('·')
 				this.localityId = values[2]
 			},
 			// 提交表单
 			sumbitForm () {
-				this.formData.imgList = this.$refs.uploadImageCard.getImgList()
+				this.feedFormData.imgList = this.$refs.uploadImageCard.getImgList()
 				
 				this.$refs.cForm.validate((valid) => {
 					if (valid) {
@@ -279,7 +326,7 @@
 					petDesc,
 					adoptionDesc,
 					imgList
-				} = this.formData
+				} = this.feedFormData
 				
 				return {
 					pet_name: petName,
@@ -303,6 +350,7 @@
 		},
 		onLoad () {
 			this.$app.ready(() => {
+				this.handleFormCache()
 				// 在c-page组件的loading结束后，才initRules
 				this.$nextTick(() => {
 					this.$refs.cForm.initRules(this.formRules)
@@ -311,3 +359,9 @@
 		}
 	}
 </script>
+
+<style lang="scss">
+.footer {
+	padding-bottom: 80px;
+}
+</style>

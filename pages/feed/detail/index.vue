@@ -1,5 +1,6 @@
 <template>
 	<c-page :has-header="false">
+		<header-back></header-back>
 		<image-swiper :list="currFeedData.petImages || []"></image-swiper>
 		<view class="feed-detail-main">
 			<!-- 宠物信息 -->
@@ -71,9 +72,12 @@
 import { mapState } from 'vuex'
 import uniSwiperDot from '@/library/components/uni-ui/uni-swiper-dot/uni-swiper-dot.vue'
 import ImageSwiper from '@/library/components/image-swiper'
+import HeaderBack from '@/library/components/header-back'
+import { adapterFeedList } from '@/library/utils/adapter-data'
 
 export default {
 	components: {
+		HeaderBack,
 		ImageSwiper
 	},
 	data () {
@@ -88,8 +92,10 @@ export default {
 	},
 	methods: {
 		// 获取领养详情的数据
-		fetchFeedData () {
-			
+		fetchFeedData (petId) {
+			this.$http.get(`/pet/api/v1/adoption/pet/${petId}`).then(res => {
+				this.currFeedData = adapterFeedList([res])[0]
+			})
 		},
 		// 返回首页
 		backHomePage () {

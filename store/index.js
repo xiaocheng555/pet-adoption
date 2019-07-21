@@ -13,6 +13,7 @@ function getToken(code) {
 		return res.token
 	}).catch(err => {
 		console.error('获取token失败：', err)
+		return Promise.reject(err)
 	})
 }
 
@@ -126,8 +127,9 @@ const store = new Vuex.Store({
 						})
 					})
         }).catch((err) => {
+					console.log('erasdfasjdflr', 'err')
 					dispatch('showRetryAuthModal', {
-						content: '获取token，请重试'
+						content: '获取token失败，请重试'
 					})
 				})
       })
@@ -139,11 +141,13 @@ const store = new Vuex.Store({
 				commit('changePetClassData', data)
 			}).catch((err) => {
 				console.error('获取宠物类型失败:', err)
+				return Promise.reject(err)
 			})
 			const p2 = fetchChinaAddressData().then((data) => {
 				commit('changeCityData', data)
 			}).catch((err) => {
 				console.error('获取省市区地址失败:', err)
+				return Promise.reject(err)
 			})
 			return Promise.all([p1, p2])
 		},
@@ -151,6 +155,8 @@ const store = new Vuex.Store({
 		showRetryAuthModal({ dispatch }, {content}) {
 			Vue.prototype.$promisify(uni.showModal)({
 				title: '提示',
+				showCancel: false,
+				confirmText: '重试',
 				content: content
 			}).then(res => {
 				if (res.confirm) {
