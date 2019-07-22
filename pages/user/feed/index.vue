@@ -7,7 +7,8 @@
       :list="feedList" 
       @avatar-bar-click="handleAvatarBarClick"
       @item-click="handleFeedItemClick"
-      @item-delete="handleFeedDelete">
+      @item-delete="handleFeedDelete"
+      @item-cancel="handleFeedItemCancel">
     </feed-list>
   </c-page>
 </template>
@@ -16,7 +17,8 @@
 import { mapMutations } from 'vuex'
 import { adapterFeedList } from '@/library/utils/adapter-data'
 import FeedList from '@/library/components/feed-list-user'
-  
+import { PET_FEED_STATE } from '@/library/constant'
+   
 export default {
   components: {
     FeedList
@@ -73,10 +75,37 @@ export default {
         }
       })
     },
+    // 某条领养取消事件
+    handleFeedItemCancel (data) {
+      let { item, index } = data
+      let cancelState = PET_FEED_STATE.cancel.value
+      this.$promisify(uni.showModal)({ 
+        title: '提示',
+        content: '确定取消？'
+      }).then(res => {
+        if (res.confirm) {
+          uni.showLoading({
+						title: '正在取消...'
+					})
+          this.$http.put(`/pet/api/v1/adoption/pet/${item.id}`, {
+            pet_state: cancelState
+          }).then(() => {
+            uni.hideLoading()
+            // 设置为已取消状态
+            this.feedList[index].petState = cancelState
+          }).catch(() => {
+            uni.showToast({
+              icon: 'none',
+              title: '取消操作失败'
+            })
+          })
+        }
+      })
+    },
     // 申请人头像bar点击事件
     handleAvatarBarClick (item) {
       uni.navigateTo({
-        url: `/pages/apply/list/index`
+        url: `/pages/apply/list/index?petId=${item.id}`
       })
     }
   },

@@ -1,7 +1,9 @@
 <template>
   <view class="no-data">
     <image class="no-data-image" src="/static/icons/no-data.svg"></image>
-    <view class="no-data-tip">暂无数据</view>
+    <view class="no-data-tip">
+      <slot>暂无数据</slot>
+    </view>
   </view>
 </template>
 
@@ -12,7 +14,8 @@ export default {
 
 <style lang='scss'>
 .no-data {
-  padding-top: 30px 0 10px;
+  padding-top: 30px;
+  padding-bottom: 30px;
   text-align: center;
 }
 .no-data-image {

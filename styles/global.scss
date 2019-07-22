@@ -24,29 +24,40 @@ page {
 	padding-bottom: 10px !important;
 }
 
-/* 按钮 */
-.c-submit-button {
-	height: 42px;
-	margin: 20px 16px;
-	border-radius: 6px;
-	font-size: 16px;
-	line-height: 42px;
-	color: #ffffff;
-	background-color: #1897F2;
+/* 底部固定操作条 */
+.c-fixed-bottom-bar-wrapper {
+	margin-top: 20px;
+	height: 62px;
 }
-.c-submit-button-fixed {
-	border-top: 1px solid #DFE3E6;
+.c-fixed-bottom-bar {
 	position: fixed;
 	left: 0;
 	right: 0;
 	bottom: 0;
 	z-index: 10;
+	padding: 10px 16px;
+	border-top: 1px solid #DFE3E6;
 	background-color: #ffffff;
 }
-.c-submit-button-fixed .c-submit-button {
-		margin-top: 10px;
-		margin-bottom: 10px;
-	}
+button.c-button-primary,
+button.c-button-danger {
+  height: 42px;
+	border-radius: 6px;
+	font-size: 16px;
+	line-height: 42px;
+	color: #ffffff !important;
+}
+.c-button-primary {
+	background-color: #1897F2 !important;
+}
+.c-button-danger {
+	background-color: #F25555 !important;
+}
+.c-button-small {
+	height: 38px;
+	line-height: 38px;
+	font-size: 14px;
+}
 
 /* 表单label宽度统一设置 */
 .c-form_label-width-sm .c-form-item-label {
@@ -81,7 +92,26 @@ page {
 	color: #6C7880;
 }
 
+// 加载更多样式
 .uni-load-more {
-	padding: 12px 0;
+	margin-bottom: 10px;
+	padding: 10px 0;
+	background-color: #ffffff;
 }
 
+// 多状态的文字颜色
+.c-text-default {
+	color: #6C7880;
+}
+.c-text-danger {
+	color: #F25555;
+}
+.c-text-success {
+	color: #1DBF6E;
+}
+.c-text-warn {
+	color: #FF9933;
+}
+.c-text-primary {
+	color: #1897F2;
+}

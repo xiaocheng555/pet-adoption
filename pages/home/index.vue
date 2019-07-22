@@ -19,9 +19,13 @@
 		</filter-bar>
 		<feed-list :list="feedList" @item-click="handleFeedItemClick">
 		</feed-list>
+		<view style="margin-top: -70px;" v-if="isEmptyData">
+    	<c-no-data>暂时没有数据，敬请期待~</c-no-data>
+		</view>
 		<uni-load-more 
+			v-else
 			:status="loadmoreStatus" 
- 			:content-text="loadmoreContent" 
+			:content-text="loadmoreContent" 
 			color="#6C7880" />
 	</c-page>
 </template>
@@ -42,6 +46,7 @@ export default {
 	},
   data () {
     return {
+			isEmptyData: false,
 			// 领养列表
 			feedList: [],
 			// 领养列表请求参数
@@ -80,6 +85,7 @@ export default {
 				} else {
 					this.loadmoreStatus = LOADMORE_STATUS.noMore
 				}
+				this.isEmptyData = this.feedList.length === 0
 			})
 		},
 		// 地址筛选

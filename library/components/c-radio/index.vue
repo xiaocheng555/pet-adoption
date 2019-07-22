@@ -2,7 +2,7 @@
 	<radio-group @change="radioChange">
 		<label class="c-radio-item" v-for="(item, index) in options" :key="item.value">
 			<view class="c-radio-radio">
-				<radio :value="item.value" :checked="index === current" />
+				<radio :value="item.value" :checked="index === current" :disabled="disabled" />
 			</view>
 			<view class="c-radio-label">{{ item.label || item.value }}</view>
 		</label>
@@ -18,6 +18,10 @@
 			},
 			value: {
 				default: ''
+			},
+			disabled: {
+				type: Boolean,
+				default: false
 			}
 		},
 		data () {

@@ -2,7 +2,7 @@
 	<checkbox-group @change="checkboxChange">
 		<label class="c-checkbox-item" v-for="item in options" :key="item.value">
 			<view class="c-checkbox-checkbox">
-				<checkbox :value="item.value" :checked="item.checked" />
+				<checkbox :value="item.value" :checked="item.checked" :disabled="disabled" />
 			</view>
 			<view class="c-checkbox-label">{{item.name || item.value}}</view>
 		</label>
@@ -17,8 +17,12 @@
 				default: () => []
 			},
 			value: {
-				default: () => [],
-				default: []
+				type: Array,
+				default: () => []
+			},
+			disabled: {
+				type: Boolean,
+				default: false
 			}
 		},
 		methods: {

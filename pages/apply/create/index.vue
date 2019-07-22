@@ -29,9 +29,10 @@
 					</template>
 				</view>
 			</c-form>
-			<view class="footer"></view>
-			<view class="c-submit-button-fixed">
-				<button class="c-submit-button" @tap="sumbitForm">提交</button>
+			<view class="c-fixed-bottom-bar-wrapper">
+				<view class="c-fixed-bottom-bar">
+					<button class="c-button-primary" @tap="sumbitForm">提交</button>
+				</view>
 			</view>
 		</template>
 		<template v-else>
@@ -75,7 +76,7 @@
 				
 				const _formData = {}
 				form.forEach((item, index) => {
-					let key = 'question' + index + 1
+					let key = 'question' + (index + 1)
 					_formData[key] = {}
 					// 题号
 					_formData[key].no = index + 1
@@ -123,7 +124,7 @@
 				this.$refs.cForm.validate((valid) => {
 					if (valid) {
 						this.$http.post(`/pet/api/v1/adoption/pet/${this.petId}/application`, {
-							state: PET_APPLY_STATE.wait,
+							state: PET_APPLY_STATE.wait.value,
 							infos: JSON.stringify(this.formData),
 						}).then(() => {
 							this.showSuccessTip = true
@@ -151,7 +152,5 @@
 </script>
 
 <style>
-.footer {
-	padding-bottom: 80px;
-}
+
 </style>
