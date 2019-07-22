@@ -53,16 +53,17 @@
 				</view>
 			</view>
 		</view>
-		<!-- 底部功能菜单 -->
-		<view class="footer-menu">
-			<view class="footer-menu-aside">
-				<view class="footer-menu-back-home" @tap="backHomePage">
-					<image class="footer-menu-icon" src="/static/icons/home.svg"></image> 
-					返回首页
+		<view class="c-fixed-bottom-bar-wrapper">
+			<view class="c-fixed-bottom-bar">
+				<view class="bottom-bar-inner">
+					<view class="bottom-bar-left" @tap="backHomePage">
+						<image class="bottom-bar-home-icon" src="/static/icons/home.svg"></image> 
+						返回首页
+					</view>
+					<view class="bottom-bar-right">
+						<button class="c-button-primary c-button-small" @tap="gotoApplyPage">申请领养</button>
+					</view>
 				</view>
-			</view>
-			<view class="footer-menu-main">
-				<button class="footer-menu-button" @tap="gotoApplyPage">申请领养</button>
 			</view>
 		</view>
 	</c-page>
@@ -180,32 +181,22 @@ export default {
 	width: 16px;
 	height: 16px;
 }
-.footer-menu {
-	display: flex;
-	position: fixed;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	height: 60px;
-	align-items: center;
-	padding: 0 16px;
-	background-color: #ffffff;
-	border-top: 1px solid $M04;
-}
-.footer-menu-aside {
-	width: 120px;
-}
-.footer-menu-main {
-	flex: 1;
-}
-.footer-menu-back-home {
+.bottom-bar-inner {
 	display: flex;
 	align-items: center;
+}
+.bottom-bar-left {
+	width: 40%;
 	color: $M10;
 	font-size: 14px;
-	line-height: 14px;
+	line-height: 26px;
 }
-.footer-menu-icon {
+.bottom-bar-right {
+	flex: 1;
+}
+.bottom-bar-home-icon {
+	position: relative;
+	top: 4px;
 	display: inline-block;
 	margin-right: 5px;
 	width: 22px;

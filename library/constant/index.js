@@ -186,10 +186,45 @@ const PET_CLASS_ID = {
 
 // 宠物申请的状态（1等待审核，2通过，3申请失败，4宠物移除）
 const PET_APPLY_STATE = {
-	wait: 1,
-	success: 2,
-	fail: 3,
-	remove: 4
+	wait: {
+		value: 1,
+		label: '待审',
+		class: 'c-text-warn'
+	},
+	success: {
+		value: 2,
+		label: '通过',
+		class: 'c-text-success'
+	},
+	fail: {
+		value: 3,
+		label: '拒绝',
+		class: 'c-text-danger'
+	},
+	remove: {
+		value: 4,
+		label: '宠物已移除',
+		class: 'c-text-danger'
+	}
+}
+
+// 宠物送养状态（1进行中，2完成，3取消）
+const PET_FEED_STATE = {
+	processing: {
+		value: 1,
+		label: '进行中',
+		class: 'c-text-warn'
+	},
+	success: {
+		value: 2,
+		label: '已完成',
+		class: 'c-text-success'
+	},
+	cancel: {
+		value: 3,
+		label: '已取消',
+		class: 'c-text-danger'
+	}
 }
 
 export {
@@ -201,5 +236,6 @@ export {
 	LOADMORE_STATUS,
 	LOADMORE_CONTENT_TEXT,
 	PET_CLASS_ID,
-	PET_APPLY_STATE
+	PET_APPLY_STATE,
+	PET_FEED_STATE
 }

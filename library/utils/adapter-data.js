@@ -23,6 +23,7 @@ function adapterFeedList(list) {
       pet_sterilization,
       pet_vaccine,
       pet_age,
+      pet_state,
       free,
       pet_images,
       locality_name,
@@ -55,7 +56,9 @@ function adapterFeedList(list) {
       // 宠物领养需求
       adoptionRequest: adoption_request,
       // 宠物描述
-      petDesc: pet_disposition
+      petDesc: pet_disposition,
+      // 宠物状态（1进行中，2完成，3取消）
+      petState: pet_state
     }
   })
 }

@@ -116,9 +116,11 @@
 					ref="uploadImageCard" 
 					title="宠物图片">
 				</upload-image-card>
-				<view class="footer"></view>
-				<view class="c-submit-button-fixed">
-					<button class="c-submit-button" @tap="sumbitForm">提交</button>
+				
+				<view class="c-fixed-bottom-bar-wrapper">
+					<view class="c-fixed-bottom-bar">
+						<button class="c-button-primary" @tap="sumbitForm" :disabled="submitBntDisabled">提交</button>
+					</view>
 				</view>
 			</c-form>
 		</template>
@@ -218,7 +220,8 @@
 				// feedFormData.agePickerIndex: null,
 				localityId: null,
 				// 是否显示提交成功的提示
-				showSuccessTip: false
+				showSuccessTip: false,
+				submitBntDisabled: false
 			}
 		},
 		computed: {
@@ -297,8 +300,10 @@
 						uni.showLoading({
 							title: '正在提交...'
 						})
+						this.submitBntDisabled = true
 						this.$http.post('/pet/api/v1/adoption/pet', postData).then(() => {
 							uni.hideLoading()
+							this.submitBntDisabled = false
 							this.showSuccessTip = true
 							this.updateRefreshHome(true)
 						}).catch(error => {
@@ -306,6 +311,7 @@
 								icon: 'none',
 								title: '提交失败'
 							})
+							this.submitBntDisabled = false
 							console.error('提交失败:', error)
 						})
 					}
@@ -361,7 +367,5 @@
 </script>
 
 <style lang="scss">
-.footer {
-	padding-bottom: 80px;
-}
+
 </style>
