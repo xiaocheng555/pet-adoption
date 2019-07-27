@@ -25,7 +25,7 @@
 			<view class="feed-list-action-wrap c-1px-t">
 				<!-- <view class="feed-list-delete" @tap.stop="handleDelete(item, index)">删除</view> -->
 				<view 
-					v-if="item.petState !== PET_FEED_STATE.processing.value" 
+					v-if="item.petState === PET_FEED_STATE.processing.value" 
 					class="feed-list-cancel" 
 					@tap.stop="handleCancel(item, index)">
 					取消送养
@@ -115,7 +115,7 @@ export default {
   margin-left: 8px;
 }
 .feed-list-body {
-	padding: 12px 16px 0;
+	padding: 12px 16px 5px;
 }
 .feed-list-date {
 	font-size: 12px;

@@ -13,6 +13,8 @@
 
 <script>
 import ApplyList from '@/library/components/apply-list'
+import { PET_APPLY_STATE } from '@/library/constant'
+import { dateFormat } from '@/library/utils/date'
 
 export default {
 	components: {
@@ -20,6 +22,7 @@ export default {
 	},
 	data() {
 		return {
+      PET_APPLY_STATE,
 			applyList: [],
 	    listLoading: true,
 	    isEmptyData: false
@@ -31,16 +34,47 @@ export default {
 			this.$http.get('/pet/api/v1/adoption/application').then(res => {
 				this.listLoading = false
 				if (res !== null) {
-					this.applyList = res // adapterApplyList(res)
+					this.applyList = this.adapterApplyList(res)
 				} else {
 					this.isEmptyData = true
 				}
 			})
+    },
+    // 适配申请领养列表
+    adapterApplyList (list) {
+      return list.map(item => {
+        let stateObj = this.getApplyStateObj(item.state)
+        return {
+          applyId: item.uuid,
+          petId: item.pet_id,
+          userId: item.user_id,
+          state: item.state,
+          stateClass: stateObj.class,
+          stateLabel: stateObj.label,
+          remark: item.remark,
+          infos: item.infos,
+          nickName: item.user.nick_name,
+          avatarUrl: item.user.avatar_url,
+          date: dateFormat(item.created, 'YYYY-MM-DD hh:mm'),
+        }
+      })
+    },
+    // 获取审批状态的对象
+		getApplyStateObj (state) {
+			let stateObj = {}
+			Object.values(PET_APPLY_STATE).some(item => {
+				console.log(item, 'value')
+				if (item.value === state) {
+					stateObj = item
+					return true
+				}
+			})
+			return stateObj
 		},
 		// 某条申请领养点击事件
     handleApplyItemClick (item) {
       uni.navigateTo({
-        url: `/pages/apply/detail/index`
+        url: `/pages/apply/detail/index?applyId=${item.applyId}`
       })
     },
     // 某条申请领养删除事件

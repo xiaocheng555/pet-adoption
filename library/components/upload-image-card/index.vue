@@ -36,7 +36,7 @@
 				type: String,
 				default: '图片上传'
 			},
-			defaultImgList: {
+			value: {
 				type: Array,
 				default: () => []
 			}
@@ -60,19 +60,20 @@
 			},
 			uploadFail (err) {
 				this.uploadingCount--
+			}
+		},
+		watch: {
+			imgList (val) {
+				this.$emit('input', val)
 			},
-			// 获取图片列表
-			getImgList () {
-				return this.imgList
-			},
-			setImgList (value) {
-				if (Array.isArray(value)) {
-					this.imgList = value
-				}
+			value (val) {
+				this.imgList = val
 			}
 		},
 		created () {
-			this.imgList = this.defaultImgList
+			if (this.value.length > 0) {
+				this.imgList = this.value
+			}
 		}
 	}
 </script>

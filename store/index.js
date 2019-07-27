@@ -102,6 +102,11 @@ const store = new Vuex.Store({
 					nickName: userInfo.nickName,
 					avatarUrl: userInfo.avatarUrl
 				})
+				// 后台更新用户数据
+				Vue.prototype.$http.put('/pet/api/v1/user', {
+					nick_name: userInfo.nickName,
+					avatar_url: userInfo.avatarUrl
+				})
 			})
 		},
 		// 授权，从后台获取token

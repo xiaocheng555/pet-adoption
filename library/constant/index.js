@@ -128,6 +128,7 @@ const petSterilizationOptions = [
 	},
 	{
 		label: '不详',
+		text: '绝育·不详',
 		value: 2
 	}
 ]
@@ -146,6 +147,7 @@ const petVaccinationOptions = [
 	},
 	{
 		label: '不详',
+		text: '注射疫苗·不详',
 		value: 2
 	}
 ]

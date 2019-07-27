@@ -1,60 +1,67 @@
 <template>
   <c-page title="申请内容">
-    <c-form class="c-form_label-row" ref="cForm">
-			<view v-for="(item, key) in applyFormData" :key="key">
-				<view class="c-gutter-md"></view>
-				<!-- 单选框 radio -->
-				<template v-if="item.type === 'radio'">
-					<c-form-item class="c-padding-bottem-sm" :label="item.label" :required="item.required" block>
-						<c-radio :options="item.options" v-model="item.value" disabled></c-radio>
-					</c-form-item>
-				</template>
-				<!-- 多选框 -->
-				<template v-else-if="item.type === 'checkbox'">
-					<c-form-item class="c-padding-bottem-sm" :label="item.label" :required="item.required" block>
-						<c-checkbox :options="item.options" v-model="item.value" disabled></c-checkbox>
-					</c-form-item>
-				</template>
-				<!-- 富文本框 textarea -->
-				<template v-else>
-					<c-form-item :label="item.label" block>
-            <view class="input-text">{{ item.value || '未填写' }}</view>
-					</c-form-item>
-				</template>
-			</view>
-		</c-form>
-		<view class="c-fixed-bottom-bar-wrapper">
-			<view class="c-fixed-bottom-bar">
-				<!-- 审批操作 -->
-				<view v-if="applyData.state === PET_APPLY_STATE.wait.value" class="bottom-bar-inner">
-					<button class="bottom-bar-item c-button-danger" @tap="showRefusePopup">拒绝</button>
-					<button class="bottom-bar-item c-button-primary" @tap="submitApprove(PET_APPLY_STATE.success.value)">通过</button>
+		<c-inline-loading align="center" v-if="pageLoading"></c-inline-loading>
+		<template v-else>
+	    <c-form class="c-form_label-row" ref="cForm">
+				<view v-for="(item, index) in applyFormData" :key="index">
+					<view class="c-gutter-md"></view>
+					<!-- 单选框 radio -->
+					<template v-if="item.type === 'radio'">
+						<c-form-item class="c-padding-bottem-sm" :label="item.label" :required="item.required" block>
+							<c-radio :options="item.options" v-model="item.value" disabled></c-radio>
+						</c-form-item>
+					</template>
+					<!-- 多选框 -->
+					<template v-else-if="item.type === 'checkbox'">
+						<c-form-item class="c-padding-bottem-sm" :label="item.label" :required="item.required" block>
+							<c-checkbox :options="item.options" v-model="item.value" disabled></c-checkbox>
+						</c-form-item>
+					</template>
+					<!-- 富文本框 textarea -->
+					<template v-else>
+						<c-form-item :label="item.label" block>
+	            <view class="input-text">{{ item.value || '未填写' }}</view>
+						</c-form-item>
+					</template>
 				</view>
-				<!-- 显示审批结果 -->
-				<view v-else class="bottom-bar-result">
-					审批状态: 
-					<text class="bottom-bar-state-text" :class="[ getApplyStateObj(applyData.state).class ]">
-						{{ getApplyStateObj(applyData.state).label }}
-					</text> 
+			</c-form>
+			<view class="c-fixed-bottom-bar-wrapper">
+				<view class="c-fixed-bottom-bar">
+					<!-- 审批操作 -->
+					<view v-if="applyData.state === PET_APPLY_STATE.wait.value" class="bottom-bar-inner">
+						<button class="bottom-bar-item c-button-danger" @tap="showRefusePopup">拒绝</button>
+						<button class="bottom-bar-item c-button-primary" @tap="submitApprove(PET_APPLY_STATE.success.value)">通过</button>
+					</view>
+					<!-- 显示审批结果 -->
+					<view v-else class="bottom-bar-result">
+						审批状态: 
+						<text class="bottom-bar-state-text" :class="[ getApplyStateObj(applyData.state).class ]">
+							{{ getApplyStateObj(applyData.state).label }}
+						</text> 
+						<text 
+							class="bottom-bar-state-link" 
+							v-if="hasRefuseContent"
+							@click="viewRefuseContent">(补充说明)</text>
+					</view>
 				</view>
 			</view>
-		</view>
-		<!-- 拒绝时填写内容的弹窗 -->
-		<uni-popup 
-			:show="refusePopupVisible" 
-			position="bottom" 
-			@hidePopup="hideRefusePopup">
-			<view class="refuse-popup-inner">
-				<textarea 
-					class="refuse-popup-textarea"
-					v-model="refuseContent" 
-					fixed="true"
-					cursor-spacing="85"
-					placeholder="请输入拒绝原因（选填）" 
-					maxlength="100" />
-				 <button class="refuse-popup-button c-button-danger" @tap="submitApprove(PET_APPLY_STATE.fail.value, refuseContent)">确定拒绝</button>
-			</view>
-		</uni-popup>
+			<!-- 拒绝时填写内容的弹窗 -->
+			<uni-popup 
+				:show="refusePopupVisible" 
+				position="bottom" 
+				@hidePopup="hideRefusePopup">
+				<view class="refuse-popup-inner">
+					<textarea 
+						class="refuse-popup-textarea"
+						v-model="refuseContent" 
+						fixed="true"
+						cursor-spacing="85"
+						placeholder="请输入拒绝原因（选填）" 
+						maxlength="100" />
+					 <button class="refuse-popup-button c-button-danger" @tap="submitApprove(PET_APPLY_STATE.fail.value, refuseContent)">确定拒绝</button>
+				</view>
+			</uni-popup>
+		</template>
   </c-page>
 </template>
 
@@ -69,13 +76,36 @@ export default {
   data () {
     return {
 			PET_APPLY_STATE,
+			pageLoading: true,
 			applyData: {},
 			applyFormData: {},
 			refusePopupVisible: false,
 			refuseContent: ''
     }
 	},
+	computed: {
+		hasRefuseContent () {
+			return this.applyData.state === PET_APPLY_STATE.fail.value && this.applyData.remark
+		}
+	},
 	methods: {
+		fetchApplyDetail (applyId) {
+			this.$http.get(`/pet/api/v1/adoption/application/${applyId}`).then(res => {
+				if (res) {
+					this.pageLoading = false
+					this.applyData = {
+						petId: res.pet_id,
+						applyId: res.uuid,
+						infos: res.infos || {},
+						state: res.state,
+						remark: res.remark.trim()
+					}
+					this.applyFormData = Object.values(res.infos).sort((a, b) => {
+						return a.no - b.no
+					})
+				}
+			})
+		},
 		// 获取审批状态的对象
 		getApplyStateObj (state) {
 			let stateObj = {}
@@ -121,11 +151,20 @@ export default {
           })
         }
 			})
+		},
+		// 查看拒绝的原因
+		viewRefuseContent () {
+			this.$promisify(uni.showModal)({ 
+				title: '补充说明',
+        content: this.applyData.remark,
+				showCancel: false,
+      })
 		}
 	},
   onLoad (params) {
-		this.applyData = JSON.parse(params.data)
-    this.applyFormData = this.applyData.infos
+		this.$app.ready(() => {
+      this.fetchApplyDetail(params.applyId)
+    })
   }
 }
 </script>
@@ -170,5 +209,10 @@ export default {
 }
 .bottom-bar-state-text {
 	margin-left: 6px;
+}
+.bottom-bar-state-link {
+	margin-left: 10px;
+	color: $A06;
+	text-decoration: underline;
 }
 </style>
