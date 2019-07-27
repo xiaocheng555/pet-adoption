@@ -8,9 +8,9 @@
   			v-for="(item, index) in applyList"
   			:key="index"
   			@tap="handleApplyItemClick(item)">
-        <image class="apply-list-avatar" :src="item.src"></image>
+        <image class="apply-list-avatar" :src="item.avatarUrl"></image>
         <view class="apply-list-main">
-          <view class="apply-list-name">{{ item.name }}</view>
+          <view class="apply-list-name">{{ item.nickName }}</view>
           <view class="apply-list-date">提交时间：{{ item.date }}</view>
         </view>
         <view class="apply-list-state" :class="[item.stateClass]">{{ item.stateLabel }}</view>
@@ -22,26 +22,14 @@
 
 <script>
 import { PET_APPLY_STATE } from '@/library/constant'
+import { dateFormat } from '@/library/utils/date'
 
 export default {
   data () {
     return {
 	    listLoading: false,
 	    isEmptyData: false,
-      applyList: [
-        // {
-				// 	id: 1,
-        //   src: 'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIBNWMbATA1z48yPkpaf9W8qOfCf3FicZaVHU0xGaulOQfnDOBRJCwLazo5Ue5GPPicnQgcSmQgKfsQ/132',
-        //   name: '张焕城',
-        //   date: '2019-02-19'
-        // },
-        // {
-				// 	id: 1,
-        //   src: 'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIBNWMbATA1z48yPkpaf9W8qOfCf3FicZaVHU0xGaulOQfnDOBRJCwLazo5Ue5GPPicnQgcSmQgKfsQ/132',
-        //   name: '张焕城',
-        //   date: '2019-02-19'
-				// }
-      ]
+      applyList: []
     }
   },
   methods: {
@@ -69,7 +57,10 @@ export default {
           stateClass: stateObj.class,
           stateLabel: stateObj.label,
           remark: item.remark,
-          infos: item.infos
+          infos: item.infos,
+          nickName: item.user.nick_name,
+          avatarUrl: item.user.avatar_url,
+          date: dateFormat(item.created, 'YYYY-MM-DD hh:mm'),
         }
       })
     },
@@ -88,7 +79,7 @@ export default {
     // 某条申请人点击事件
     handleApplyItemClick (item) {
       uni.navigateTo({
-				url: `/pages/apply/detail/index?data=${JSON.stringify(item)}`
+				url: `/pages/apply/detail/index?applyId=${item.applyId}`
 			})
     }
   },

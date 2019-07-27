@@ -9,7 +9,7 @@ CONFIG.imageViewUrl = 'https://pet.xpressiot.com/pet/static/img'
 
 // h5 测试数据
 CONFIG.tesUserInfo= {
-	token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOiI2N2IxMmY2NS0wYzdlLTQ1Y2YtYjVmMi0yMTgyZWY5ZGQwMGEiLCJleHAiOjE1NjQxOTY3NDksImlzcyI6InBldC1hZG9wdGlvbiJ9.JS5ItYk14oWLJO1khs8TOg-OansTOReMl-TE6JWmLVo',
+	token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOiI2N2IxMmY2NS0wYzdlLTQ1Y2YtYjVmMi0yMTgyZWY5ZGQwMGEiLCJleHAiOjE1NjY3OTE2MzYsImlzcyI6InBldC1hZG9wdGlvbiJ9.bYMRX6Em0kuNfkR9TfhUCUHKcIj8vdXLoXwNoG4KQPc',
 	// 昵称
 	nickName: 'Zhang°先森',
 	// 头像

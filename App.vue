@@ -33,13 +33,14 @@
 				})
 			}
 		},
-		onLaunch: function() {
+		onLaunch: function(option) {
+			console.log(option, 'option')
 			this.initAppReady()
 			this.getSystemInfo()
-			this.getUserInfo()
 			this.handleAuth().then(() => {
 				// 执行app.ready内的函数
 				ready.open()
+				this.getUserInfo()
 			})
 		}
 	}

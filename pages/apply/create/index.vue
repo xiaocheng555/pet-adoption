@@ -128,11 +128,19 @@
 							infos: JSON.stringify(this.formData),
 						}).then(() => {
 							this.showSuccessTip = true
-						}).catch(() => {
-							uni.showToast({
-								icon: 'none',
-								title: '提交失败'
-							})
+						}).catch((err) => {
+							const errorData = err.data || {}
+							if (errorData.err_code === 500) {
+								uni.showToast({
+									icon: 'none',
+									title: '您已提交过该宠物的领养申请，请勿重复提交！'
+								})
+							} else {
+								uni.showToast({
+									icon: 'none',
+									title: '提交失败'
+								})
+							}
 						})
 					}
 				})

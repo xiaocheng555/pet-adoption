@@ -125,6 +125,9 @@ export default {
 </script>
 
 <style lang="scss">
+page {
+	background-color: #ffffff;
+}
 .feed-detail-main {
 	padding-bottom: 70px;
 	background-color: #ffffff;
@@ -139,6 +142,7 @@ export default {
 	border-radius: 8px;
 	background-color: #ffffff;
 	box-shadow: 3px 3px 4px rgba(26, 26, 26, 0.2);
+	box-shadow: 0 1.5px 6px rgba(0, 0, 0, 0.12);
 }
 
 .pet-info-title {

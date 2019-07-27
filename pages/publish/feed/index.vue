@@ -112,7 +112,7 @@
 				<view class="c-gutter-md"></view>
 				
 				<upload-image-card 
-					:default-img-list="feedFormData.imgList"
+					v-model="feedFormData.imgList"
 					ref="uploadImageCard" 
 					title="宠物图片">
 				</upload-image-card>
@@ -246,7 +246,6 @@
 			// 处理表单缓存
 			handleFormCache () {
 				let hasCacheData = false 
-				console.log(this.feedFormData)
 				Object.entries(this.feedFormData).some(([key, value]) => {
 					if (typeof value === 'string' && value) {
 						hasCacheData = true
@@ -258,18 +257,19 @@
 					}
 				})
 				if (hasCacheData) {
-					this.$promisify(uni.showModal)({
-						title: '提示',
-						confirmText: '使用',
-						cancelText: '舍弃',
-						content: '发现有未使用的草稿，是否使用'
-					}).then(res => {
-						if (res.cancel) {
-							this.clearImgList()
-							this.clearFeedFormData()
-							this.$refs.uploadImageCard.setImgList([])
-						}
-					})
+					setTimeout(() => {
+						this.$promisify(uni.showModal)({
+							title: '提示',
+							confirmText: '使用',
+							cancelText: '舍弃',
+							content: '发现有未使用的草稿，是否使用'
+						}).then(res => {
+							if (res.cancel) {
+								this.clearImgList()
+								this.clearFeedFormData()
+							}
+						})
+					}, 300)
 				}
 			},
 			// 删除服务端的图片
@@ -292,8 +292,6 @@
 			},
 			// 提交表单
 			sumbitForm () {
-				this.feedFormData.imgList = this.$refs.uploadImageCard.getImgList()
-				
 				this.$refs.cForm.validate((valid) => {
 					if (valid) {
 						const postData = this.adapterPostData()
@@ -305,6 +303,7 @@
 							uni.hideLoading()
 							this.submitBntDisabled = false
 							this.showSuccessTip = true
+							this.clearFeedFormData()
 							this.updateRefreshHome(true)
 						}).catch(error => {
 							uni.showToast({
