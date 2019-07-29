@@ -32,7 +32,7 @@
 
 <script>
   import { mapState, mapGetters, mapActions } from 'vuex'
-  import rewardImgUrl from '@/static/images/reward-qr-code.png'
+  import rewardImgUrl from '@/static/images/reward-qr-code.jpg'
   import defaultAvatar from '@/static/images/default-avatar.png'
   
   const APPRECIATE = 'appreciate'
