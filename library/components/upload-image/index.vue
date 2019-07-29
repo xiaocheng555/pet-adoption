@@ -206,7 +206,7 @@
 			}
 		},
 		created () {
-			if (this.value) {
+			if (this.value.length) {
 				this.imgDataList = this.value
 			}
 			this.fetchOosData()

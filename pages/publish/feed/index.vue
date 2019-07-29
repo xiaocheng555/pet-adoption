@@ -113,7 +113,6 @@
 				
 				<upload-image-card 
 					v-model="feedFormData.imgList"
-					ref="uploadImageCard" 
 					title="宠物图片">
 				</upload-image-card>
 				
