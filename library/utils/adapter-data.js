@@ -29,13 +29,14 @@ function adapterFeedList(list) {
       locality_name,
       pet_variety,
       adoption_request,
-      pet_disposition
+      pet_disposition,
+      user
     } = item
     return {
       id: uuid,
       date: dateFormat(created, 'YYYY-MM-DD HH:mm'),
-      name: 'Zhang°先森',
-      avatar: 'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIBNWMbATA1z48yPkpaf9W8qOfCf3FicZaVHU0xGaulOQfnDOBRJCwLazo5Ue5GPPicnQgcSmQgKfsQ/132',
+      name: user.nick_name,
+      avatar: user.avatar_url,
       petName: pet_name,
       // 宠物类型id
       petClassId: pet_classid,

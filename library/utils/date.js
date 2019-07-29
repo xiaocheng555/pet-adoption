@@ -12,7 +12,6 @@ function dateFormat (date, fmt = 'YYYY-MM-DD HH:mm:ss') {
   if (typeof date === 'number') {
     date = new Date(date)
   }
-  console.log(date, 'date')
   var o = {
     'M+': date.getMonth() + 1,
     'D+': date.getDate(),
