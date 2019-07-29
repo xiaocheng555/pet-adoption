@@ -52,6 +52,19 @@
 					{{ currFeedData.adoptionRequest }}
 				</view>
 			</view>
+			<!-- 发布人 -->
+			<view class="c-card">
+				<view class="c-card-header">
+					发布人
+				</view>
+				<view class="c-card-body">
+					<view class="publish-info">
+						<image class="publish-info-avatar" :src="currFeedData.avatar"></image>
+						<view class="publish-info-name">{{ currFeedData.name }}</view>
+					</view>
+					<view class="publish-info-date">发布于：{{ currFeedData.date }}</view>
+				</view>
+			</view>
 		</view>
 		<view class="c-fixed-bottom-bar-wrapper">
 			<view class="c-fixed-bottom-bar">
@@ -61,7 +74,17 @@
 						返回首页
 					</view>
 					<view class="bottom-bar-right">
-						<button class="c-button-primary c-button-small" @tap="gotoApplyPage">申请领养</button>
+						<button 
+							v-if="canApply"
+							class="c-button-primary c-button-small" 
+							@tap="gotoApplyPage">
+							申请领养
+						</button>
+						<button
+							v-else 
+							class="c-button-warn c-button-small">
+							申请已关闭
+						</button>
 					</view>
 				</view>
 			</view>
@@ -75,6 +98,7 @@ import uniSwiperDot from '@/library/components/uni-ui/uni-swiper-dot/uni-swiper-
 import ImageSwiper from '@/library/components/image-swiper'
 import HeaderBack from '@/library/components/header-back'
 import { adapterFeedList } from '@/library/utils/adapter-data'
+import { PET_FEED_STATE } from '@/library/constant'
 
 export default {
 	components: {
@@ -89,7 +113,10 @@ export default {
 	computed: {
 		...mapState('feed', [
 			'feedData'
-		])
+		]),
+		canApply () {
+			return this.currFeedData.petState === PET_FEED_STATE.processing.value
+		}
 	},
 	methods: {
 		// 获取领养详情的数据
@@ -108,7 +135,7 @@ export default {
 		gotoApplyPage () {
 			let { id, petClassId } = this.currFeedData
 			uni.navigateTo({
-				url: `/pages/apply/create/index?petId=${id}&petClassId=${petClassId}`
+				url: `/pages/feed/apply/index?petId=${id}&petClassId=${petClassId}`
 			})
 		}
 	},
@@ -129,7 +156,7 @@ page {
 	background-color: #ffffff;
 }
 .feed-detail-main {
-	padding-bottom: 70px;
+	padding-bottom: 20px;
 	background-color: #ffffff;
 }
 .pet-info {
@@ -184,6 +211,26 @@ page {
 	left: 0;
 	width: 16px;
 	height: 16px;
+}
+.publish-info {
+	display: flex;
+	align-items: center;
+}
+.publish-info-avatar {
+	border-radius: 100px;
+	width: 25px;
+	height: 25px;
+}
+.publish-info-name {
+	flex: 1;
+	padding: 0 10px;
+	font-size: 14px;
+	color: $M10;
+}
+.publish-info-date {
+	margin-top: 6px;
+	font-size: 14px;
+	color: $M08;
 }
 .bottom-bar-inner {
 	display: flex;

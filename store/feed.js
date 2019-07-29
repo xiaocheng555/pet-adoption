@@ -23,7 +23,9 @@ export default {
       adoptionDesc: '',
       imgList: [],
       agePickerIndex: null
-    }
+    },
+    // 刷新我的领养-申请人列表
+    refreshApplyApproval: false
   },
   getters: {
     
@@ -57,6 +59,10 @@ export default {
         imgList: [],
         agePickerIndex: null
       }
+    },
+    // 更新refreshApplyApproval数据
+    updateRefreshApplyApproval (state, data) {
+      state.refreshApplyApproval = data
     }
   },
   actions: {

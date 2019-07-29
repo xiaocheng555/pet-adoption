@@ -2,7 +2,7 @@
   <c-page title="首页" :has-back="false">
 		<div class="home-section">
 			<image class="home-banner" src="/static/images/banner.jpg" lazy-load></image>
-			<view class="home-nav">
+			<view class="home-nav" v-if="false">
 				<view class="home-nav-item c-1px-r">
 					<image class="home-nav-icon" src="/static/icons/publish__pet-search.svg"></image>
 	        <text class="home-nav-text">寻宠启示</text>
@@ -76,12 +76,16 @@ export default {
 		]),
 		// 获取领养列表
 		fetchFeedList () {
-			this.$http.get('/pet/api/v1/adoption', {
+			return this.$http.get('/pet/api/v1/adoption', {
 				...this.feedListParams
 			}).then(res => {
 				if (res !== null) {
 					const newFeedList = adapterFeedList(res)
 					this.feedList = this.feedList.concat(newFeedList)
+					
+					if (newFeedList.length < this.feedListParams.page_size) {
+						this.loadmoreStatus = LOADMORE_STATUS.noMore
+					}
 				} else {
 					this.loadmoreStatus = LOADMORE_STATUS.noMore
 				}
@@ -105,7 +109,7 @@ export default {
 			this.loadmoreStatus = LOADMORE_STATUS.loading
 			this.feedListParams.page = 1
 			this.feedList = []
-			this.fetchFeedList()
+			return this.fetchFeedList()
 		},
 		// 列表点击事件
 		handleFeedItemClick (item) {
@@ -115,11 +119,20 @@ export default {
 			})
 		}
 	},
+	// 滚动到底部的事件
 	onReachBottom () {
 		if (this.loadmoreStatus !== LOADMORE_STATUS.noMore) {
 			this.feedListParams.page++
 			this.fetchFeedList()
 		}
+	},
+	// 下拉刷新事件
+	onPullDownRefresh () {
+		this.refreshFeedList().then(() => {
+			uni.stopPullDownRefresh()
+		}).catch(() => {
+			uni.stopPullDownRefresh()
+		})
 	},
   onLoad () {
     this.$app.ready(() => {
@@ -144,7 +157,7 @@ export default {
 
 <style lang="scss">
 .home-section {
-	padding: 14px 16px 0;
+	padding: 14px 16px 14px;
 	background-color: #ffffff;
 }
 .home-banner {

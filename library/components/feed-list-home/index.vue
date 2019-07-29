@@ -8,7 +8,10 @@
 			@tap="handleItemClick(item, index)">
 			<view class="feed-list-header">
 				<image class="feed-list-avatar" :src="item.avatar"></image>
-				<text class="feed-list-name">{{ item.name }}</text>
+				<div class="feed-list-header-main">
+					<view class="feed-list-name">{{ item.name }}</view>
+					<view class="feed-list-date">{{ item.date }}</view>
+				</div>
 			</view>
 			<view class="feed-list-body">
 				<view class="feed-list-content c-ellipsisLn-6">{{ item.petDesc }}</view>
@@ -71,11 +74,18 @@ export default {
 	width: 35px;
 	height: 35px;
 }
-.feed-list-name {
+.feed-list-header-main {
 	flex: 1;
 	width: 0;
 	margin-left: 10px;
-	font-size: 15px;
+}
+.feed-list-name {
+	font-size: 14px;
+	color: $M10;
+}
+.feed-list-date {
+	margin-top: 6px;
+	font-size: 12px;
 	color: $M08;
 }
 .feed-list-body {

@@ -33,7 +33,7 @@ function adapterFeedList(list) {
     } = item
     return {
       id: uuid,
-      date: dateFormat(created, 'YYYY-MM-DD hh:mm'),
+      date: dateFormat(created, 'YYYY-MM-DD HH:mm'),
       name: 'Zhang°先森',
       avatar: 'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIBNWMbATA1z48yPkpaf9W8qOfCf3FicZaVHU0xGaulOQfnDOBRJCwLazo5Ue5GPPicnQgcSmQgKfsQ/132',
       petName: pet_name,
@@ -47,7 +47,7 @@ function adapterFeedList(list) {
       petSex: getOptionsLabel(petGenderOptions, pet_sex),
       // 是否注射疫苗
       petVaccine: getOptionText(petVaccinationOptions, pet_vaccine),
-      petImages: pet_images.map(key => {
+      petImages: (pet_images || []).map(key => {
         return getImgUrlByKey(key)
       }),
       address: locality_name,

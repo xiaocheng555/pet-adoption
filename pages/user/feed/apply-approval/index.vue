@@ -2,35 +2,13 @@
   <c-page title="申请内容">
 		<c-inline-loading align="center" v-if="pageLoading"></c-inline-loading>
 		<template v-else>
-	    <c-form class="c-form_label-row" ref="cForm">
-				<view v-for="(item, index) in applyFormData" :key="index">
-					<view class="c-gutter-md"></view>
-					<!-- 单选框 radio -->
-					<template v-if="item.type === 'radio'">
-						<c-form-item class="c-padding-bottem-sm" :label="item.label" :required="item.required" block>
-							<c-radio :options="item.options" v-model="item.value" disabled></c-radio>
-						</c-form-item>
-					</template>
-					<!-- 多选框 -->
-					<template v-else-if="item.type === 'checkbox'">
-						<c-form-item class="c-padding-bottem-sm" :label="item.label" :required="item.required" block>
-							<c-checkbox :options="item.options" v-model="item.value" disabled></c-checkbox>
-						</c-form-item>
-					</template>
-					<!-- 富文本框 textarea -->
-					<template v-else>
-						<c-form-item :label="item.label" block>
-	            <view class="input-text">{{ item.value || '未填写' }}</view>
-						</c-form-item>
-					</template>
-				</view>
-			</c-form>
+			<apply-form-detail :form="applyFormData"></apply-form-detail>
 			<view class="c-fixed-bottom-bar-wrapper">
 				<view class="c-fixed-bottom-bar">
 					<!-- 审批操作 -->
 					<view v-if="applyData.state === PET_APPLY_STATE.wait.value" class="bottom-bar-inner">
 						<button class="bottom-bar-item c-button-danger" @tap="showRefusePopup">拒绝</button>
-						<button class="bottom-bar-item c-button-primary" @tap="submitApprove(PET_APPLY_STATE.success.value)">通过</button>
+						<button class="bottom-bar-item c-button-primary" @tap="submitApprove(PET_APPLY_STATE.success.value, '申请通过后领养将自动下架，确认是否通过？')">通过</button>
 					</view>
 					<!-- 显示审批结果 -->
 					<view v-else class="bottom-bar-result">
@@ -41,7 +19,7 @@
 						<text 
 							class="bottom-bar-state-link" 
 							v-if="hasRefuseContent"
-							@click="viewRefuseContent">(补充说明)</text>
+							@click="viewRefuseContent">(说明)</text>
 					</view>
 				</view>
 			</view>
@@ -58,7 +36,7 @@
 						cursor-spacing="85"
 						placeholder="请输入拒绝原因（选填）" 
 						maxlength="100" />
-					 <button class="refuse-popup-button c-button-danger" @tap="submitApprove(PET_APPLY_STATE.fail.value, refuseContent)">确定拒绝</button>
+					 <button class="refuse-popup-button c-button-danger" @tap="submitApprove(PET_APPLY_STATE.fail.value, '确定是否拒绝' ,refuseContent)">确定拒绝</button>
 				</view>
 			</uni-popup>
 		</template>
@@ -66,19 +44,22 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
 import { PET_APPLY_STATE } from '@/library/constant'
 import uniPopup from '@/library/components/uni-ui/uni-popup/uni-popup.vue'
+import ApplyFormDetail from '@/library/components/apply-form-detail'
 
 export default {
   components: {
-		uniPopup
+		uniPopup,
+		ApplyFormDetail
 	},
   data () {
     return {
 			PET_APPLY_STATE,
 			pageLoading: true,
 			applyData: {},
-			applyFormData: {},
+			applyFormData: [],
 			refusePopupVisible: false,
 			refuseContent: ''
     }
@@ -89,6 +70,9 @@ export default {
 		}
 	},
 	methods: {
+		...mapMutations('feed', [
+			'updateRefreshApplyApproval'
+		]),
 		fetchApplyDetail (applyId) {
 			this.$http.get(`/pet/api/v1/adoption/application/${applyId}`).then(res => {
 				if (res) {
@@ -96,11 +80,11 @@ export default {
 					this.applyData = {
 						petId: res.pet_id,
 						applyId: res.uuid,
-						infos: res.infos || {},
+						infos: res.infos ? JSON.parse(res.infos) : {},
 						state: res.state,
 						remark: res.remark.trim()
 					}
-					this.applyFormData = Object.values(res.infos).sort((a, b) => {
+					this.applyFormData = Object.values(this.applyData.infos).sort((a, b) => {
 						return a.no - b.no
 					})
 				}
@@ -127,7 +111,7 @@ export default {
 			this.refusePopupVisible = false
 		},
 		// 提交审批
-		submitApprove (state, remark) {
+		submitApprove (state, tip, remark) {
 			let { applyId, petId } = this.applyData
 			this.$promisify(uni.showModal)({ 
         title: '提示',
@@ -142,7 +126,9 @@ export default {
 						remark: remark
           }).then(() => {
             uni.hideLoading()
-            this.applyData.state = state
+						this.applyData.state = state
+						// 更新领养申请人列表数据
+						this.updateRefreshApplyApproval(true)
           }).catch(() => {
             uni.showToast({
               icon: 'none',
@@ -155,7 +141,7 @@ export default {
 		// 查看拒绝的原因
 		viewRefuseContent () {
 			this.$promisify(uni.showModal)({ 
-				title: '补充说明',
+				title: '说明',
         content: this.applyData.remark,
 				showCancel: false,
       })

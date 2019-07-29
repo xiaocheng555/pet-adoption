@@ -105,7 +105,7 @@ export default {
     // 申请人头像bar点击事件
     handleAvatarBarClick (item) {
       uni.navigateTo({
-        url: `/pages/apply/list/index?petId=${item.id}`
+        url: `/pages/user/feed/applicant-list/index?petId=${item.id}`
       })
     }
   },

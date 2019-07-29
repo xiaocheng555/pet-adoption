@@ -21,6 +21,7 @@
 </template>
 
 <script>
+import { mapState, mapMutations } from 'vuex'
 import { PET_APPLY_STATE } from '@/library/constant'
 import { dateFormat } from '@/library/utils/date'
 
@@ -32,7 +33,15 @@ export default {
       applyList: []
     }
   },
+  computed: {
+    ...mapState('feed', [
+      'refreshApplyApproval'
+    ])
+  },
   methods: {
+    ...mapMutations('feed', [
+			'updateRefreshApplyApproval'
+		]),
     // 获取申请领养列表
 		fetchApplyList (petId) {
       this.listLoading = true
@@ -79,7 +88,7 @@ export default {
     // 某条申请人点击事件
     handleApplyItemClick (item) {
       uni.navigateTo({
-				url: `/pages/apply/detail/index?applyId=${item.applyId}`
+				url: `/pages/user/feed/apply-approval/index?applyId=${item.applyId}`
 			})
     }
   },
@@ -88,7 +97,14 @@ export default {
 		this.$app.ready(() => {
       this.fetchApplyList(petId)
     })
-	}
+  },
+  onShow () {
+    // 从申请人审批更新了审批状态，返回该页面时，需要刷新申请人列表
+    if (this.refreshApplyApproval) {
+      this.fetchApplyList(petId)
+      this.updateRefreshApplyApproval(false)
+    }
+  }
 }
 </script>
 

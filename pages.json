@@ -2,7 +2,10 @@
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 	  // 首页 
 		{
-			"path": "pages/home/index"
+			"path": "pages/home/index",
+			"style": {
+				"enablePullDownRefresh": true
+			}
 		},
 		// 送养详情页
 		{
@@ -10,15 +13,7 @@
 		},
 		// 申请领养页
 		{
-			"path": "pages/apply/create/index"
-		},
-		// 申请列表页
-		{
-			"path": "pages/apply/list/index"
-		},
-		// 申请详情页
-		{
-			"path": "pages/apply/detail/index"
+			"path": "pages/feed/apply/index"
 		},
 		// 发布页 
 		{
@@ -62,6 +57,18 @@
 		// 测试页面
 		{
 			"path" : "pages/test/index"
+		},
+		// 我的领养-申请人列表
+		{
+			"path" : "pages/user/feed/applicant-list/index"
+		},
+		// 我的领养-申请人审批
+		{
+			"path" : "pages/user/feed/apply-approval/index"
+		},
+		// 我的申请-申请详情
+		{
+			"path": "pages/user/apply/detail/index"
 		}
 	],
 	"globalStyle": {
