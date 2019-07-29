@@ -5,6 +5,7 @@
 		<apply-list 
       v-else
       :list="applyList" 
+      @item-head-click="handleApplyItemHeadClick"
       @item-click="handleApplyItemClick"
       @item-delete="handleApplyDelete">
     </apply-list>
@@ -15,6 +16,8 @@
 import ApplyList from '@/library/components/apply-list'
 import { PET_APPLY_STATE } from '@/library/constant'
 import { dateFormat } from '@/library/utils/date'
+import { adapterFeedList } from '@/library/utils/adapter-data'
+import { mapMutations } from 'vuex'
 
 export default {
 	components: {
@@ -29,6 +32,9 @@ export default {
 		}
 	},
 	methods: {
+    ...mapMutations('feed', [
+      'updateFeedData'
+    ]),
 		// 获取申请领养列表
 		fetchApplyList () {
 			this.$http.get('/pet/api/v1/adoption/application').then(res => {
@@ -44,6 +50,7 @@ export default {
     adapterApplyList (list) {
       return list.map(item => {
         let stateObj = this.getApplyStateObj(item.state)
+        let pet = [item.pet]
         return {
           applyId: item.uuid,
           petId: item.pet_id,
@@ -56,6 +63,7 @@ export default {
           nickName: item.user.nick_name,
           avatarUrl: item.user.avatar_url,
           date: dateFormat(item.created, 'YYYY-MM-DD hh:mm'),
+          petData: item.pet ? adapterFeedList([item.pet])[0] : {}
         }
       })
     },
@@ -63,29 +71,40 @@ export default {
 		getApplyStateObj (state) {
 			let stateObj = {}
 			Object.values(PET_APPLY_STATE).some(item => {
-				console.log(item, 'value')
 				if (item.value === state) {
 					stateObj = item
 					return true
 				}
 			})
 			return stateObj
-		},
+    },
+    // 跳转申请详情
+    handleApplyItemHeadClick (item) {
+      uni.navigateTo({
+        url: `/pages/user/apply/detail/index?applyId=${item.applyId}`
+      })
+    },
 		// 某条申请领养点击事件
     handleApplyItemClick (item) {
+      let useStore = false
+      if (item.petData) {
+        this.updateFeedData(item.petData)
+        useStore = true
+      }
       uni.navigateTo({
-        url: `/pages/apply/detail/index?applyId=${item.applyId}`
+        url: `/pages/feed/detail/index?id=${item.petId}&useStore=${useStore}`
       })
     },
     // 某条申请领养删除事件
     handleApplyDelete (data) {
       let { item, index } = data
+      console.log(item, 'item')
       this.$promisify(uni.showModal)({ 
         title: '提示',
         content: '确定删除？'
       }).then(res => {
         if (res.confirm) {
-          this.$http.delete(`/pet/api/v1/adoption/pet/${item.id}`, null, {
+          this.$http.delete(`/pet/api/v1/adoption/pet/${item.petId}/application/${item.applyId}`, null, {
             header: {
               'Content-Type': 'application/x-www-form-urlencoded'
             }

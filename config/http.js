@@ -29,7 +29,7 @@ http.interceptor.response = (response) => {
 		} else if (response.statusCode >= 500 && response.statusCode <= 599) {
 			errorTip = '服务器错误'
 		} else {
-			errorTip = '未知异常'
+			errorTip = '网络异常，请稍后重试'
 		}
 		uni.showToast({
 			icon: 'none',

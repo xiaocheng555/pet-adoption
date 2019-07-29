@@ -190,7 +190,7 @@ const PET_CLASS_ID = {
 const PET_APPLY_STATE = {
 	wait: {
 		value: 1,
-		label: '待审',
+		label: '待审核',
 		class: 'c-text-warn'
 	},
 	success: {

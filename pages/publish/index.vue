@@ -1,9 +1,7 @@
 <template>
 	<c-page 
 		title="发布" 
-		:has-back="false" 
-		:login-modal="loginModalShow" 
-		@login-close="loginModalShow = false">
+		:has-back="false">
 		<view class="publish-card-list">
 			<view 
 				class="publish-card" 
@@ -35,13 +33,15 @@
 						title: '发布寻宠启示',
 						icon: '/static/icons/publish__pet-search.svg',
 						url: '/pages/publish/pet-search/index',
-						bgColor: '#8dc63f'
+						bgColor: '#8dc63f',
+						status: 'developing'
 					},
 					{
 						title: '发布寻主启示',
 						icon: '/static/icons/publish__search-owner.svg',
 						url: '/pages/publish/owner-search/index',
-						bgColor: '#1cbbb4'
+						bgColor: '#1cbbb4',
+						status: 'developing'
 					}
 				]
 			}
@@ -53,10 +53,18 @@
 		},
 		methods: {
 			handleTap (item) {
-				// if (!this.hasLogin) {
-				// 	this.loginModalShow = true
-				// 	return
-				// }
+				if (item.status === 'developing') {
+					return uni.showToast({
+						icon: 'none',
+						title: '努力开发中，敬请期待...'
+					})
+				}
+				if (!this.hasLogin) {
+					return uni.showToast({
+						icon: 'none',
+						title: '请先登录'
+					})
+				}
 				uni.navigateTo({
 					url: item.url
 				})
@@ -72,7 +80,7 @@
 
 <style lang="scss">
 .publish-card-list {
-	padding: 0 16px;
+	padding: 0 16px 16px;
 }
 .publish-card {
 	display: flex;

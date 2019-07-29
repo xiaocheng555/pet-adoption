@@ -1,7 +1,9 @@
 <template>
   <view class="header-back" @tap="backPage" :style="style">
-		<image class="header-back-icon" src="/static/icons/header__back.svg"></image>
-		<text class="header-back-text">返回</text>
+		<view class="header-back-circle">
+		<image class="header-back-icon" src="/static/icons/header__back_white.svg"></image>
+		</view>
+		<!-- <text class="header-back-text">返回</text> -->
 	</view>
 </template>
 
@@ -30,21 +32,28 @@ export default {
 
 <style lang='scss'>
 .header-back {
-  display: flex;
-  align-items: center;
   position: absolute;
-  top: 0;
+  top: 9px;
   z-index: 10;
-  width: 100px;
   padding: 0 16px;
 	font-size: 16px;
   color: $A11;
 }
-.header-back-icon {
+.header-back-circle {
 	position: relative;
+	width: 30px;
+	height: 30px;
+	border-radius: 100%;
+	background: rgba(0, 0, 0, .35);
+	
+}
+.header-back-icon {
+	position: absolute;
+	top: 50%;
+	left: 50%;
 	width: 10px;
 	height: 17px;
-	margin-right: 6px;
+	transform: translate(-55%, -50%);
 }
 .header-back-text {
 	text-align: center;

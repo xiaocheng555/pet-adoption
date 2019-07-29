@@ -40,7 +40,8 @@ page {
 	background-color: #ffffff;
 }
 button.c-button-primary,
-button.c-button-danger {
+button.c-button-danger,
+button.c-button-warn {
   height: 42px;
 	border-radius: 6px;
 	font-size: 16px;
@@ -52,6 +53,9 @@ button.c-button-danger {
 }
 .c-button-danger {
 	background-color: #F25555 !important;
+}
+.c-button-warn {
+	background-color: #FF9933 !important;
 }
 .c-button-small {
 	height: 38px;

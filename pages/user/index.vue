@@ -55,12 +55,14 @@
           {
             icon: '/static/icons/user__search-people.svg',
             text: '我的寻主启示',
-            url: '/pages/user/owner-search/index'
+            url: '/pages/user/owner-search/index',
+            status: 'developing'
           },
           {
             icon: '/static/icons/user__search-pet.svg',
             text: '我的寻宠启示',
-            url: '/pages/user/pet-search/index'
+            url: '/pages/user/pet-search/index',
+            status: 'developing'
           },
           {
             icon: '/static/icons/user__appreciate.svg',
@@ -93,6 +95,12 @@
           this.previewImage()
           return
         }
+        if (nav.status === 'developing') {
+					return uni.showToast({
+						icon: 'none',
+						title: '努力开发中，敬请期待...'
+					})
+				}
 				if (!this.hasLogin) {
 					return uni.showToast({
 						icon: 'none',
