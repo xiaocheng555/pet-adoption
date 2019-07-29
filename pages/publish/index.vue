@@ -21,7 +21,6 @@
 	export default {
 		data() {
 			return {
-				loginModalShow: false,
 				publishList: [
 					{
 						title: '发布送养',
@@ -68,11 +67,6 @@
 				uni.navigateTo({
 					url: item.url
 				})
-			}
-		},
-		onShow () {
-			if (!this.hasLogin) {
-				this.loginModalShow = true
 			}
 		}
 	}
