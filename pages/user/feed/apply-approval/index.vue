@@ -125,11 +125,13 @@ export default {
 						state: state,
 						remark: remark
           }).then(() => {
+						this.refusePopupVisible = false
             uni.hideLoading()
 						this.applyData.state = state
 						// 更新领养申请人列表数据
 						this.updateRefreshApplyApproval(true)
           }).catch(() => {
+						this.refusePopupVisible = false
             uni.showToast({
               icon: 'none',
               title: '操作失败'

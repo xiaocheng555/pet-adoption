@@ -1,5 +1,5 @@
 <template>
-  <c-page ref="cPage" :has-header="false">
+  <c-page ref="cPage" :has-header="false" :loading="false">
     <view class="user-info">
       <image class="user-info-bg" mode="aspectFill" src="/static/images/user-info-bg.jpeg"></image>
       <view class="user-info-main">

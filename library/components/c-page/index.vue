@@ -1,7 +1,7 @@
 <template>
 	<view class="c-page">
 		<c-header v-if="hasHeader" :title="title" :has-back="hasBack"></c-header>
-		<c-inline-loading align="center" v-if="pageLoading"></c-inline-loading>
+		<c-inline-loading align="center" v-if="pageLoading && loading"></c-inline-loading>
 		<view v-else>
 	  	<slot></slot>
 		</view>		
@@ -20,6 +20,10 @@
 				default: true
 			},
 			hasHeader: {
+				type: Boolean,
+				default: true
+			},
+			loading: {
 				type: Boolean,
 				default: true
 			}

@@ -1,7 +1,7 @@
 <template>
   <c-page title="申请人列表">
 		<c-inline-loading align="center" v-if="listLoading"></c-inline-loading>
-    <c-no-data v-else-if="isEmptyData">暂无申请人，请耐心等候~</c-no-data>
+    <c-no-data v-else-if="isEmptyData">暂无申请人~</c-no-data>
     <view class="apply-list" v-else>
       <view 
         class="apply-list-item c-1px-b"
@@ -30,7 +30,8 @@ export default {
     return {
 	    listLoading: false,
 	    isEmptyData: false,
-      applyList: []
+      applyList: [],
+      petId: null
     }
   },
   computed: {
@@ -44,6 +45,7 @@ export default {
 		]),
     // 获取申请领养列表
 		fetchApplyList (petId) {
+      this.applyList = []
       this.listLoading = true
 			this.$http.get(`/pet/api/v1/adoption/pet/${petId}/application`).then(res => {
 				this.listLoading = false
@@ -93,15 +95,15 @@ export default {
     }
   },
   onLoad (params) {
-    const petId = params.petId
+    this.petId = params.petId
 		this.$app.ready(() => {
-      this.fetchApplyList(petId)
+      this.fetchApplyList(this.petId)
     })
   },
-  onShow () {
+  onShow (params) {
     // 从申请人审批更新了审批状态，返回该页面时，需要刷新申请人列表
     if (this.refreshApplyApproval) {
-      this.fetchApplyList(petId)
+      this.fetchApplyList(this.petId)
       this.updateRefreshApplyApproval(false)
     }
   }
