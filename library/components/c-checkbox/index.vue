@@ -1,6 +1,6 @@
 <template>
 	<checkbox-group @change="checkboxChange">
-		<label class="c-checkbox-item" v-for="item in options" :key="item.value">
+		<label class="c-checkbox-item" v-for="item in checkboxOptions" :key="item.value">
 			<view class="c-checkbox-checkbox">
 				<checkbox :value="item.value" :checked="item.checked" :disabled="disabled" />
 			</view>
@@ -25,6 +25,11 @@
 				default: false
 			}
 		},
+		data () {
+			return {
+				checkboxOptions: []
+			}
+		},
 		methods: {
 			checkboxChange (e) {
 				let values = e.detail.value
@@ -32,17 +37,17 @@
 				this.updateOptions(values)
 			},
 			updateOptions (values) {
-				this.options.forEach((option, index) => {
+				this.checkboxOptions.forEach((option, index) => {
 					if (values.includes(option.value)) {
-						console.log('ok')
-						this.$set(this.options[index], 'checked', true)
+						this.$set(this.checkboxOptions[index], 'checked', true)
 					} else {
-						this.$set(this.options[index], 'checked', false)
+						this.$set(this.checkboxOptions[index], 'checked', false)
 					}
 				})
 			}
 		},
 		created () {
+			this.checkboxOptions = this.options
 			if (this.value.length > 0) {
 				this.updateOptions(this.value)
 			}

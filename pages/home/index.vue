@@ -1,5 +1,5 @@
 <template>
-  <c-page title="首页" :has-back="false">
+  <c-page title="首页" :has-back="false" :loading="false">
 		<div class="home-section">
 			<image class="home-banner" src="/static/images/banner.jpg" lazy-load></image>
 			<view class="home-nav" v-if="false">

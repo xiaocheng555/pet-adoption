@@ -98,7 +98,7 @@
 			// 获取图片上传oos参数
 			fetchOosData () {
 			  this.$http.get('/pet/api/v1/oss').then(res => {
-					OSS.host = `http://${res.dir}.${res.host}`
+					OSS.host = `https://${res.dir}.${res.host}`
 					OSS.dir = res.dir
 					OSS.policy = res.policy
 					OSS.signature = res.signature

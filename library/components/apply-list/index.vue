@@ -23,7 +23,7 @@
 					{{ item.petData.petDesc }}
 				</view>
 			</view>
-			<view class="apply-list-action-wrap c-1px-t">
+			<view class="apply-list-action-wrap c-1px-t" v-if="item.state !== PET_APPLY_STATE.success.value">
 				<view class="apply-list-delete" @tap.stop="handleDelete(item, index)">删除</view>
 			</view>
 		</view>

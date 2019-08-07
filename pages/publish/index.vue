@@ -1,6 +1,7 @@
 <template>
 	<c-page 
 		title="发布" 
+		:loading="false"
 		:has-back="false">
 		<view class="publish-card-list">
 			<view 
